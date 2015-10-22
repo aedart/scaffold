@@ -36,7 +36,7 @@ class TwigEngine {
 
         // Twig
         $this->twig = new Twig_Environment($loader, [
-            
+
         ]);
     }
 
