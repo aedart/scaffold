@@ -2,10 +2,10 @@
 
 return [
 
-    'basePath' => __DIR__ . 'templates',
+    'basePath' => __DIR__ . '/templates',
 
     'files' => [
-            'composer.json.twig'    => 'Aedart/Scaffold/Handlers/FileHandler::class',
+            'composer.json.twig'    => \Aedart\Scaffold\Handlers\FileHandler::class,
     ],
 
     'data'      => [
