@@ -11,18 +11,14 @@ return [
     'data'      => [
 
         'name'      => [
-            'ask'           =>  true,
-            'description'   =>  'Name of the project',
+            'default'       =>  'aedart/scaffold-file-handler-test'
         ],
 
         'author_name'  => [
-            'ask'           =>  true,
-            'description'   =>  'Author\'s name',
             'default'       =>  'Alin Eugen Deac'
         ],
 
         'author_email'  => [
-            'ask'           =>  false,
             'default'       =>  'aedart@gmail.com'
         ],
 
