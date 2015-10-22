@@ -1,0 +1,41 @@
+{
+  "name": "aedart/scaffold",
+  "description": "Tool for creating and installing various file and directory templates into your project",
+  "keywords": [
+    "Scaffold",
+    "Template",
+    "File Generator"
+  ],
+  "homepage": "https://github.com/aedart/scaffold",
+  "license": "BSD-3-Clause",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Alin Eugen Deac",
+      "email": "aedart@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.9",
+    "aedart/laravel-helpers": "~1.1",
+    "aedart/config-loader": "~1.0",
+    "aedart/model": "~1.0",
+    "twig/twig": "~1.9",
+    "illuminate/console": "~5.1",
+    "illuminate/container": "~5.1"
+  },
+  "require-dev": {
+    "aedart/license": "1.*",
+    "aedart/license-file-manager": "~1.4",
+    "aedart/testing-laravel": "~1.5"
+  },
+  "autoload": {
+    "psr-4": {
+      "Aedart\\Scaffold\\": "src/"
+    }
+  },
+  "minimum-stability": "stable",
+  "scripts": {
+    "post-update-cmd": "vendor/bin/license-manager license:copy vendor/aedart/license/aedart/BSD-3-Clause"
+  }
+}
