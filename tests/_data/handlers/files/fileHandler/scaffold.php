@@ -5,7 +5,10 @@ return [
     'basePath' => __DIR__ . '/templates',
 
     'files' => [
-            'composer.json.twig'    => \Aedart\Scaffold\Handlers\FileHandler::class,
+            'composer.json.twig'    => [
+                'handler'           => \Aedart\Scaffold\Handlers\FileHandler::class,
+                'filename'       => 'composer.json'
+            ],
     ],
 
     'data'      => [
