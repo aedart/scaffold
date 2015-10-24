@@ -1,6 +1,7 @@
 <?php namespace Aedart\Scaffold\Handlers;
 
 use Aedart\Laravel\Helpers\Traits\Config\ConfigTrait;
+use Aedart\Laravel\Helpers\Traits\Filesystem\FileTrait;
 use Aedart\Model\Traits\Arrays\DataTrait;
 use Aedart\Model\Traits\Strings\BasePathTrait;
 use Aedart\Model\Traits\Strings\FilenameTrait;
@@ -18,6 +19,7 @@ use Aedart\Scaffold\Engines\TwigEngine;
 class FileHandler {
 
     use ConfigTrait,
+        FileTrait,
         BasePathTrait,
         DataTrait,
         OutputPathTrait,
@@ -39,29 +41,18 @@ class FileHandler {
         $engine->setup();
 
         // Render the template
-        $renderedTemplate = $engine->render();
-
-        //dd($renderedTemplate);
+        $content = $engine->render();
 
         // TODO: Output path needs to be relative-ish... match structure of inside the "templates" folder
-        // TODO: If target folder-path doesn't exist, then file_put_content fails
 
-        // TODO: tip;
-        //        (http://php.net/manual/en/function.file-put-contents.php#84180)
-        //        File put contents fails if you try to put a file in a directory that doesn't exist. This creates the directory.
-        //
-        //
-        //    function file_force_contents($dir, $contents){
-        //        $parts = explode('/', $dir);
-        //        $file = array_pop($parts);
-        //        $dir = '';
-        //        foreach($parts as $part)
-        //            if(!is_dir($dir .= "/$part")) mkdir($dir);
-        //        file_put_contents("$dir/$file", $contents);
-        //    }
-        //
+        // Finally, write the content to the target file
+        $this->writeFile($this->getOutputPath() . $this->getFilename(), $content);
+    }
 
-        $result = file_put_contents($this->getOutputPath() . $this->getFilename(), $renderedTemplate);
+    // TODO: PHPDoc
+    public function writeFile($filePath, $content) {
+        // TODO: Throw exception in case that nothing was written to the file!
+        $result = $this->getFile()->put($filePath, $content);
     }
 
     // TODO: PHPDoc .... and why was this needed?
