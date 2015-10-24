@@ -32,7 +32,7 @@ class FileHandler {
         $engine->setBasePath($this->getBasePath());
 
         // Set the template to be rendered
-        $engine->setTemplateFile($element);
+        $engine->setTemplate($element);
 
         // Parse the data
         $engine->setData($this->processData($this->getData()));
