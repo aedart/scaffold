@@ -1,5 +1,10 @@
 <?php namespace Aedart\Scaffold\Handlers;
+
 use Aedart\Laravel\Helpers\Traits\Config\ConfigTrait;
+use Aedart\Model\Traits\Arrays\DataTrait;
+use Aedart\Model\Traits\Strings\BasePathTrait;
+use Aedart\Model\Traits\Strings\FilenameTrait;
+use Aedart\Model\Traits\Strings\OutputPathTrait;
 use Aedart\Scaffold\Engines\TwigEngine;
 
 /**
@@ -12,7 +17,11 @@ use Aedart\Scaffold\Engines\TwigEngine;
  */
 class FileHandler {
 
-    use ConfigTrait;
+    use ConfigTrait,
+        BasePathTrait,
+        DataTrait,
+        OutputPathTrait,
+        FilenameTrait;
 
     public function handle($element) {
         $engine = $this->getTemplateEngine();
@@ -71,46 +80,6 @@ class FileHandler {
         return $output;
     }
 
-    /**************************************************
-     * TODO: Base Path - split into trait
-     **************************************************/
-
-    /**
-     * Base Path; location of where the templates are located
-     *
-     * @var string|null
-     */
-    protected $basePath = null;
-
-    /**
-     * Set the given base path
-     *
-     * @param string $path Base Path; location of where the templates are located
-     *
-     * @return void
-     */
-    public function setBasePath($path) {
-        $this->basePath = $path;
-    }
-
-    /**
-     * Get the given base path
-     *
-     * If no base path has been set, this method will
-     * set and return a default base path, if any such
-     * value is available
-     *
-     * @see getDefaultBasePath()
-     *
-     * @return string|null base path or null if none base path has been set
-     */
-    public function getBasePath() {
-        if (!$this->hasBasePath() && $this->hasDefaultBasePath()) {
-            $this->setBasePath($this->getDefaultBasePath());
-        }
-        return $this->basePath;
-    }
-
     /**
      * Get a default base path value, if any is available
      *
@@ -121,222 +90,12 @@ class FileHandler {
     }
 
     /**
-     * Check if base path has been set
-     *
-     * @return bool True if base path has been set, false if not
-     */
-    public function hasBasePath() {
-        return !is_null($this->basePath);
-    }
-
-    /**
-     * Check if a default base path is available or not
-     *
-     * @return bool True of a default base path is available, false if not
-     */
-    public function hasDefaultBasePath() {
-        return !is_null($this->getDefaultBasePath());
-    }
-
-    /**************************************************
-     * TODO: Data - split into trait
-     **************************************************/
-
-    /**
-     * Data array - contains various types of data entries
-     *
-     * @var array|null
-     */
-    protected $data = null;
-
-    /**
-     * Set the given data
-     *
-     * @param array $data Data array - contains various types of data entries
-     *
-     * @return void
-     */
-    public function setData(array $data) {
-        $this->data = $data;
-    }
-
-    /**
-     * Get the given data
-     *
-     * If no data has been set, this method will
-     * set and return a default data, if any such
-     * value is available
-     *
-     * @see getDefaultData()
-     *
-     * @return array|null data or null if none data has been set
-     */
-    public function getData() {
-        if (!$this->hasData() && $this->hasDefaultData()) {
-            $this->setData($this->getDefaultData());
-        }
-        return $this->data;
-    }
-
-    /**
      * Get a default data value, if any is available
      *
      * @return array|null A default data value or Null if no default value is available
      */
     public function getDefaultData() {
         return $this->getConfig()->get('scaffold.data', null);
-    }
-
-    /**
-     * Check if data has been set
-     *
-     * @return bool True if data has been set, false if not
-     */
-    public function hasData() {
-        return !is_null($this->data);
-    }
-
-    /**
-     * Check if a default data is available or not
-     *
-     * @return bool True of a default data is available, false if not
-     */
-    public function hasDefaultData() {
-        return !is_null($this->getDefaultData());
-    }
-
-    /**************************************************
-     * TODO: Output Path - split into trait
-     **************************************************/
-
-    /**
-     * Output path - location of where something needs to be persisted
-     *
-     * @var string|null
-     */
-    protected $outputPath = null;
-
-    /**
-     * Set the given output path
-     *
-     * @param string $path Output path - location of where something needs to be persisted
-     *
-     * @return void
-     */
-    public function setOutputPath($path) {
-        $this->outputPath = $path;
-    }
-
-    /**
-     * Get the given output path
-     *
-     * If no output path has been set, this method will
-     * set and return a default output path, if any such
-     * value is available
-     *
-     * @see getDefaultOutputPath()
-     *
-     * @return string|null output path or null if none output path has been set
-     */
-    public function getOutputPath() {
-        if (!$this->hasOutputPath() && $this->hasDefaultOutputPath()) {
-            $this->setOutputPath($this->getDefaultOutputPath());
-        }
-        return $this->outputPath;
-    }
-
-    /**
-     * Get a default output path value, if any is available
-     *
-     * @return string|null A default output path value or Null if no default value is available
-     */
-    public function getDefaultOutputPath() {
-        return null;
-    }
-
-    /**
-     * Check if output path has been set
-     *
-     * @return bool True if output path has been set, false if not
-     */
-    public function hasOutputPath() {
-        return !is_null($this->outputPath);
-    }
-
-    /**
-     * Check if a default output path is available or not
-     *
-     * @return bool True of a default output path is available, false if not
-     */
-    public function hasDefaultOutputPath() {
-        return !is_null($this->getDefaultOutputPath());
-    }
-
-    /**************************************************
-     * TODO: file name - split into trait, facade... etc
-     **************************************************/
-
-    /**
-     * Filename
-     *
-     * @var string|null
-     */
-    protected $filename = null;
-
-    /**
-     * Set the given filename
-     *
-     * @param string $name Filename
-     *
-     * @return void
-     */
-    public function setFilename($name) {
-        $this->filename = $name;
-    }
-
-    /**
-     * Get the given filename
-     *
-     * If no filename has been set, this method will
-     * set and return a default filename, if any such
-     * value is available
-     *
-     * @see getDefaultFilename()
-     *
-     * @return string|null filename or null if none filename has been set
-     */
-    public function getFilename() {
-        if (!$this->hasFilename() && $this->hasDefaultFilename()) {
-            $this->setFilename($this->getDefaultFilename());
-        }
-        return $this->filename;
-    }
-
-    /**
-     * Get a default filename value, if any is available
-     *
-     * @return string|null A default filename value or Null if no default value is available
-     */
-    public function getDefaultFilename() {
-        return null;
-    }
-
-    /**
-     * Check if filename has been set
-     *
-     * @return bool True if filename has been set, false if not
-     */
-    public function hasFilename() {
-        return !is_null($this->filename);
-    }
-
-    /**
-     * Check if a default filename is available or not
-     *
-     * @return bool True of a default filename is available, false if not
-     */
-    public function hasDefaultFilename() {
-        return !is_null($this->getDefaultFilename());
     }
 
     /**************************************************

@@ -144,7 +144,7 @@ class FileHandlerTest extends HandlerTestCase{
 
         $filename = null;
         foreach($configFiles as $template => $config){
-            $filename = $config['filename'];
+            $filename = $config['filename']['default'];
         }
 
         $handler->setFilename($filename);
