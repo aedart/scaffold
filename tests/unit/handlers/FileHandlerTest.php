@@ -131,6 +131,7 @@ class FileHandlerTest extends HandlerTestCase{
     public function canHandleTemplate() {
         $handler = $this->makeHandler();
         $handler->setConfig($this->config);
+        $handler->setFile(new Filesystem());
 
         $outputDir = Configuration::outputDir();
 
