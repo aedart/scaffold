@@ -17,6 +17,7 @@
   ],
   "require": {
     "php": ">=5.5.9",
+    "aedart/dto": "~1.2",
     "aedart/laravel-helpers": "~1.1",
     "aedart/config-loader": "~1.0",
     "aedart/model": "~1.1",
