@@ -11,7 +11,11 @@ return [
     'files' => [
         'composer.json.twig'    => [
             'handler'           => \Aedart\Scaffold\Handlers\FileHandler::class,
-            'filename'       => 'composer.json'
+            'filename'          => [
+                'ask'           => true,
+                'description'   => 'Composer file\'s name?',
+                'default'       => 'composer.json'
+            ],
         ],
         '.gitkeep'              => [
             'handler'   => 'Aedart/Scaffold/Handlers/IgnoreFileHandler::class',
