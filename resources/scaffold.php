@@ -12,10 +12,11 @@ return [
         'composer.json.twig'    => [
             'handler'           => \Aedart\Scaffold\Handlers\FileHandler::class,
             'filename'          => [
+                'id'            => 'composer_filename',
                 'ask'           => true,
                 'description'   => 'Composer file\'s name?',
                 'default'       => 'composer.json'
-            ],
+            ]
         ],
         '.gitkeep'              => [
             'handler'   => 'Aedart/Scaffold/Handlers/IgnoreFileHandler::class',
@@ -26,20 +27,24 @@ return [
 
     'data'      => [
 
-        'name'      => [
-            'ask'           =>  true,
-            'description'   =>  'Name of the project',
+        [
+            'id'            => 'name',
+            'ask'           => true,
+            'description'   => 'Name of the project',
         ],
 
-        'author_name'  => [
-            'ask'           =>  true,
-            'description'   =>  'Author\'s name',
-            'default'       =>  'Alin Eugen Deac'
+        [
+            'id'            => 'author_name',
+            'ask'           => false,
+            'description'   => 'Author\'s name',
+            'default'       => 'Alin Eugen Deac'
         ],
 
-        'author_email'  => [
-            'ask'           =>  false,
-            'default'       =>  'aedart@gmail.com'
+        [
+            'id'            => 'author_email',
+            'ask'           => false,
+            'description'   => 'Author\'s email',
+            'default'       => 'aedart@gmail.com'
         ],
 
     ],
