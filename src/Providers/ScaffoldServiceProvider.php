@@ -29,8 +29,8 @@ class ScaffoldServiceProvider extends ServiceProvider{
      * Register the askable-property
      */
     public function registerAskableProperty() {
-        $this->app->bind(AskablePropertyInterface::class, function($app){
-            return new AskableProperty();
+        $this->app->bind(AskablePropertyInterface::class, function($app, array $data = []){
+            return new AskableProperty($data);
         });
     }
 }
