@@ -1,5 +1,9 @@
 <?php
 
+use Faker\Factory;
+
+$faker = Factory::create();
+
 return [
 
     'basePath' => __DIR__ . '/templates',
@@ -7,7 +11,9 @@ return [
     'files' => [
             'composer.json.twig'    => [
                 'handler'           => \Aedart\Scaffold\Handlers\FileHandler::class,
-                'filename'       => 'composer.json'
+                'filename'          => [
+                    'default' => 'composer.json'
+                ],
             ],
     ],
 
@@ -18,11 +24,11 @@ return [
         ],
 
         'author_name'  => [
-            'default'       =>  'Alin Eugen Deac'
+            'default'       =>  $faker->name
         ],
 
         'author_email'  => [
-            'default'       =>  'aedart@gmail.com'
+            'default'       =>  $faker->email
         ],
 
     ],
