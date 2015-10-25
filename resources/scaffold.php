@@ -8,22 +8,26 @@ return [
 
     'basePath' => __DIR__ . '/templates',
 
-    'files' => [
-        'composer.json.twig'    => [
-            'handler'           => \Aedart\Scaffold\Handlers\FileHandler::class,
-            'filename'          => [
+    'directories' => 'Aedart/Scaffold/Handlers/DirectoryHandler::class',
+
+    'templates' => [
+
+        [
+            'id'            =>  'composer.json.twig',
+            'handler'       =>  \Aedart\Scaffold\Handlers\FileHandler::class, // Should be a "Template-Handler" instead...
+            'filename'      =>  [
                 'id'            => 'composer_filename',
                 'ask'           => true,
                 'description'   => 'Composer file\'s name?',
                 'default'       => 'composer.json'
             ]
         ],
-        '.gitkeep'              => [
-            'handler'   => 'Aedart/Scaffold/Handlers/IgnoreFileHandler::class',
+
+        [
+            'id'            =>  '.gitkeep',
+            'handler'       =>  'Aedart/Scaffold/Handlers/IgnoreFileHandler::class'
         ],
     ],
-
-    'directories' => 'Aedart/Scaffold/Handlers/DirectoryHandler::class',
 
     'data'      => [
 
