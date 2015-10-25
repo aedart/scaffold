@@ -17,6 +17,7 @@ class ScaffoldTest extends DtoTestCase{
 
     /**
      * @test
+     * @covers ::toArray
      */
     public function canPopulateInstance() {
         $data = [
