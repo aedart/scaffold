@@ -8,6 +8,13 @@ use Aedart\Testing\Laravel\TestCases\unit\UnitWithLaravelTestCase;
  */
 abstract class CollectionTestCase extends UnitWithLaravelTestCase{
 
+    protected function getPackageProviders($app)
+    {
+        return [
+            \Aedart\Scaffold\Providers\ScaffoldServiceProvider::class
+        ];
+    }
+
     /***********************************************************
      * Helpers and utilities
      **********************************************************/
