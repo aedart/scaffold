@@ -36,4 +36,13 @@ class Template extends DataTransferObject implements TemplateInterface {
     public function getFilename(){
         return $this->filename;
     }
+
+    public function toArray() {
+        $arr = parent::toArray();
+
+        // Make sure that property is also exported as an array
+        $arr['filename'] = $this->getFilename()->toArray();
+
+        return $arr;
+    }
 }

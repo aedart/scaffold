@@ -41,10 +41,16 @@ class TemplateTest extends DtoTestCase{
      * @test
      * @covers ::setFilename
      * @covers ::getFilename
+     * @covers ::toArray
      */
     public function canPopulateInstance() {
         $data = [
-            'filename'      => $this->getAskablePropertyMock(),
+            'filename'      => [
+                'default'       => $this->faker->word,
+                'id'            => $this->faker->name,
+                'ask'           => $this->faker->boolean(),
+                'description'   => $this->faker->sentence,
+            ],
             'id'            => $this->faker->uuid,
             'handler'       => $this->faker->word . '/' . $this->faker->word,
         ];
