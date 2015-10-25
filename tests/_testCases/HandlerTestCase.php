@@ -7,7 +7,7 @@ use Aedart\Testing\Laravel\TestCases\unit\UnitTestCase;
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
-class HandlerTestCase extends UnitTestCase{
+abstract class HandlerTestCase extends UnitTestCase{
 
     /***********************************************************
      * Helpers and utilities
