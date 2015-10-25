@@ -1,11 +1,11 @@
 <?php namespace Aedart\Scaffold\Collections;
 
-use Aedart\Laravel\Helpers\Traits\Foundation\AppTrait;
 use Aedart\Scaffold\Contracts\Collections\TemplatesCollection as TemplatesCollectionInterface;
 use Aedart\Scaffold\Contracts\Data\Template;
 use Aedart\Scaffold\Exceptions\InvalidIdException;
 use Aedart\Scaffold\Exceptions\PopulateException;
 use Aedart\Util\Traits\Collections\PartialCollectionTrait;
+use Illuminate\Support\Facades\App;
 
 /**
  * <h1>Templates Collection</h1>
@@ -17,7 +17,7 @@ use Aedart\Util\Traits\Collections\PartialCollectionTrait;
  */
 class TemplatesCollection implements TemplatesCollectionInterface {
 
-    use PartialCollectionTrait, AppTrait;
+    use PartialCollectionTrait;
 
     /**
      * Create a new instance of this collection
@@ -92,7 +92,7 @@ class TemplatesCollection implements TemplatesCollectionInterface {
         }
 
         if(is_array($template)){
-            $dto = $this->getApp()->make(Template::class, $template);
+            $dto = App::make(Template::class, $template);
             $this->add($dto);
             return;
         }

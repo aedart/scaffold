@@ -1,11 +1,11 @@
 <?php namespace Aedart\Scaffold\Collections;
 
-use Aedart\Laravel\Helpers\Traits\Foundation\AppTrait;
 use Aedart\Scaffold\Contracts\Collections\AskablePropertiesCollection as AskablePropertiesCollectionInterface;
 use Aedart\Scaffold\Contracts\Data\AskableProperty;
 use Aedart\Scaffold\Exceptions\InvalidIdException;
 use Aedart\Scaffold\Exceptions\PopulateException;
 use Aedart\Util\Traits\Collections\PartialCollectionTrait;
+use Illuminate\Support\Facades\App;
 
 /**
  * <h1>Askable-Properties Collection</h1>
@@ -17,7 +17,7 @@ use Aedart\Util\Traits\Collections\PartialCollectionTrait;
  */
 class AskablePropertiesCollection implements AskablePropertiesCollectionInterface {
 
-    use PartialCollectionTrait, AppTrait;
+    use PartialCollectionTrait;
 
     /**
      * Create a new instance of this collection
@@ -92,7 +92,7 @@ class AskablePropertiesCollection implements AskablePropertiesCollectionInterfac
         }
 
         if(is_array($property)){
-            $dto = $this->getApp()->make(AskableProperty::class, $property);
+            $dto = App::make(AskableProperty::class, $property);
             $this->add($dto);
             return;
         }
