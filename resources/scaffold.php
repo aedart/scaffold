@@ -8,7 +8,7 @@ return [
 
     'basePath' => __DIR__ . '/templates',
 
-    'directories' => 'Aedart/Scaffold/Handlers/DirectoryHandler::class',
+    'directoryHandler' => 'Aedart/Scaffold/Handlers/DirectoryHandler::class',
 
     'templates' => [
 
