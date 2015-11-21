@@ -1,5 +1,8 @@
 <?php namespace Aedart\Scaffold\Contracts\Handlers;
 
+use Aedart\Laravel\Helpers\Contracts\Config\ConfigAware;
+use Aedart\Laravel\Helpers\Contracts\Filesystem\FileAware;
+use Aedart\Model\Contracts\Strings\BasePathAware;
 use Aedart\Model\Contracts\Strings\OutputPathAware;
 use Aedart\Scaffold\Exceptions\UnableToHandleElementException;
 
@@ -15,7 +18,11 @@ use Aedart\Scaffold\Exceptions\UnableToHandleElementException;
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Contracts\Handlers
  */
-interface Handler extends OutputPathAware {
+interface Handler extends OutputPathAware,
+    FileAware,
+    ConfigAware,
+    BasePathAware
+{
 
     /**
      * Handle the given file or directory in some way, e.g. copy it into

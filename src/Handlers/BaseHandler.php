@@ -1,5 +1,8 @@
 <?php namespace Aedart\Scaffold\Handlers;
 
+use Aedart\Laravel\Helpers\Traits\Config\ConfigTrait;
+use Aedart\Laravel\Helpers\Traits\Filesystem\FileTrait;
+use Aedart\Model\Traits\Strings\BasePathTrait;
 use Aedart\Model\Traits\Strings\OutputPathTrait;
 use Aedart\Scaffold\Contracts\Handlers\Handler;
 use Aedart\Scaffold\Exceptions\UnableToHandleElementException;
@@ -15,7 +18,7 @@ use Exception;
  */
 abstract class BaseHandler implements Handler{
 
-    use OutputPathTrait;
+    use FileTrait, ConfigTrait, OutputPathTrait, BasePathTrait;
 
     public function handle($element) {
         try {
