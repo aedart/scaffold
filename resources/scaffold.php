@@ -35,7 +35,7 @@ return [
 
         [
             'id'            =>  '.gitkeep',
-            'handler'       =>  'Aedart/Scaffold/Handlers/IgnoreFileHandler::class'
+            'handler'       =>  \Aedart\Scaffold\Handlers\IgnoreFileHandler::class,
         ],
     ],
 
