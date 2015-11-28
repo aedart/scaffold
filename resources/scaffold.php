@@ -24,6 +24,16 @@ return [
         ],
 
         [
+            'id'            =>  'myFile.txt',
+            'handler'       =>  \Aedart\Scaffold\Handlers\CopyFileHandler::class,
+            'filename'      =>  [
+                'id'            => 'my_file',
+                'ask'           => false,
+                'default'       => 'someFile.txt'
+            ]
+        ],
+
+        [
             'id'            =>  '.gitkeep',
             'handler'       =>  'Aedart/Scaffold/Handlers/IgnoreFileHandler::class'
         ],
