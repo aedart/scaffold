@@ -47,7 +47,7 @@ class CopyFileHandler extends BaseFileHandler{
         }
 
         // Get the element's filename and use it
-        $filename = $this->getFile()->name($element);
+        $filename = pathinfo($element, PATHINFO_BASENAME);
 
         // Set the filename to use
         $this->setFilename($filename);
