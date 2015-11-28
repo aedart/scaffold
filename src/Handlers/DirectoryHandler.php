@@ -13,15 +13,6 @@ use Symfony\Component\Finder\Finder;
  */
 class DirectoryHandler extends BaseHandler implements DirectoryHandlerInterface {
 
-    /**
-     * Process the given file or directory
-     *
-     * @see handle()
-     *
-     * @param string $element Full path to a given file or directory that must be "handled"
-     *
-     * @return void
-     */
     public function processElement($element) {
         // Find all directories found inside the given element location (max 255 depth)
         $directories = $this->directoriesIn($this->getBasePath() . $element);
