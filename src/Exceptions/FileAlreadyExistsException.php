@@ -1,5 +1,7 @@
 <?php namespace Aedart\Scaffold\Exceptions;
 
+use RuntimeException;
+
 /**
  * File Already Exists Exception
  *
@@ -8,6 +10,6 @@
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Exceptions
  */
-class FileAlreadyExistsException extends UnableToHandleElementException{
+class FileAlreadyExistsException extends RuntimeException{
 
 }
