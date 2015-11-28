@@ -56,4 +56,22 @@ abstract class HandlerTestCase extends UnitTestCase{
     public function getOutputDirectoriesLocation() {
         return Configuration::outputDir() . 'handlers/directories/';
     }
+
+    /**
+     * Returns the location from where files can be copied
+     *
+     * @return string
+     */
+    public function getCopyFileLocation() {
+        return Configuration::dataDir() . 'handlers/files/copyHandler/';
+    }
+
+    /**
+     * Returns location of where files are to be copied to
+     *
+     * @return string
+     */
+    public function getOutputFileCopyLocation() {
+        return Configuration::outputDir() . 'handlers/files/copyHandler/';
+    }
 }
