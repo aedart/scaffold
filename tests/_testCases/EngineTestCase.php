@@ -1,13 +1,11 @@
 <?php
 
-use Aedart\Testing\Laravel\TestCases\unit\UnitTestCase;
-
 /**
  * Engine Test Case
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
-abstract class EngineTestCase extends UnitTestCase{
+abstract class EngineTestCase extends HandlerTestCase{
 
     /***********************************************************
      * Helpers and utilities
