@@ -10,6 +10,10 @@ return [
 
     'directoryHandler' => \Aedart\Scaffold\Handlers\DirectoryHandler::class,
 
+    // TODO:        Perhaps the structure should be changed, and a section purely for files
+    // TODO:        should be added, stating what files should be copied, which not, keeping
+    // TODO:        templates completely clean!
+
     'templates' => [
 
         [
