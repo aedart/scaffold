@@ -19,6 +19,26 @@ class BaseEngineTest extends EngineTestCase{
      **********************************************************/
 
     /**
+     * Get the source location of where the templates are
+     * located
+     *
+     * @return string Relative path inside the '_data/handlers/templates/'
+     */
+    public function templatesLocation(){
+        return '';
+    }
+
+    /**
+     * Get the output location of where rendered templates
+     * must be written to
+     *
+     * @return string Relative path inside the '_output/handlers/templates/'
+     */
+    public function templatesOutputLocation(){
+        return '';
+    }
+
+    /**
      * Get the base-engine instance
      *
      * @return m\Mock|BaseEngine
