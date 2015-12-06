@@ -1,5 +1,7 @@
 <?php namespace Aedart\Scaffold\Providers;
 
+use Aedart\Scaffold\Contracts\Engines\TemplateEngine;
+use Aedart\Scaffold\Engines\Twig;
 use Illuminate\Support\ServiceProvider;
 use Aedart\Scaffold\Contracts\Collections\AskablePropertiesCollection as AskablePropertiesCollectionInterface;
 use Aedart\Scaffold\Collections\AskablePropertiesCollection;
@@ -31,6 +33,7 @@ class ScaffoldServiceProvider extends ServiceProvider{
         $this->registerAskablePropertiesCollection();
         $this->registerTemplatesCollection();
         $this->registerScaffold();
+        $this->registerDefaultTemplateEngine();
     }
 
     /******************************************************
@@ -79,6 +82,15 @@ class ScaffoldServiceProvider extends ServiceProvider{
     public function registerTemplatesCollection() {
         $this->app->bind(TemplatesCollectionInterface::class, function($app, array $data = []){
             return new TemplatesCollection($data);
+        });
+    }
+
+    /**
+     * Register the default template engine collection
+     */
+    public function registerDefaultTemplateEngine() {
+        $this->app->bind(TemplateEngine::class, function($app){
+            return new Twig();
         });
     }
 }
