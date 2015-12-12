@@ -7,6 +7,8 @@ use Twig_Environment;
 use Twig_Loader_Filesystem;
 
 /**
+ * @deprecated 1.0.0 Prototype will be removed
+ *
  * Class TwigEngine
  *
  * @author Alin Eugen Deac <aedart@gmail.com>

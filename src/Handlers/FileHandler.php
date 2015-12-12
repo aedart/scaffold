@@ -9,6 +9,8 @@ use Aedart\Model\Traits\Strings\OutputPathTrait;
 use Aedart\Scaffold\Engines\TwigEngine;
 
 /**
+ * @deprecated 1.0.0 Prototype will be removed
+ *
  * Class FileHandler
  *
  * TODO: Refactor, break it down into interface, smaller components, traits, etc.
