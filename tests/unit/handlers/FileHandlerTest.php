@@ -9,6 +9,8 @@ use Illuminate\Config\Repository;
 use Illuminate\Filesystem\Filesystem;
 
 /**
+ * @deprecated 1.0.0 Test will be removed
+ *
  * Class FileHandlerTest
  *
  * @group handlers
