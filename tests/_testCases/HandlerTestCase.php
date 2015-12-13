@@ -23,7 +23,7 @@ abstract class HandlerTestCase extends UnitTestCase{
     public function createLocation($directory) {
         $fs = new Filesystem();
         if(!$fs->isDirectory($directory)){
-            $fs->makeDirectory($directory);
+            $fs->makeDirectory($directory, 0755, true);
         }
     }
 
