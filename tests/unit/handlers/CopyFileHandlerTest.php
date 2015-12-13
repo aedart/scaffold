@@ -16,12 +16,12 @@ class CopyFileHandlerTest extends HandlerTestCase{
         parent::_before();
 
         // Add output location directory, in case it doesn't exist
-        $this->createLocation($this->getOutputFileCopyLocation());
+        $this->createLocation($this->getOutputCopyFileLocation());
     }
 
     protected function _after(){
         // Remove any eventual directories inside the output location
-        $this->removeLocation($this->getOutputFileCopyLocation());
+        $this->removeLocation($this->getOutputCopyFileLocation());
 
         parent::_after();
     }
@@ -40,7 +40,7 @@ class CopyFileHandlerTest extends HandlerTestCase{
 
         $handler->setFile(new Filesystem());
         $handler->setBasePath($this->getCopyFileLocation());
-        $handler->setOutputPath($this->getOutputFileCopyLocation());
+        $handler->setOutputPath($this->getOutputCopyFileLocation());
 
         return $handler;
     }
@@ -91,7 +91,7 @@ class CopyFileHandlerTest extends HandlerTestCase{
 
         $handler->handle($file);
 
-        $this->assertFileExists($this->getOutputFileCopyLocation() . 'hallo.txt', 'File was not copied!');
+        $this->assertFileExists($this->getOutputCopyFileLocation() . 'hallo.txt', 'File was not copied!');
     }
 
     /**

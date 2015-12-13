@@ -71,7 +71,9 @@ abstract class HandlerTestCase extends UnitTestCase{
      *
      * @return string
      */
-    public function getOutputFileCopyLocation() {
+    public function getOutputCopyFileLocation() {
         return Configuration::outputDir() . 'handlers/files/copyHandler/';
     }
+
+
 }

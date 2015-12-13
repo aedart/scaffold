@@ -15,12 +15,12 @@ class IgnoreFileHandlerTest extends HandlerTestCase{
         parent::_before();
 
         // Add output location directory, in case it doesn't exist
-        $this->createLocation($this->getOutputFileCopyLocation());
+        $this->createLocation($this->getOutputCopyFileLocation());
     }
 
     protected function _after(){
         // Remove any eventual directories inside the output location
-        $this->removeLocation($this->getOutputFileCopyLocation());
+        $this->removeLocation($this->getOutputCopyFileLocation());
 
         parent::_after();
     }
@@ -38,7 +38,7 @@ class IgnoreFileHandlerTest extends HandlerTestCase{
         $handler = new IgnoreFileHandler();
 
         $handler->setBasePath($this->getCopyFileLocation());
-        $handler->setOutputPath($this->getOutputFileCopyLocation());
+        $handler->setOutputPath($this->getOutputCopyFileLocation());
 
         return $handler;
     }
@@ -59,6 +59,6 @@ class IgnoreFileHandlerTest extends HandlerTestCase{
 
         $handler->handle($file);
 
-        $this->assertFileNotExists($this->getOutputFileCopyLocation() . '.gitkeep', 'Should not be copied');
+        $this->assertFileNotExists($this->getOutputCopyFileLocation() . '.gitkeep', 'Should not be copied');
     }
 }
