@@ -69,7 +69,7 @@ class TemplateHandler extends BaseFileHandler implements TemplateHandlerInterfac
     public function computeOutputPath($template, $filename) {
         $parentDirectory = dirname($template);
 
-        $finalOutputPath = $this->getOutputPath() . str_replace($this->getBasePath(), '', $parentDirectory) . $filename;
+        $finalOutputPath = $this->getOutputPath() . str_replace($this->getBasePath(), '', $parentDirectory) . '/' . $filename;
 
         return $finalOutputPath;
     }
