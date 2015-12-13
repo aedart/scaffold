@@ -81,7 +81,7 @@ abstract class HandlerTestCase extends UnitTestCase{
      * @return string
      */
     public function getTemplateLocation() {
-        return Configuration::dataDir() . 'handlers/files/templateHandler/';
+        return Configuration::dataDir() . 'handlers/templates/templateHandler/';
     }
 
     /**
@@ -90,6 +90,6 @@ abstract class HandlerTestCase extends UnitTestCase{
      * @return string
      */
     public function getOutputTemplateLocation() {
-        return Configuration::outputDir() . 'handlers/files/templateHandler/';
+        return Configuration::outputDir() . 'handlers/templates/templateHandler/';
     }
 }
