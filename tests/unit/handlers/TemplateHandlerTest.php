@@ -1,5 +1,6 @@
 <?php
 
+use Aedart\Scaffold\Engines\Twig;
 use Aedart\Scaffold\Handlers\TemplateHandler;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\Str;
@@ -44,6 +45,9 @@ class TemplateHandlerTest extends HandlerTestCase{
         $handler->setBasePath($this->getTemplateLocation());
         $handler->setOutputPath($this->getOutputTemplateLocation());
 
+        $handler->setFile(new Filesystem());
+        $handler->setTemplateEngine(new Twig());
+
         return $handler;
     }
 
@@ -87,8 +91,8 @@ class TemplateHandlerTest extends HandlerTestCase{
      * @covers ::computeOutputPath
      */
     public function canComputeDeepNestedOutputPath() {
-        $template = $this->getTemplateLocation() . 'Components/Api/Models/models.php.twig';
-        $filename = Str::camel($this->faker->word) . '.php';
+        $template = $this->getTemplateLocation() . 'Components/Api/Models/model.txt.twig';
+        $filename = Str::camel($this->faker->word) . '.txt';
 
         $handler = $this->getTemplateHandler();
 
@@ -143,5 +147,44 @@ class TemplateHandlerTest extends HandlerTestCase{
      * Actual tests
      **********************************************************/
 
+    /**
+     * @test
+     * @covers ::handle
+     * @covers ::processElement
+     */
+    public function canCreateProcessTemplateAndCreateFile() {
+        // Ready the directories and template
+        $dir = 'Components/Api/Models/';
+        $this->createLocation($this->getOutputTemplateLocation() . $dir);
+        $element = $dir . 'model.txt.twig';
 
+        // NOTE: This "data" is in the correct format, which is
+        // required by the template engine (key => value pairs)
+        $data = [
+            'alpha' => $this->faker->address,
+            'beta'  => $this->faker->uuid,
+            'gamma' => $this->faker->name
+        ];
+
+        // Output filename
+        $filename = $this->faker->word . '.txt';
+
+        // Setup the handler
+        $handler = $this->getTemplateHandler();
+        $handler->setFilename($filename);
+        $handler->setData($data);
+
+        // Handle!
+        $handler->handle($element);
+
+        // Does file exists
+        $expectedOutputPath = $this->getOutputTemplateLocation() . 'Components/Api/Models/' . $filename;
+        $this->assertFileExists($expectedOutputPath, 'No file was created');
+
+        // Does file contain the data
+        $content = file_get_contents($expectedOutputPath);
+        foreach($data as $k => $v){
+            $this->assertContains($v, $content, sprintf('Generated file does not contain data (%s => %s)', $k, $v));
+        }
+    }
 }
