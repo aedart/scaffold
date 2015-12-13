@@ -75,5 +75,21 @@ abstract class HandlerTestCase extends UnitTestCase{
         return Configuration::outputDir() . 'handlers/files/copyHandler/';
     }
 
+    /**
+     * Returns the location from where templates can be copied
+     *
+     * @return string
+     */
+    public function getTemplateLocation() {
+        return Configuration::dataDir() . 'handlers/files/templateHandler/';
+    }
 
+    /**
+     * Returns location of where templates are to be copied to
+     *
+     * @return string
+     */
+    public function getOutputTemplateLocation() {
+        return Configuration::outputDir() . 'handlers/files/templateHandler/';
+    }
 }
