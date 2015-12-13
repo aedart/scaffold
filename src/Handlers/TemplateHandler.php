@@ -31,6 +31,9 @@ class TemplateHandler extends BaseFileHandler implements TemplateHandlerInterfac
         // Set the data to be parsed
         $engine->setData($this->getData());
 
+        // Perform 'setup' on engine
+        $engine->setup();
+
         // Render the template
         $content = $engine->render();
 
