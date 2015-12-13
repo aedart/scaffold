@@ -18,7 +18,7 @@ return [
 
         [
             'id'            =>  'composer.json.twig',
-            'handler'       =>  \Aedart\Scaffold\Handlers\FileHandler::class, // Should be a "Template-Handler" instead...
+            'handler'       =>  \Aedart\Scaffold\Handlers\TemplateHandler::class,
             'filename'      =>  [
                 'id'            => 'composer_filename',
                 'ask'           => true,
