@@ -152,7 +152,7 @@ class TemplateHandlerTest extends HandlerTestCase{
      * @covers ::handle
      * @covers ::processElement
      */
-    public function canCreateProcessTemplateAndCreateFile() {
+    public function canProcessTemplateAndCreateFile() {
         // Ready the directories and template
         $dir = 'Components/Api/Models/';
         $this->createLocation($this->getOutputTemplateLocation() . $dir);
@@ -186,5 +186,47 @@ class TemplateHandlerTest extends HandlerTestCase{
         foreach($data as $k => $v){
             $this->assertContains($v, $content, sprintf('Generated file does not contain data (%s => %s)', $k, $v));
         }
+    }
+
+    /**
+     * In this test, we provide too many data-properties for the template,
+     * yet do still expect the engine not to fail!
+     *
+     * @test
+     * @covers ::handle
+     * @covers ::processElement
+     */
+    public function canProcessTemplateWhenTooManyDataPropertiesGiven() {
+        // Ready the directories and template
+        $dir = 'Components/Api/Models/';
+        $this->createLocation($this->getOutputTemplateLocation() . $dir);
+        $element = $dir . 'model.txt.twig';
+
+        // NOTE: This "data" is in the correct format, which is
+        // required by the template engine (key => value pairs)
+        $data = [
+            'alpha' => $this->faker->address,
+            'beta'  => $this->faker->uuid,
+            'gamma' => $this->faker->name,
+
+            // These are NOT found in the template
+            'zeta'  => $this->faker->boolean(),
+            'grim'  => $this->faker->century
+        ];
+
+        // Output filename
+        $filename = $this->faker->word . '.txt';
+
+        // Setup the handler
+        $handler = $this->getTemplateHandler();
+        $handler->setFilename($filename);
+        $handler->setData($data);
+
+        // Handle!
+        $handler->handle($element);
+
+        // Does file exists
+        $expectedOutputPath = $this->getOutputTemplateLocation() . 'Components/Api/Models/' . $filename;
+        $this->assertFileExists($expectedOutputPath, 'No file was created');
     }
 }
