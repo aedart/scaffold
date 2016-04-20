@@ -4,12 +4,12 @@ use Aedart\Scaffold\Contracts\Collections\Directories;
 use Aedart\Scaffold\Exceptions\CannotCreateDirectoryException;
 
 /**
- * Interface DirectoryHandler
+ * Interface DirectoriesHandler
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Contracts\Handlers
  */
-interface DirectoryHandler extends Handler
+interface DirectoriesHandler extends Handler
 {
 
     /**

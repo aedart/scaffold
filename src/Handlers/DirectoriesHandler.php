@@ -1,7 +1,7 @@
 <?php namespace Aedart\Scaffold\Handlers;
 
 use Aedart\Scaffold\Contracts\Collections\Directories;
-use Aedart\Scaffold\Contracts\Handlers\DirectoryHandler as DirectoryHandlerInterface;
+use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler as DirectoriesHandlerInterface;
 use Aedart\Scaffold\Exceptions\CannotCreateDirectoryException;
 
 /**
@@ -12,7 +12,7 @@ use Aedart\Scaffold\Exceptions\CannotCreateDirectoryException;
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Handlers
  */
-class DirectoryHandler extends BaseHandler implements DirectoryHandlerInterface
+class DirectoriesHandler extends BaseHandler implements DirectoriesHandlerInterface
 {
 
     const MODE = 0755;

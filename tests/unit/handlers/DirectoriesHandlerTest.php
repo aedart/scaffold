@@ -1,5 +1,5 @@
 <?php
-use Aedart\Scaffold\Handlers\DirectoryHandler;
+use Aedart\Scaffold\Handlers\DirectoriesHandler;
 use Illuminate\Contracts\Logging\Log;
 
 /**
@@ -8,7 +8,7 @@ use Illuminate\Contracts\Logging\Log;
  * @group handlers
  * @group directoryHandler
  *
- * @coversDefaultClass Aedart\Scaffold\Handlers\DirectoryHandler
+ * @coversDefaultClass Aedart\Scaffold\Handlers\DirectoriesHandler
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
 class DirectoryHandlerTest extends BaseUnitTest
@@ -37,11 +37,11 @@ class DirectoryHandlerTest extends BaseUnitTest
      *
      * @param Log|null $log [optional]
      *
-     * @return DirectoryHandler
+     * @return DirectoriesHandler
      */
     public function makeDirectoryHandler(Log $log = null)
     {
-        $handler = new DirectoryHandler();
+        $handler = new DirectoriesHandler();
 
         $handler->setOutputPath($this->outputPath());
         $handler->setFile($this->getFilesystem());
