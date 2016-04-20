@@ -5,6 +5,7 @@ use Codeception\Configuration;
 use Codeception\TestCase\Test;
 use Codeception\Util\Debug;
 use Faker\Factory;
+use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Filesystem\Filesystem;
 use Mockery as m;
@@ -80,6 +81,16 @@ abstract class BaseUnitTest extends Test
     public function makeFilesystemMock()
     {
         return m::mock(Filesystem::class);
+    }
+
+    /**
+     * Returns a Configuration Repository mock
+     *
+     * @return m\MockInterface|Repository
+     */
+    public function makeConfigRepositoryMock()
+    {
+        return m::mock(Repository::class);
     }
 
     /**
