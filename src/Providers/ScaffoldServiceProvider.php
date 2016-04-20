@@ -1,6 +1,8 @@
 <?php namespace Aedart\Scaffold\Providers;
 
 
+use Aedart\Scaffold\Collections\Directories;
+use Aedart\Scaffold\Contracts\Collections\Directories as DirectoriesInterface;
 use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler as DirectoriesHandlerInterface;
 use Aedart\Scaffold\Handlers\DirectoriesHandler;
 use Illuminate\Support\ServiceProvider;
@@ -22,6 +24,7 @@ class ScaffoldServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerDirectoriesHandler();
+        $this->registerDirectoriesCollection();
     }
 
     /******************************************************
@@ -38,5 +41,15 @@ class ScaffoldServiceProvider extends ServiceProvider
         });
 
         $this->app->alias(DirectoriesHandlerInterface::class, 'handlers.directory');
+    }
+
+    /**
+     * Register the directories collection
+     */
+    public function registerDirectoriesCollection()
+    {
+        $this->app->bind(DirectoriesInterface::class, function($app, array $data = []){
+            return new Directories($data);
+        });
     }
 }
