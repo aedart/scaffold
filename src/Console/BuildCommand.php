@@ -1,5 +1,6 @@
 <?php namespace Aedart\Scaffold\Console;
 
+use Aedart\Scaffold\Traits\ConfigLoader;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -13,6 +14,8 @@ use Symfony\Component\Console\Input\InputOption;
  */
 class BuildCommand extends BaseCommand
 {
+    use ConfigLoader;
+
     protected function configure()
     {
         $this
@@ -29,6 +32,11 @@ class BuildCommand extends BaseCommand
      */
     public function runCommand()
     {
+        // Load configuration
+        $config = $this->getConfigLoader()->parse($this->input->getArgument('config'));
 
+        // Define all of this builder's tasks
+
+        // Execute builder's tasks
     }
 }
