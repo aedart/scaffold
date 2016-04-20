@@ -49,4 +49,29 @@ abstract class BaseUnitTest extends Test
     {
         return m::mock(Log::class);
     }
+
+    /**
+     * Returns random folder paths
+     *
+     * @param int $amount [optional]
+     *
+     * @return string[]
+     */
+    public function makeFolderPaths($amount = 3)
+    {
+        $output = [];
+
+        while($amount--){
+            $nested = mt_rand(1, 4);
+            $path = [];
+
+            while($nested--){
+                $path[] = $this->faker->word;
+            }
+
+            $output[] = implode(DIRECTORY_SEPARATOR, $path) . DIRECTORY_SEPARATOR;
+        }
+
+        return $output;
+    }
 }
