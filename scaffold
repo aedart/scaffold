@@ -11,4 +11,6 @@ $app = new Symfony\Component\Console\Application(
     'Aedart Scaffold Installer', '1.0.x-dev'
 );
 
+$app->add(new \Aedart\Scaffold\Console\BuildCommand());
+
 $app->run();
