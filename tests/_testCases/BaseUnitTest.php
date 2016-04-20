@@ -2,6 +2,7 @@
 
 use Codeception\TestCase\Test;
 use Faker\Factory;
+use Illuminate\Contracts\Logging\Log;
 use Mockery as m;
 
 /**
@@ -38,4 +39,14 @@ abstract class BaseUnitTest extends Test
     /********************************************************
      * Helpers
      *******************************************************/
+
+    /**
+     * Returns instance of a log mock
+     *
+     * @return m\MockInterface|Log
+     */
+    public function makeLogMock()
+    {
+        return m::mock(Log::class);
+    }
 }
