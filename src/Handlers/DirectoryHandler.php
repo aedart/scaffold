@@ -43,7 +43,7 @@ class DirectoryHandler extends BaseHandler implements DirectoryHandlerInterface
      */
     protected function createDirectory($path){
         // Build the final path
-        $finalPath = $this->getOutputPath() . DIRECTORY_SEPARATOR . $path;
+        $finalPath = $this->getOutputPath() . $path;
 
         // Get the log and file system
         $log = $this->getLog();
@@ -56,7 +56,7 @@ class DirectoryHandler extends BaseHandler implements DirectoryHandlerInterface
         }
 
         // Create the directory
-        $hasCreated = $fs->makeDirectory($finalPath, self::MODE, true, true);
+        $hasCreated = $fs->makeDirectory($finalPath, self::MODE, true);
 
         // Check if directory was NOT created
         if(!$hasCreated){
