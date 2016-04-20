@@ -2,6 +2,7 @@
 
 use Aedart\Scaffold\Traits\ConfigLoader;
 use Illuminate\Config\Repository;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -63,14 +64,34 @@ class BuildCommand extends BaseCommand
         }
         $config->set('outputPath', $outputPath);
 
+        // Output title
+        $this->output->title(sprintf('Building %s', $config->get('name')));
+
         // Define all of this builder's tasks
         $tasks = [
-
+            \Aedart\Scaffold\Tasks\CreateDirectories::class,
         ];
 
         // Execute builder's tasks
         foreach($tasks as $task){
+            $this->output->section($this->normaliseTaskName($task));
+
             (new $task)->execute($this->input, $this->output, $config);
         }
+    }
+
+    /**
+     * Normalise the given task class path
+     *
+     * @param string $taskPath
+     *
+     * @return string
+     */
+    protected function normaliseTaskName($taskPath){
+        $a = Str::snake($taskPath);
+        $b = explode('\\', $a);
+        $c = str_replace('_', ' ', array_pop($b));
+
+        return Str::ucfirst(trim($c));
     }
 }
