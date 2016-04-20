@@ -56,6 +56,13 @@ class BuildCommand extends BaseCommand
         // "name", "folders", "files", ... etc
         $config = new Repository($newEntries);
 
+        // Resolve the output path and added it to the configuration
+        $outputPath = $this->input->getOption('output');
+        if(substr($outputPath, -1) != DIRECTORY_SEPARATOR){
+            $outputPath = $outputPath . DIRECTORY_SEPARATOR;
+        }
+        $config->set('outputPath', $outputPath);
+
         // Define all of this builder's tasks
         $tasks = [
 
