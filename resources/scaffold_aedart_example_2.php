@@ -6,26 +6,39 @@ return [
      | Scaffold Example configuration
      | ------------------------------------------------------------
      |
-     | Each scaffold should follow a naming convention;
-     | "scaffold_" [your namespace] "_" [name of scaffold] ".php"
-     | and should be placed in the root of your package
+     | Each scaffold should follow this naming convention;
+     | "scaffold_" [vendor] "_" [your namespace] "_" [name of scaffold] ".php"
+     | and should be placed in the root of your package.
+     |
+     | Example:
+     | scaffold_aedart_templates_composer.php
      */
 
     /* ------------------------------------------------------------
      | Name of this Scaffold
      | ------------------------------------------------------------
+     |
+     | This name is displayed in the list of available templates,
+     | when the CLI command is invoked.
      */
     'name'          => 'My Template',
 
     /* ------------------------------------------------------------
      | Description of this Scaffold
      | ------------------------------------------------------------
+     |
+     | This description is displayed in the list of available
+     | templates, when the CLI command is invoked.
      */
     'description'   => 'This is my awesome template...',
 
     /* ------------------------------------------------------------
      | Location of scaffold's files and templates
      | ------------------------------------------------------------
+     |
+     | This path tells the scaffold where it can find it's
+     | resource, from which it can build and install one or several
+     | folders, files and or templates.
      */
     'basePath' => __DIR__ . '/templates',
 
@@ -38,6 +51,19 @@ return [
      |
      | NOTE: Directories are created from the current working
      | directory as the top-most level.
+     |
+     | Example:
+     | Lets assume that you wish to create a set of predefined
+     | directories in /home/projects/MyProject/.
+     | When the scaffold CLI is executed, then all of the
+     | below stated directories will be created inside the
+     | mentioned root directory;
+     |
+     | /home/projects/MyProject/app/
+     | /home/projects/MyProject/config/
+     | /home/projects/MyProject/src/
+     | /home/projects/MyProject/src/Contracts/
+     | ...etc
      */
     'folders' => [
             'app',
@@ -55,7 +81,7 @@ return [
      | Files
      | ------------------------------------------------------------
      |
-     | Each file will be copied into the given source directory,
+     | Each file will be copied into your project directory,
      | if it does NOT already exist.
      |
      | NOTE: The files are read from inside the 'basePath'.
@@ -63,8 +89,10 @@ return [
     'files' => [
         // Source files (inside 'basePath')  =>  Destination directory
         'gitFiles/.gitkeep'         =>  'config',
+        'gitFiles/.ignore'          =>  '',
         'gfx/logo.png'              =>  'tmp',
-        'docs/LICENSE'              =>  ''
+        'docs/LICENSE'              =>  '',
+        'docs/README.md'            =>  '',
     ],
 
     /* ------------------------------------------------------------
@@ -77,12 +105,22 @@ return [
      |
      | Each template has a source template file, e.g. a *.twig
      | file, a destination where it will be created and a
-     | filename, which you can prompt the user about, when the
-     | scaffold is used.
+     | filename, which you can prompt the user about, before
+     | the file is generated.
      |
      | Furthermore, the source, destination and filename will
      | assigned as a template variable, and made available
      | inside the template itself!
+     |
+     | Example
+     | 'composer' => [
+     |      'source' => 'snippets/composer.json.twig'
+     |      'filename' => 'composer.json'
+     |      ...
+     | ]
+     | Will be available inside the 'snippets/composer.json.twig'
+     | template as {{ composer.source }}, {{ composer.filename }}
+     | ...etc
      */
     'templates' => [
         'composer' => [
@@ -124,21 +162,18 @@ return [
      | for a value
      */
     'templateData' => [
-        [
-            'id'            => 'name',
+        'name' => [
             'ask'           => true,
             'description'   => 'Name of the project',
         ],
 
-        [
-            'id'            => 'author_name',
+        'authorName' => [
             'ask'           => false,
             'description'   => 'Author\'s name',
             'default'       => 'Alin Eugen Deac'
         ],
 
-        [
-            'id'            => 'author_email',
+        'authorEmail' => [
             'ask'           => false,
             'description'   => 'Author\'s email',
             'default'       => 'aedart@gmail.com'
