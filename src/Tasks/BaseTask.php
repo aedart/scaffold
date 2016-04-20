@@ -1,6 +1,7 @@
 <?php namespace Aedart\Scaffold\Tasks;
 
 use Aedart\Scaffold\Contracts\Tasks\ConsoleTask;
+use Aedart\Scaffold\Resolvers\IoC;
 use Illuminate\Contracts\Config\Repository;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -60,4 +61,49 @@ abstract class BaseTask implements ConsoleTask
      * @return void
      */
     abstract public function performTask();
+
+    /**
+     * Resolve a handler
+     *
+     * Method attempts to make an instance of a given handler,
+     * from this tasks' configuration, based on the alias.
+     * If no alias is defined inside the configuration, a default
+     * handler is attempted resolved, from the IoC.
+     *
+     * Furthermore, if a handler is created, it's base path and
+     * output paths are also set, before it is returned
+     *
+     * @param string $alias
+     *
+     * @see IoC::resolveFromConfig()
+     *
+     * @return \Aedart\Scaffold\Contracts\Handlers\Handler
+     */
+    protected function resolveHandler($alias)
+    {
+        $ioc = IoC::getInstance();
+
+        /** @var \Aedart\Scaffold\Contracts\Handlers\Handler $handler */
+        $handler = $ioc->resolveFromConfig($alias, $this->config);
+
+        // Set base path
+        $basePathKey = 'basePath';
+        if($this->config->has($basePathKey)){
+            $handler->setBasePath($this->config->get($basePathKey));
+        }
+
+        // Set output path
+        $outputPath = 'outputPath';
+        if($this->config->has($outputPath)){
+            $handler->setOutputPath($this->config->get($outputPath));
+        }
+
+        // Output some information about what handler is being
+        // applied for something
+        $handlerClass = get_class($handler);
+        $this->output->text("Using handler: {$handlerClass}");
+
+        // Finally, return the handler
+        return $handler;
+    }
 }
