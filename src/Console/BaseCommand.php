@@ -26,7 +26,7 @@ abstract class BaseCommand extends Command
     /**
      * The output
      *
-     * @var OutputInterface
+     * @var OutputInterface|SymfonyStyle
      */
     protected $output;
 
