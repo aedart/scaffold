@@ -1,5 +1,7 @@
 <?php
 
+use Aedart\Scaffold\Collections\Directories as DirectoriesCollection;
+use Aedart\Scaffold\Contracts\Collections\Directories;
 use Aedart\Scaffold\Handlers\DirectoriesHandler;
 use Aedart\Scaffold\Resolvers\IoC;
 use Illuminate\Config\Repository;
@@ -92,6 +94,20 @@ class IoCTest extends BaseUnitTest
         ]));
 
         $this->assertInstanceOf(DirectoriesHandler::class, $handler);
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::make
+     */
+    public function canMakeInstance()
+    {
+        $ioc = IoC::getInstance();
+
+        $handler = $ioc->make(Directories::class, $this->makeFolderPaths());
+
+        $this->assertInstanceOf(DirectoriesCollection::class, $handler);
     }
 
     /**
