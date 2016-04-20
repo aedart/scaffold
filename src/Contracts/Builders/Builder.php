@@ -13,4 +13,8 @@
  */
 interface Builder {
 
+    public function createDirectories();
+    public function copyFiles();
+    public function generateFiles();
+    
 }
