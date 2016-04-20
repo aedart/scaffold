@@ -22,7 +22,7 @@
     "aedart/config-loader": "~1.1",
     "aedart/model": "~1.4",
     "twig/twig": "~1.9",
-    "illuminate/console": "5.2.*",
+    "symfony/console": "~2.7|~3.0",
     "illuminate/container": "5.2.*",
     "illuminate/log": "5.2.*"
   },
