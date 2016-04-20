@@ -131,6 +131,21 @@ class IoC
     }
 
     /**
+     * Alias for Container::make
+     *
+     * @param string $concrete
+     * @param array $parameters
+     *
+     * @see \Illuminate\Contracts\Container\Container::make()
+     *
+     * @return mixed
+     */
+    public function make($concrete, array $parameters = [])
+    {
+        return $this->container()->make($concrete, $parameters);
+    }
+
+    /**
      * Get the IoC Service Container instance
      *
      * @return \Illuminate\Contracts\Container\Container
