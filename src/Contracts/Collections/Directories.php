@@ -20,4 +20,11 @@ interface Directories extends IPartialCollection
      * @return bool
      */
     public function add($path);
+
+    /**
+     * Get all added paths
+     *
+     * @return string[]
+     */
+    public function all();
 }

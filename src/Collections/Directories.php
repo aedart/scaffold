@@ -50,6 +50,11 @@ class Directories implements DirectoriesInterface
         return ($this->getInternalCollection()->push($path));
     }
 
+    public function all()
+    {
+        return $this->getInternalCollection()->all();
+    }
+
     public function populate(array $data)
     {
         if(empty($data)){
