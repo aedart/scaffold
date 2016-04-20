@@ -6,12 +6,12 @@ use Illuminate\Contracts\Logging\Log;
  * Class DirectoryHandlerTest
  *
  * @group handlers
- * @group directoryHandler
+ * @group directoriesHandler
  *
  * @coversDefaultClass Aedart\Scaffold\Handlers\DirectoriesHandler
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
-class DirectoryHandlerTest extends BaseUnitTest
+class DirectoriesHandlerTest extends BaseUnitTest
 {
     protected function _after()
     {
