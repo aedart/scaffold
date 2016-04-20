@@ -188,7 +188,7 @@ return [
      */
     'handlers' => [
 
-        'directories'     =>    \Aedart\Scaffold\Handlers\DirectoryHandler::class,
+        'directories'     =>    \Aedart\Scaffold\Handlers\DirectoriesHandler::class,
 
         'files'           =>    \Aedart\Scaffold\Handlers\CopyFileHandler::class,
 
