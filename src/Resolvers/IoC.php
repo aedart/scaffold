@@ -1,5 +1,6 @@
 <?php namespace Aedart\Scaffold\Resolvers;
 
+use Aedart\Config\Loader\Providers\ConfigurationLoaderServiceProvider;
 use Aedart\Scaffold\Exceptions\ForbiddenException;
 use Aedart\Scaffold\Providers\ConsoleLoggerServiceProvider;
 use Aedart\Scaffold\Providers\ScaffoldServiceProvider;
@@ -45,6 +46,7 @@ class IoC
      */
     protected $providers = [
         ConsoleLoggerServiceProvider::class,
+        ConfigurationLoaderServiceProvider::class,
         ScaffoldServiceProvider::class
     ];
 
