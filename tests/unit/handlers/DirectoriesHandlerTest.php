@@ -79,10 +79,7 @@ class DirectoriesHandlerTest extends BaseUnitTest
         // Process paths
         $handler->processDirectories($directoriesCollection);
 
-        // Assert that all paths have been created
-        foreach($paths as $path){
-            $this->assertFileExists($this->outputPath() . $path, 'Path was not created by handler');
-        }
+        $this->assertPathsOrFilesExist($paths, 'Path was not created by handler');
     }
 
     /**
