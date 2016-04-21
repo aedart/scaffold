@@ -1,6 +1,7 @@
 <?php namespace Aedart\Scaffold\Resolvers;
 
 use Aedart\Scaffold\Exceptions\ForbiddenException;
+use Aedart\Scaffold\Providers\ConsoleLoggerServiceProvider;
 use Aedart\Scaffold\Providers\ScaffoldServiceProvider;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Config\Repository;
@@ -106,8 +107,14 @@ class IoC
      */
     public function registerServiceProviders()
     {
-        $defaultServiceProvider = new ScaffoldServiceProvider($this->container());
-        $defaultServiceProvider->register();
+        $providers = [
+            ConsoleLoggerServiceProvider::class,
+            ScaffoldServiceProvider::class
+        ];
+
+        foreach($providers as $provider){
+            (new $provider($this->container()))->register();
+        }
     }
 
     /**
