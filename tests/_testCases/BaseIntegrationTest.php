@@ -27,4 +27,9 @@ abstract class BaseIntegrationTest extends BaseUnitTest
     {
         return parent::outputPath() . 'commands/';
     }
+
+    public function dataPath()
+    {
+        return parent::dataPath() . 'commands/';
+    }
 }
