@@ -2,8 +2,7 @@
 
 use Aedart\Scaffold\Console\BaseCommand;
 use Mockery as m;
-use Symfony\Component\Console\Application;
-use Symfony\Component\Console\Tester\CommandTester;
+use Symfony\Component\Console\Output\ConsoleOutput;
 
 /**
  * Class BaseCommandTest
@@ -14,46 +13,41 @@ use Symfony\Component\Console\Tester\CommandTester;
  * @coversDefaultClass Aedart\Scaffold\Console\BaseCommand
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
-class BaseCommandTest extends BaseUnitTest
+class BaseCommandTest extends ConsoleTest
 {
     /**
      * Returns an instance of a BaseCommand mock
      *
-     * @param string $name
-     *
      * @return m\Mock|BaseCommand
      */
-    public function makeBaseCommand($name)
+    public function makeBaseCommand()
     {
-        return m::mock(BaseCommand::class, [$name])->makePartial();
+        return m::mock(BaseCommand::class)->makePartial();
     }
 
     /********************************************************
      * Actual tests
      *******************************************************/
 
-    // TODO: It appears that it's not possible to mock the command - Mockery yield error, cannot find setName() on mock!?
+    /**
+     * @test
+     *
+     * @covers ::execute
+     * @covers ::runCommand
+     */
+    public function canExecuteRunCommand()
+    {
 
-//    /**
-//     * @test
-//     *
-//     * @covers ::execute
-//     * @covers ::runCommand
-//     */
-//    public function canExecuteRunCommand()
-//    {
-//        $name = 'baseCommand';
-//        $baseCommand = $this->makeBaseCommand($name);
-//        $baseCommand->shouldReceive('runCommand')
-//            ->andReturn(0);
-//
-//        $app = new Application();
-//        $app->add($baseCommand);
-//
-//        $command = $app->find($name);
-//        $commandTester = new CommandTester($command);
-//        $commandTester->execute([
-//           'command' => $command->getName()
-//        ]);
-//    }
+        $input = $this->makeInputMock();
+        $input->shouldDeferMissing();
+
+        // Output is very hard to mock at this point!
+        $output = new ConsoleOutput();
+
+        $command = $this->makeBaseCommand();
+        $command->shouldReceive('runCommand')
+            ->once();
+
+        $command->execute($input, $output);
+    }
 }
