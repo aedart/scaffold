@@ -34,7 +34,7 @@ class ScaffoldServiceProvider extends ServiceProvider
     /**
      * Register the directories handler
      */
-    public function registerDirectoriesHandler()
+    protected function registerDirectoriesHandler()
     {
         $this->app->bind(DirectoriesHandlerInterface::class, function($app, array $data = []){
             return new DirectoriesHandler();
@@ -46,7 +46,7 @@ class ScaffoldServiceProvider extends ServiceProvider
     /**
      * Register the directories collection
      */
-    public function registerDirectoriesCollection()
+    protected function registerDirectoriesCollection()
     {
         $this->app->bind(DirectoriesInterface::class, function($app, array $data = []){
             return new Directories($data);
