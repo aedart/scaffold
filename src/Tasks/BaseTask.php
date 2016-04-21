@@ -65,38 +65,17 @@ abstract class BaseTask implements ConsoleTask
     /**
      * Resolve a handler
      *
-     * Method attempts to make an instance of a given handler,
-     * from this tasks' configuration, based on the alias.
-     * If no alias is defined inside the configuration, a default
-     * handler is attempted resolved, from the IoC.
-     *
-     * Furthermore, if a handler is created, it's base path and
-     * output paths are also set, before it is returned
-     *
      * @param string $alias
      *
-     * @see IoC::resolveFromConfig()
+     * @see IoC::resolveHandler()
      *
      * @return \Aedart\Scaffold\Contracts\Handlers\Handler
      */
     protected function resolveHandler($alias)
     {
+        // Resolve from IoC
         $ioc = IoC::getInstance();
-
-        /** @var \Aedart\Scaffold\Contracts\Handlers\Handler $handler */
-        $handler = $ioc->resolveFromConfig($alias, $this->config);
-
-        // Set base path
-        $basePathKey = 'basePath';
-        if($this->config->has($basePathKey)){
-            $handler->setBasePath($this->config->get($basePathKey));
-        }
-
-        // Set output path
-        $outputPath = 'outputPath';
-        if($this->config->has($outputPath)){
-            $handler->setOutputPath($this->config->get($outputPath));
-        }
+        $handler = $ioc->resolveHandler($alias, $this->config);
 
         // Output some information about what handler is being
         // applied for something

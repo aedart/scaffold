@@ -154,6 +154,47 @@ class IoC
     }
 
     /**
+     * Resolve and configure a handler
+     *
+     * Method attempts to make an instance of a given handler,
+     * from the given configuration, based on the alias.
+     * If no alias is defined inside the configuration, a default
+     * handler is attempted resolved, from the IoC.
+     *
+     * Furthermore, if a handler is created, it's base path and
+     * output paths are also set, before it is returned. This
+     * applies only if the given configuration has a 'basePath'
+     * and an 'outputPath' set.
+     *
+     * @param string $alias
+     * @param Repository $config
+     *
+     * @see IoC::resolveFromConfig()
+     *
+     * @return \Aedart\Scaffold\Contracts\Handlers\Handler
+     */
+    public function resolveHandler($alias, Repository $config)
+    {
+        /** @var \Aedart\Scaffold\Contracts\Handlers\Handler $handler */
+        $handler = $this->resolveFromConfig($alias, $config);
+
+        // Set base path
+        $basePathKey = 'basePath';
+        if($config->has($basePathKey)){
+            $handler->setBasePath($config->get($basePathKey));
+        }
+
+        // Set output path
+        $outputPath = 'outputPath';
+        if($config->has($outputPath)){
+            $handler->setOutputPath($config->get($outputPath));
+        }
+
+        // Finally, return the handler
+        return $handler;
+    }
+
+    /**
      * Get the IoC Service Container instance
      *
      * @return \Illuminate\Contracts\Container\Container
