@@ -1,8 +1,7 @@
 <?php
 
 use Aedart\Scaffold\Contracts\Collections\Directories;
-use Codeception\TestCase\Test;
-use Faker\Factory;
+use Aedart\Testing\Laravel\TestCases\unit\UnitTestCase;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Filesystem\Filesystem;
@@ -15,27 +14,14 @@ use Mockery as m;
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
-abstract class BaseUnitTest extends Test
+abstract class BaseUnitTest extends UnitTestCase
 {
     use OutputPath;
     use IoCDestroyer;
 
-    /**
-     * @var \UnitTester
-     */
-    protected $tester;
-
-    /**
-     * Instance of the faker generator
-     *
-     * @var \Faker\Generator
-     */
-    protected $faker;
-
     protected function _before()
     {
-        // Faker instance
-        $this->faker = Factory::create();
+        parent::_before();
 
         $this->createOutputPath();
     }
@@ -44,7 +30,7 @@ abstract class BaseUnitTest extends Test
     {
         $this->destroyIoC();
 
-        m::close();
+        parent::_after();
     }
 
     /********************************************************
