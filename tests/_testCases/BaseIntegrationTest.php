@@ -22,4 +22,9 @@ abstract class BaseIntegrationTest extends BaseUnitTest
     /********************************************************
      * Helpers
      *******************************************************/
+
+    public function outputPath()
+    {
+        return parent::outputPath() . 'commands/';
+    }
 }
