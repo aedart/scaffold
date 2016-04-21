@@ -99,6 +99,32 @@ class IoCTest extends BaseUnitTest
     /**
      * @test
      *
+     * @covers ::resolveHandler
+     * @covers ::resolveFromConfig
+     */
+    public function canResolveAndConfigureAHandler()
+    {
+        $ioc = IoC::getInstance();
+
+        $config = new Repository([
+            'basePath' => getcwd(),
+            'outputPath' => getcwd() . 'tests',
+            'handlers' => [
+                'directory' => DirectoriesHandler::class
+            ]
+        ]);
+
+        /** @var \Aedart\Scaffold\Contracts\Handlers\Handler $handler */
+        $handler = $ioc->resolveHandler('handlers.directory', $config);
+
+        $this->assertInstanceOf(DirectoriesHandler::class, $handler, 'Incorrect handler instance');
+        $this->assertSame($config->get('basePath'), $handler->getBasePath(), 'Incorrect Base Path set');
+        $this->assertSame($config->get('outputPath'), $handler->getOutputPath(), 'Incorrect Output Path set');
+    }
+
+    /**
+     * @test
+     *
      * @covers ::make
      */
     public function canMakeInstance()
