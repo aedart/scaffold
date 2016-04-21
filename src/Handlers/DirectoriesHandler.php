@@ -51,7 +51,7 @@ class DirectoriesHandler extends BaseHandler implements DirectoriesHandlerInterf
 
         // Check if already exists
         if($fs->exists($finalPath)){
-            $log->notice(sprintf('skipped "%s", folder already exists', $finalPath));
+            $log->notice('skipped "{path}", folder already exists', ['path' => $finalPath]);
             return;
         }
 
@@ -64,7 +64,7 @@ class DirectoriesHandler extends BaseHandler implements DirectoriesHandlerInterf
         }
 
         // Finally, log the output
-        $log->info(sprintf('created "%s"', $finalPath));
+        $log->info('created "{path}"', ['path' => $finalPath]);
     }
 
     /**
