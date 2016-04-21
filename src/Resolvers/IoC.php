@@ -38,6 +38,17 @@ class IoC
     protected $container;
 
     /**
+     * List of service providers that
+     * this IoC / application is using
+     *
+     * @var string[]
+     */
+    protected $providers = [
+        ConsoleLoggerServiceProvider::class,
+        ScaffoldServiceProvider::class
+    ];
+
+    /**
      * Get the resolver instance
      *
      * @return self
@@ -69,7 +80,7 @@ class IoC
     private function __construct()
     {
         $this->setupContainer();
-        $this->registerServiceProviders();
+        $this->registerServiceProviders($this->providers);
     }
 
     /**
@@ -104,14 +115,11 @@ class IoC
 
     /**
      * Register this application's service providers
+     *
+     * @param string[] $providers [optional]
      */
-    public function registerServiceProviders()
+    public function registerServiceProviders(array $providers = [])
     {
-        $providers = [
-            ConsoleLoggerServiceProvider::class,
-            ScaffoldServiceProvider::class
-        ];
-
         foreach($providers as $provider){
             (new $provider($this->container()))->register();
         }
