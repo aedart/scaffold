@@ -1,6 +1,7 @@
 <?php
 
 use Aedart\Scaffold\Contracts\Collections\Directories;
+use Aedart\Scaffold\Resolvers\IoC;
 use Codeception\Configuration;
 use Codeception\TestCase\Test;
 use Codeception\Util\Debug;
@@ -46,6 +47,11 @@ abstract class BaseUnitTest extends Test
 
     protected function _after()
     {
+        // Ensure that the IoC is destroyed after each
+        // test execution - or some might behave unexpected!
+        $ioc = IoC::getInstance();
+        $ioc->destroy();
+
         m::close();
     }
 
