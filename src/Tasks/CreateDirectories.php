@@ -3,6 +3,7 @@
 use Aedart\Scaffold\Contracts\Collections\Directories;
 use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler;
 use Aedart\Scaffold\Resolvers\IoC;
+use Aedart\Scaffold\Transformers\DirectoryPaths;
 
 /**
  * Create Directories Task
@@ -42,7 +43,19 @@ class CreateDirectories extends BaseTask
     {
         $ioc = IoC::getInstance();
 
-        return $ioc->make(Directories::class, $directories);
+        return $ioc->make(Directories::class, $this->transformIntoPaths($directories));
+    }
+
+    /**
+     * Flatten the given directories list
+     *
+     * @param array $directories [optional]
+     *
+     * @return array
+     */
+    protected function transformIntoPaths(array $directories = [])
+    {
+        return DirectoryPaths::transform($directories);
     }
 
     /**
