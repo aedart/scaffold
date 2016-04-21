@@ -95,7 +95,8 @@ class BuildCommand extends BaseCommand
      *
      * @return string
      */
-    protected function normaliseTaskName($taskPath){
+    protected function normaliseTaskName($taskPath)
+    {
         $a = Str::snake($taskPath);
         $b = explode('\\', $a);
         $c = str_replace('_', ' ', array_pop($b));
