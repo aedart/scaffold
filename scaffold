@@ -8,16 +8,5 @@ if (file_exists(__DIR__.'/vendor/autoload.php')) {
     require __DIR__.'/../../autoload.php';
 }
 
-// "boot" the IoC, which forces the default service provider
-// to register
-\Aedart\Scaffold\Resolvers\IoC::boot();
-
-// Create new application
-$app = new Symfony\Component\Console\Application(
-    'Aedart Scaffold Installer', '1.0.x-dev'
-);
-
-$app->add(new \Aedart\Scaffold\Console\BuildCommand());
-
-// Finally, run the application
+$app = new \Aedart\Scaffold\ScaffoldApplication();
 $app->run();
