@@ -36,7 +36,7 @@ class ScaffoldServiceProvider extends ServiceProvider
     /**
      * Register file system
      */
-    public function registerFilesystem()
+    protected function registerFilesystem()
     {
         $this->app->bind('files', function($app, array $data = []){
             return new Filesystem();
