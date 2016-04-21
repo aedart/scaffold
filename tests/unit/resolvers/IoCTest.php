@@ -65,6 +65,30 @@ class IoCTest extends BaseUnitTest
      *
      * @covers ::registerServiceProviders
      *
+     * @covers \Aedart\Scaffold\Providers\ScaffoldServiceProvider::register
+     * @covers \Aedart\Scaffold\Providers\ConsoleLoggerServiceProvider::register
+     */
+    public function canRegisterServiceProviders()
+    {
+        $ioc = IoC::getInstance();
+
+        // If we can make an instance that we know is
+        // registered inside a service provider, then
+        // we can assume that everything is in order.
+        // NOTE: We cannot / will not test every single
+        // binding - we only care about the functionality
+        // of invoking "register" on each defined
+        // service provider
+
+        $container = $ioc->container();
+        $handler = $container->make(Directories::class);
+
+        $this->assertInstanceOf(Directories::class, $handler);
+    }
+
+    /**
+     * @test
+     *
      * @covers ::resolveFromConfig
      */
     public function canResolveFromServiceProvider()
@@ -78,8 +102,6 @@ class IoCTest extends BaseUnitTest
 
     /**
      * @test
-     *
-     * @covers ::registerServiceProviders
      *
      * @covers ::resolveFromConfig
      */
