@@ -1,7 +1,7 @@
 <?php namespace Aedart\Scaffold\Console;
 
 use Aedart\Config\Loader\Traits\ConfigLoaderTrait;
-use Aedart\Scaffold\Traits\ConfigLoader;
+use Aedart\Scaffold\Tasks\CreateDirectories;
 use Illuminate\Config\Repository;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputArgument;
@@ -18,6 +18,18 @@ use Symfony\Component\Console\Input\InputOption;
 class BuildCommand extends BaseCommand
 {
     use ConfigLoaderTrait;
+
+    /**
+     * List of console tasks (paths) that this command
+     * must perform / execute.
+     *
+     * NB: The list is ordered !
+     *
+     * @var string[]
+     */
+    protected $tasks = [
+        CreateDirectories::class,
+    ];
 
     protected function configure()
     {
@@ -68,13 +80,8 @@ class BuildCommand extends BaseCommand
         // Output title
         $this->output->title(sprintf('Building %s', $config->get('name')));
 
-        // Define all of this builder's tasks
-        $tasks = [
-            \Aedart\Scaffold\Tasks\CreateDirectories::class,
-        ];
-
         // Execute builder's tasks
-        foreach($tasks as $task){
+        foreach($this->tasks as $task){
             $this->output->section($this->normaliseTaskName($task));
 
             (new $task)->execute($this->input, $this->output, $config);
