@@ -112,4 +112,24 @@ abstract class BaseUnitTest extends UnitTestCase
     {
         return new Filesystem();
     }
+
+    /********************************************************
+     * Custom assertions
+     *******************************************************/
+
+    /**
+     * Assert that the given list of paths or files exist
+     * inside the output path
+     *
+     * @see outputPath()
+     *
+     * @param array $paths
+     * @param string $message [optional]
+     */
+    public function assertPathsOrFilesExist(array $paths, $message = 'Path does not exist')
+    {
+        foreach($paths as $path){
+            $this->assertFileExists($this->outputPath() . $path, 'Path does not exist');
+        }
+    }
 }
