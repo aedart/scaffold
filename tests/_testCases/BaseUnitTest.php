@@ -16,6 +16,7 @@ use Mockery as m;
  */
 abstract class BaseUnitTest extends UnitTestCase
 {
+    use DataPath;
     use OutputPath;
     use IoCDestroyer;
 
