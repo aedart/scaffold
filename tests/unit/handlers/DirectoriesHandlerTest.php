@@ -15,13 +15,7 @@ class DirectoriesHandlerTest extends BaseUnitTest
 {
     protected function _after()
     {
-        // Remove all created folders inside output path
-        $fs = $this->getFilesystem();
-        $folders = $fs->directories($this->outputPath());
-
-        foreach($folders as $directory){
-            $fs->deleteDirectory($directory);
-        }
+        $this->emptyPath($this->outputPath());
 
         parent::_after();
     }
