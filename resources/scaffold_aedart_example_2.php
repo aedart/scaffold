@@ -63,6 +63,7 @@ return [
      | /home/projects/MyProject/config/
      | /home/projects/MyProject/src/
      | /home/projects/MyProject/src/Contracts/
+     | /home/projects/MyProject/src/Contracts/Controllers
      | ...etc
      */
     'folders' => [
