@@ -1,4 +1,7 @@
 <?php
+use Aedart\Scaffold\ScaffoldApplication;
+use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Tester\CommandTester;
 
 /**
  * Base Integration Test
@@ -31,5 +34,31 @@ abstract class BaseIntegrationTest extends BaseUnitTest
     public function dataPath()
     {
         return parent::dataPath() . 'commands/';
+    }
+
+    /**
+     * Returns a command from the Scaffold Application
+     *
+     * @param string $name
+     *
+     * @return Command
+     */
+    public function getCommandFromApp($name)
+    {
+        $app  = new ScaffoldApplication();
+
+        return $app->find($name);
+    }
+
+    /**
+     * Returns a new command tester instance
+     *
+     * @param Command $command
+     *
+     * @return CommandTester
+     */
+    public function makeCommandTester(Command $command)
+    {
+        return new CommandTester($command);
     }
 }
