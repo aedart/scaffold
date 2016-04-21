@@ -2,6 +2,7 @@
 
 use Codeception\Configuration;
 use Codeception\Util\Debug;
+use Illuminate\Filesystem\Filesystem;
 
 /**
  * Output Path
@@ -19,6 +20,22 @@ trait OutputPath
             mkdir($this->outputPath(), 0755, true);
 
             Debug::debug(sprintf('<info>Created output path </info><debug>%s</debug>', $this->outputPath()));
+        }
+    }
+
+    /**
+     * Deletes all files and folders inside the given path
+     *
+     * @param string $path
+     */
+    public function emptyPath($path)
+    {
+        // Remove all created folders inside output path
+        $fs = new Filesystem();
+        $folders = $fs->directories($path);
+
+        foreach($folders as $directory){
+            $fs->deleteDirectory($directory);
         }
     }
 
