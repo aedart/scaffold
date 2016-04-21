@@ -148,4 +148,31 @@ class IoCTest extends BaseUnitTest
 
         $this->assertNull($ioc->container());
     }
+
+
+    /**
+     * @test
+     *
+     * @covers ::__clone
+     *
+     * @expectedException \Aedart\Scaffold\Exceptions\ForbiddenException
+     */
+    public function failsWhenAttemptingToClone()
+    {
+        $ioc = IoC::getInstance();
+        $clone = clone $ioc;
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::__wakeup
+     *
+     * @expectedException \Aedart\Scaffold\Exceptions\ForbiddenException
+     */
+    public function failsWhenWakeupMethodIsInvoked()
+    {
+        $ioc = IoC::getInstance();
+        $ioc->__wakeup();
+    }
 }
