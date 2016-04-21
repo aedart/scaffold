@@ -12,7 +12,8 @@ use Illuminate\Support\Facades\App;
  * This class acts first and foremost as a wrapper for Laravel's
  * service container. Secondly, additional application logic has
  * been added, in regards to resolving instances from specifiable
- * configuration repositories.
+ * configuration repositories and bootstrapping; it ensures that
+ * this package's service provider is registered.
  *
  * @see \Illuminate\Contracts\Container\Container
  *
