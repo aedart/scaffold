@@ -41,9 +41,9 @@ class BuildCommand extends BaseCommand
         // attempting to read anything from it, because all of the
         // "scaffold's" configuration is stored inside a user defined
         // entry, e.g. "scaffold_aedart_composer.folders", where the
-        // "scaffold_aedart_composer" corresponds to the filename of
-        // the given scaffold. We have no way of knowing or guessing
-        // that given name.
+        // "scaffold_aedart_templates_composer" corresponds to the
+        // filename of the given scaffold. We have no way of knowing
+        // or guessing that given name.
         //
         // Therefore, we need to parse all loaded entries into a new
         // configuration instance, so that we can access it via a
