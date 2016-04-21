@@ -1,10 +1,7 @@
 <?php
 
 use Aedart\Scaffold\Contracts\Collections\Directories;
-use Aedart\Scaffold\Resolvers\IoC;
-use Codeception\Configuration;
 use Codeception\TestCase\Test;
-use Codeception\Util\Debug;
 use Faker\Factory;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Logging\Log;
@@ -20,6 +17,9 @@ use Mockery as m;
  */
 abstract class BaseUnitTest extends Test
 {
+    use OutputPath;
+    use IoCDestroyer;
+
     /**
      * @var \UnitTester
      */
@@ -37,20 +37,12 @@ abstract class BaseUnitTest extends Test
         // Faker instance
         $this->faker = Factory::create();
 
-        // Create output path if it does not exist
-        if(!file_exists($this->outputPath())){
-            mkdir($this->outputPath(), 0755, true);
-
-            Debug::debug(sprintf('<info>Created output path </info><debug>%s</debug>', $this->outputPath()));
-        }
+        $this->createOutputPath();
     }
 
     protected function _after()
     {
-        // Ensure that the IoC is destroyed after each
-        // test execution - or some might behave unexpected!
-        $ioc = IoC::getInstance();
-        $ioc->destroy();
+        $this->destroyIoC();
 
         m::close();
     }
@@ -132,16 +124,5 @@ abstract class BaseUnitTest extends Test
     public function getFilesystem()
     {
         return new Filesystem();
-    }
-
-    /**
-     * Returns the output directory path
-     *
-     * @return string
-     * @throws \Codeception\Exception\ConfigurationException
-     */
-    public function outputPath()
-    {
-        return Configuration::outputDir();
     }
 }
