@@ -4,7 +4,7 @@ return [
 
     'name'          => 'Folders only',
 
-    'description'   => 'Creates only a few folders',
+    'description'   => 'To be used for testing only - test if the build command can create directories',
 
     'basePath' => __DIR__ ,
 
