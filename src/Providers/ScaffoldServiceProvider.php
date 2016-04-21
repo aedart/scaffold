@@ -5,6 +5,8 @@ use Aedart\Scaffold\Collections\Directories;
 use Aedart\Scaffold\Contracts\Collections\Directories as DirectoriesInterface;
 use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler as DirectoriesHandlerInterface;
 use Aedart\Scaffold\Handlers\DirectoriesHandler;
+use Illuminate\Config\Repository;
+use Illuminate\Contracts\Config\Repository as RepositoryInterface;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
 
@@ -25,6 +27,7 @@ class ScaffoldServiceProvider extends ServiceProvider
     public function register()
     {
         $this->registerFilesystem();
+        $this->registerConfig();
         $this->registerDirectoriesHandler();
         $this->registerDirectoriesCollection();
     }
@@ -41,6 +44,18 @@ class ScaffoldServiceProvider extends ServiceProvider
         $this->app->bind('files', function($app, array $data = []){
             return new Filesystem();
         });
+    }
+
+    /**
+     * Register the configuration repository
+     */
+    protected function registerConfig()
+    {
+        $this->app->bind(RepositoryInterface::class, function($app, array $data = []){
+            return new Repository();
+        });
+
+        $this->app->alias(RepositoryInterface::class, 'config');
     }
 
     /**
