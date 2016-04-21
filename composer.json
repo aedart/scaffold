@@ -24,7 +24,7 @@
     "twig/twig": "~1.9",
     "symfony/console": "~2.7|~3.0",
     "illuminate/container": "5.2.*",
-    "illuminate/log": "5.2.*"
+    "psr/log": "1.0.*"
   },
   "require-dev": {
     "aedart/license": "1.*",
