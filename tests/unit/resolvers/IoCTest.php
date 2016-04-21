@@ -18,14 +18,6 @@ use Illuminate\Contracts\Container\Container;
  */
 class IoCTest extends BaseUnitTest
 {
-    protected function _after()
-    {
-        $ioc = IoC::getInstance();
-        $ioc->destroy();
-
-        parent::_after();
-    }
-
     /********************************************************
      * Actual tests
      *******************************************************/
