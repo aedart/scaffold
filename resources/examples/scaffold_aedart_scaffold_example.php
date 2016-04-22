@@ -40,7 +40,7 @@ return [
      | resource, from which it can build and install one or several
      | folders, files and or templates.
      */
-    'basePath' => __DIR__ . '/resources',
+    'basePath' => __DIR__ . '/resources/',
 
     /* ------------------------------------------------------------
      | Folders
