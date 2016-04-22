@@ -38,7 +38,6 @@ class BuildCommandTest extends BaseIntegrationTest
      * @covers ::runCommand
      *
      * @covers ::configure
-     * @covers ::normaliseTaskName
      *
      * @covers \Aedart\Scaffold\Tasks\CreateDirectories::performTask
      *
@@ -89,7 +88,6 @@ class BuildCommandTest extends BaseIntegrationTest
      * @covers ::runCommand
      *
      * @covers ::configure
-     * @covers ::normaliseTaskName
      *
      * @covers \Aedart\Scaffold\Tasks\CreateDirectories::performTask
      * @covers \Aedart\Scaffold\Tasks\CopyFiles::performTask
