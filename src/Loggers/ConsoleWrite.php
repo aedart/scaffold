@@ -50,36 +50,36 @@ class ConsoleWrite extends AbstractLogger implements Log
 
         switch($level){
             case LogLevel::EMERGENCY:
-                $finalOutput = "<fg=white;bg=red> [ emergency ] {$msg} </>";
+                $finalOutput = " <fg=white;bg=red>[ emergency ]</> {$msg}";
                 break;
 
             case LogLevel::ALERT:
-                $finalOutput = "<fg=white;bg=red> [ alert ] {$msg} </>";
+                $finalOutput = " <fg=white;bg=red>[ alert ]</> {$msg}";
                 break;
 
             case LogLevel::CRITICAL:
-                $finalOutput = "<fg=white;bg=red> [ critical ] {$msg} </>";
+                $finalOutput = " <fg=white;bg=red>[ critical ]</> {$msg}";
                 break;
 
             case LogLevel::ERROR:
-                $finalOutput = "<fg=white;bg=red> [ error ] {$msg} </>";
+                $finalOutput = " <fg=white;bg=red>[ error ]</> {$msg}";
                 break;
 
             case LogLevel::WARNING:
-                $finalOutput = "<fg=black;bg=yellow> [ warning ] {$msg} </>";
+                $finalOutput = " <fg=black;bg=yellow>[ warning ]</> {$msg}";
                 break;
 
             case LogLevel::NOTICE:
-                $finalOutput = "<fg=black;bg=yellow> [ notice ] {$msg} </>";
+                $finalOutput = " <fg=black;bg=yellow>[ notice ]</> {$msg}";
                 break;
 
             case LogLevel::INFO:
-                $finalOutput = "<fg=black;bg=cyan> [ info ] {$msg} </>";
+                $finalOutput = " <fg=black;bg=cyan>[ info ]</> {$msg}";
                 break;
 
             case LogLevel::DEBUG:
             default:
-                $finalOutput = "<fg=white;bg=black> [ debug ] {$msg} </>";
+                $finalOutput = " <fg=white;bg=black>[ debug ]</> {$msg}";
                 break;
         }
 
