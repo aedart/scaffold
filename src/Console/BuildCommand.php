@@ -110,7 +110,7 @@ EOT
 
         // Output done msg
         $this->output->newLine();
-        $this->output->success(sprintf('Completed building %s', $config->get('name')));
+        $this->output->success(sprintf('%s completed', $config->get('name')));
     }
 
     /**
