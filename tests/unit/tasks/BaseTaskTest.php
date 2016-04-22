@@ -88,6 +88,22 @@ class BaseTaskTest extends ConsoleTest
 
         $this->assertNotNull($handler);
     }
+
+    /**
+     * @test
+     *
+     * @covers ::getDefaultName
+     */
+    public function hasADefaultName()
+    {
+        $output = $this->makeOutputMock();
+
+        $config = new Repository([]);
+
+        $task = $this->makeDummyTask($output, $config);
+
+        $this->assertSame('Dummy task', $task->getName());
+    }
 }
 
 /**
