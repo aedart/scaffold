@@ -104,6 +104,45 @@ abstract class BaseUnitTest extends UnitTestCase
     }
 
     /**
+     * Returns random source files and their belonging
+     * destination
+     *
+     * WARNING: All paths are fake, don't use this for
+     * testing actual handler implementation!
+     *
+     * @param int $amount
+     *
+     * @return string[]
+     */
+    public function makeFilesPaths($amount = 3)
+    {
+        $output = [];
+
+        while($amount--){
+            $nested = mt_rand(1, 4);
+            $filename = $this->faker->word . '.' . $this->faker->fileExtension;
+            $sourcePath = [];
+
+            while($nested--){
+                $sourcePath[] = $this->faker->word;
+            }
+
+            $nested = mt_rand(1, 4);
+            $destinationPath = [];
+            while($nested--){
+                $destinationPath[] = $this->faker->word;
+            }
+
+            $sourceFile = implode(DIRECTORY_SEPARATOR, $sourcePath) . DIRECTORY_SEPARATOR . $filename;
+            $destination = implode(DIRECTORY_SEPARATOR, $destinationPath) . DIRECTORY_SEPARATOR . $filename;
+
+            $output[$sourceFile] = $destination;
+        }
+
+        return $output;
+    }
+
+    /**
      * Get a filesystem instance
      *
      * @return Filesystem
