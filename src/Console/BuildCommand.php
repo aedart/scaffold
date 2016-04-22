@@ -1,6 +1,7 @@
 <?php namespace Aedart\Scaffold\Console;
 
 use Aedart\Config\Loader\Traits\ConfigLoaderTrait;
+use Aedart\Scaffold\Tasks\CopyFiles;
 use Aedart\Scaffold\Tasks\CreateDirectories;
 use Illuminate\Config\Repository;
 use Illuminate\Support\Str;
@@ -29,6 +30,7 @@ class BuildCommand extends BaseCommand
      */
     protected $tasks = [
         CreateDirectories::class,
+        CopyFiles::class,
     ];
 
     protected function configure()
@@ -105,6 +107,10 @@ EOT
 
             (new $task)->execute($this->input, $this->output, $config);
         }
+
+        // Output done msg
+        $this->output->newLine();
+        $this->output->success(sprintf('Completed building %s', $config->get('name')));
     }
 
     /**
