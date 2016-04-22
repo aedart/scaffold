@@ -32,11 +32,13 @@ trait OutputPath
     {
         // Remove all created folders inside output path
         $fs = new Filesystem();
-        $folders = $fs->directories($path);
+        $fs->cleanDirectory($path);
 
-        foreach($folders as $directory){
-            $fs->deleteDirectory($directory);
-        }
+        // Not all files might have been removed by
+        // the delete directory method. Therefore, we
+        // search the dir for files and remove those as well.
+        $files = $fs->files($path);
+        $fs->delete($files);
     }
 
     /**
