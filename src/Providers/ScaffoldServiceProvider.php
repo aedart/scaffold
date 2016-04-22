@@ -2,7 +2,9 @@
 
 
 use Aedart\Scaffold\Collections\Directories;
+use Aedart\Scaffold\Collections\Files;
 use Aedart\Scaffold\Contracts\Collections\Directories as DirectoriesInterface;
+use Aedart\Scaffold\Contracts\Collections\Files as FilesInterface;
 use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler as DirectoriesHandlerInterface;
 use Aedart\Scaffold\Contracts\Handlers\FilesHandler as FilesHandlerInterface;
 use Aedart\Scaffold\Handlers\DirectoriesHandler;
@@ -33,6 +35,7 @@ class ScaffoldServiceProvider extends ServiceProvider
         $this->registerDirectoriesHandler();
         $this->registerDirectoriesCollection();
         $this->registerFilesHandler();
+        $this->registerFilesCollection();
     }
 
     /******************************************************
@@ -93,5 +96,15 @@ class ScaffoldServiceProvider extends ServiceProvider
         });
 
         $this->app->alias(FilesHandlerInterface::class, 'handlers.file');
+    }
+
+    /**
+     * Register the Files collection
+     */
+    protected function registerFilesCollection()
+    {
+        $this->app->bind(FilesInterface::class, function($app, array $data = []){
+            return new Files($data);
+        });
     }
 }
