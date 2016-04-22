@@ -9,7 +9,7 @@ use Aedart\Scaffold\Exceptions\CannotCopyFileException;
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Contracts\Handlers
  */
-interface FilesHandler
+interface FilesHandler extends Handler
 {
     /**
      * Copies the given collection of source files into
