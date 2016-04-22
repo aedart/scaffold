@@ -195,7 +195,7 @@ return [
 
         'directory'     =>    \Aedart\Scaffold\Handlers\DirectoriesHandler::class,
 
-        'files'           =>    \Aedart\Scaffold\Handlers\CopyFileHandler::class,
+        'file'           =>    \Aedart\Scaffold\Handlers\FilesHandler::class,
 
         'templates'       =>    \Aedart\Scaffold\Handlers\TemplateHandler::class,
     ],
