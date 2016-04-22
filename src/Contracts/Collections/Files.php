@@ -28,7 +28,7 @@ interface Files extends IPartialCollection
      * Get all added source files and their
      * belonging destination
      *
-     * @return string[][]
+     * @return string[]
      */
     public function all();
 }
