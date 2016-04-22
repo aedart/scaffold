@@ -51,7 +51,7 @@ class FilesHandler extends BaseHandler implements FilesHandlerInterface
 
         // Check if file already exists
         if($fs->exists($finalDestination)){
-            $log->notice('skipped "{path}", file already exists', ['path' => $finalDestination]);
+            $log->notice('skipped "{path}", file already exists in "{destination}"', ['path' => $sourceFile, 'destination' => $finalDestination]);
             return;
         }
 
@@ -64,7 +64,7 @@ class FilesHandler extends BaseHandler implements FilesHandlerInterface
         }
 
         // Finally, log the output
-        $log->info('copied "{path}"', ['path' => $finalSource]);
+        $log->info('copied "{path}" into "{destination}"', ['path' => $sourceFile, 'destination' => $finalDestination]);
     }
 
     /**
