@@ -37,7 +37,26 @@ class BuildCommand extends BaseCommand
             ->setName('build')
             ->setDescription('Creates folders, copies and generate files into the given output path')
             ->addArgument('config', InputArgument::REQUIRED, 'Path to the scaffold configuration file')
-            ->addOption('output', null, InputOption::VALUE_OPTIONAL, 'Path where to build the scaffold folders and files', getcwd());
+            ->addOption('output', null, InputOption::VALUE_OPTIONAL, 'Path where to build the scaffold folders and files', getcwd())
+            ->setHelp(<<<EOT
+Base on a scaffold configuration file, this command will do the following;
+
+1) Create specified directories
+2) Copy a set of source files into specified destinations
+3) Aks you for eventual input, based on 'templateData' and 'templates' sections of the given configuration
+4) Generate files based on specified templates and eventual given input
+
+Usage:
+
+<info>php scaffold build resources/scaffold_aedart_composer_example.php</info>
+
+The above command will load and read the specified scaffold configuration file and process it.
+All directories and files will be created, copied or generated into the <debug>current working directory</debug>.
+You can, however, also specify a desired output directory:
+
+<info>php scaffold build resources/scaffold_aedart_composer_example.php --output /home/vagrant/Aedart/MyProject/</info>
+EOT
+            );
     }
 
     /**
