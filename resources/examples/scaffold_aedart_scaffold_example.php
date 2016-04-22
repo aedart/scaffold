@@ -40,7 +40,7 @@ return [
      | resource, from which it can build and install one or several
      | folders, files and or templates.
      */
-    'basePath' => __DIR__ . '/templates',
+    'basePath' => __DIR__ . '/resources',
 
     /* ------------------------------------------------------------
      | Folders
@@ -93,10 +93,9 @@ return [
      */
     'files' => [
         // Source files (inside 'basePath')  =>  Destination
-        'gitFiles/.gitkeep'         =>  'config/.gitkeep',
-        'gitFiles/.ignore'          =>  '.ignore',
-        'gfx/logo.png'              =>  'tmp/logo.png',
-        'docs/LICENSE'              =>  'LICENSE',
+        '.gitkeep'                  =>  '.gitkeep',
+        'logs/default.log'          =>  'tmp/log.log',
+        'docs/LICENSE.txt'          =>  'LICENSE',
         'docs/README.md'            =>  'README.md',
     ],
 
