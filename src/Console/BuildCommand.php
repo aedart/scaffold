@@ -98,14 +98,22 @@ EOT
         }
         $config->set('outputPath', $outputPath);
 
-        // Output title
+        // Output title and what configuration file is being used
         $this->output->title(sprintf('Building %s', $config->get('name')));
+        $this->output->text(sprintf('Using: %s', $this->input->getArgument('config')));
 
         // Execute builder's tasks
+        $i = 1;
+        $total = count($this->tasks);
         foreach($this->tasks as $task){
+            // Output task info
             $this->output->section($this->normaliseTaskName($task));
+            $this->output->text("Task ({$i}/{$total})");
+            $this->output->newLine();
 
+            // Execute the task
             (new $task)->execute($this->input, $this->output, $config);
+            $i++;
         }
 
         // Output done msg
