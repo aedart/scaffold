@@ -82,4 +82,44 @@ class BuildCommandTest extends BaseIntegrationTest
 
         $this->assertPathsOrFilesExist($expectedPaths);
     }
+
+    /**
+     * @test
+     *
+     * @covers ::runCommand
+     *
+     * @covers ::configure
+     * @covers ::normaliseTaskName
+     *
+     * @covers \Aedart\Scaffold\Tasks\CopyFiles::performTask
+     *
+     * @covers \Aedart\Scaffold\Tasks\CopyFiles::parseFiles
+     * @covers \Aedart\Scaffold\Tasks\CopyFiles::getFilesHandler
+     */
+    public function canCopyFiles()
+    {
+        $command = $this->getCommandFromApp('build');
+
+        $commandTester = $this->makeCommandTester($command);
+
+        // Remove trailing slash form output path...
+        // Only for testing a specific condition in buildCommand
+        $outputPath = substr($this->outputPath(), 0, -1);
+
+        $commandTester->execute([
+            'command'   => $command->getName(),
+            'config'    => $this->dataPath() . 'filesOnly.php',
+            '--output'  => $outputPath
+        ]);
+
+        // @see _data/commands/build/filesOnly.php
+        $expectedPaths = [
+           '.gitkeep',
+           'log.log',
+           'LICENSE',
+           'README.md',
+        ];
+
+        $this->assertPathsOrFilesExist($expectedPaths);
+    }
 }
