@@ -1,6 +1,7 @@
 <?php
 
 use Aedart\Scaffold\Contracts\Collections\Directories;
+use Aedart\Scaffold\Contracts\Collections\Files;
 use Aedart\Testing\Laravel\TestCases\unit\UnitTestCase;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Logging\Log;
@@ -56,6 +57,16 @@ abstract class BaseUnitTest extends UnitTestCase
     public function makeDirectoriesCollectionMock()
     {
         return m::mock(Directories::class);
+    }
+
+    /**
+     * Returns a files collection mock
+     *
+     * @return m\MockInterface|Files
+     */
+    public function makeFilesCollectionMock()
+    {
+        return m::mock(Files::class);
     }
 
     /**
