@@ -88,12 +88,12 @@ return [
      | NOTE: The files are read from inside the 'basePath'.
      */
     'files' => [
-        // Source files (inside 'basePath')  =>  Destination directory
-        'gitFiles/.gitkeep'         =>  'config',
-        'gitFiles/.ignore'          =>  '',
-        'gfx/logo.png'              =>  'tmp',
-        'docs/LICENSE'              =>  '',
-        'docs/README.md'            =>  '',
+        // Source files (inside 'basePath')  =>  Destination
+        'gitFiles/.gitkeep'         =>  'config/.gitkeep',
+        'gitFiles/.ignore'          =>  '.ignore',
+        'gfx/logo.png'              =>  'tmp/logo.png',
+        'docs/LICENSE'              =>  'LICENSE',
+        'docs/README.md'            =>  'README.md',
     ],
 
     /* ------------------------------------------------------------
