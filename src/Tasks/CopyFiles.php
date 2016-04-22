@@ -26,7 +26,7 @@ class CopyFiles extends BaseTask
 
         // Copy the files
         $handler->processFiles(
-            $this->parseDirectories($this->config->get($filesKey))
+            $this->parseFiles($this->config->get($filesKey))
         );
     }
 
@@ -37,7 +37,7 @@ class CopyFiles extends BaseTask
      *
      * @return Files
      */
-    protected function parseDirectories(array $files = [])
+    protected function parseFiles(array $files = [])
     {
         $ioc = IoC::getInstance();
 
