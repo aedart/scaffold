@@ -80,7 +80,7 @@ EOT
         // into a new configuration, which is the one that we are
         // going to pass on to each task
         $config = new Repository($config->get($filename));
-        
+
         // Resolve the output path and added it to the configuration
         $outputPath = $this->input->getOption('output');
         if(substr($outputPath, -1) != DIRECTORY_SEPARATOR){
