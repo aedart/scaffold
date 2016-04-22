@@ -1,8 +1,11 @@
 <?php namespace Aedart\Scaffold\Tasks;
 
+use Aedart\Model\Traits\Strings\DescriptionTrait;
+use Aedart\Model\Traits\Strings\NameTrait;
 use Aedart\Scaffold\Contracts\Tasks\ConsoleTask;
 use Aedart\Scaffold\Resolvers\IoC;
 use Illuminate\Contracts\Config\Repository;
+use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -16,6 +19,9 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 abstract class BaseTask implements ConsoleTask
 {
+    use NameTrait;
+    use DescriptionTrait;
+
     /**
      * The input
      *
@@ -84,5 +90,14 @@ abstract class BaseTask implements ConsoleTask
 
         // Finally, return the handler
         return $handler;
+    }
+
+    public function getDefaultName()
+    {
+        $a = Str::snake(get_class($this));
+        $b = explode('\\', $a);
+        $c = str_replace('_', ' ', array_pop($b));
+
+        return Str::ucfirst(trim($c));
     }
 }
