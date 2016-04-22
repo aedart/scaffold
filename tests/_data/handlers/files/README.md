@@ -1,0 +1,3 @@
+# Dummy file #
+
+This file is used for the files handler test....
