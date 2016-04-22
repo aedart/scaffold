@@ -96,34 +96,22 @@ EOT
         $i = 1;
         $total = count($this->tasks);
         foreach($this->tasks as $task){
+            // Create new task instance
+            /** @var \Aedart\Scaffold\Contracts\Tasks\ConsoleTask $taskToExecute */
+            $taskToExecute = (new $task);
+
             // Output task info
-            $this->output->section($this->normaliseTaskName($task));
+            $this->output->section($taskToExecute->getName());
             $this->output->text("Task ({$i}/{$total})");
             $this->output->newLine();
 
             // Execute the task
-            (new $task)->execute($this->input, $this->output, $config);
+            $taskToExecute->execute($this->input, $this->output, $config);
             $i++;
         }
 
         // Output done msg
         $this->output->newLine();
         $this->output->success(sprintf('%s completed', $config->get('name')));
-    }
-
-    /**
-     * Normalise the given task class path
-     *
-     * @param string $taskPath
-     *
-     * @return string
-     */
-    protected function normaliseTaskName($taskPath)
-    {
-        $a = Str::snake($taskPath);
-        $b = explode('\\', $a);
-        $c = str_replace('_', ' ', array_pop($b));
-
-        return Str::ucfirst(trim($c));
     }
 }
