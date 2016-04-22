@@ -71,26 +71,16 @@ EOT
         // Load configuration
         $config = $this->getConfigLoader()->parse($this->input->getArgument('config'));
 
-        // The configuration is loader, yet we will have some issues
-        // attempting to read anything from it, because all of the
-        // "scaffold's" configuration is stored inside a user defined
-        // entry, e.g. "scaffold_aedart_composer.folders", where the
-        // "scaffold_aedart_templates_composer" corresponds to the
-        // filename of the given scaffold. We have no way of knowing
-        // or guessing that given name.
-        //
-        // Therefore, we need to parse all loaded entries into a new
-        // configuration instance, so that we can access it via a
-        // predefined accessor.
+        // Get the filename (without file extension) so that we know what
+        // part of the configuration to fetch. The filename acts as the
+        // configuration's entry key.
+        $filename = strtolower(pathinfo($this->input->getArgument('config'), PATHINFO_FILENAME));
 
-        $rawEntries = $config->all();
-        $newEntries = array_shift($rawEntries);
-
-        // Now, we simple create a new Repository in which we can
-        // access the configuration entries directly, e.g.
-        // "name", "folders", "files", ... etc
-        $config = new Repository($newEntries);
-
+        // Fetch the content of the configuration and pass it
+        // into a new configuration, which is the one that we are
+        // going to pass on to each task
+        $config = new Repository($config->get($filename));
+        
         // Resolve the output path and added it to the configuration
         $outputPath = $this->input->getOption('output');
         if(substr($outputPath, -1) != DIRECTORY_SEPARATOR){
