@@ -6,12 +6,6 @@ return [
      | Scaffold Example configuration
      | ------------------------------------------------------------
      |
-     | Each scaffold should follow this naming convention;
-     | "scaffold_" [vendor] "_" [your namespace] "_" [name of scaffold] ".php"
-     | and should be placed in the root of your package.
-     |
-     | Example:
-     | scaffold_aedart_templates_composer.php
      */
 
     /* ------------------------------------------------------------
