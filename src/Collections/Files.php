@@ -47,7 +47,7 @@ class Files implements FilesInterface
 
     public function put($sourceFile, $destination)
     {
-        $this->getInternalCollection()->put($sourceFile, $destination);
+        return ($this->getInternalCollection()->put($sourceFile, $destination));
     }
 
     public function all()
