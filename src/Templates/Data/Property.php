@@ -7,6 +7,7 @@ use Aedart\Model\Traits\Strings\IdTrait;
 use Aedart\Model\Traits\Strings\QuestionTrait;
 use Aedart\Model\Traits\Strings\ValueTrait;
 use Aedart\Scaffold\Contracts\Templates\Data\Property as PropertyInterface;
+use Aedart\Scaffold\Contracts\Templates\Data\Type;
 
 /**
  * Template Data Property
@@ -27,4 +28,9 @@ class Property extends DataTransferObject implements PropertyInterface
     // TODO: validate trait
     // TODO: max Attempts trait
     // TODO: post Process trait
+
+    public function getDefaultType()
+    {
+        return Type::VALUE;
+    }
 }
