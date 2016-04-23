@@ -2,6 +2,7 @@
 
 use Aedart\Scaffold\Contracts\Tasks\ConsoleTask;
 use Aedart\Scaffold\Handlers\FilesHandler;
+use Aedart\Scaffold\Tasks\NullTask;
 use Aedart\Scaffold\Tasks\TaskRunner;
 use Mockery as m;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -136,10 +137,17 @@ class TaskRunnerTest extends ConsoleTest
      *
      * @covers ::initTask
      * @covers ::outputExecutionInfo
+     *
+     * @covers \Aedart\Scaffold\Tasks\NullTask::execute
+     * @covers \Aedart\Scaffold\Tasks\NullTask::performTask
      */
     public function canOutputViaSymfonyStyle()
     {
-        $tasks = $this->makeTaskList(mt_rand(3, 5), true);
+        $tasks = [
+            NullTask::class,
+            NullTask::class,
+            NullTask::class,
+        ];
 
         $input = $this->makeInputMock();
 
