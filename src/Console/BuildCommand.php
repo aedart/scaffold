@@ -27,7 +27,7 @@ class BuildCommand extends BaseCommand
     {
         $this
             ->setName('build')
-            ->setDescription('Creates folders, copies and generate files into the given output path')
+            ->setDescription('Executes the tasks that are defined inside the provided scaffold configuration')
             ->addArgument('config', InputArgument::REQUIRED, 'Path to the scaffold configuration file')
             ->addOption('output', null, InputOption::VALUE_OPTIONAL, 'Path where to build the scaffold folders and files', getcwd())
             ->setHelp($this->formatHelp());
