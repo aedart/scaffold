@@ -1,8 +1,6 @@
 <?php namespace Aedart\Scaffold\Console;
 
 use Aedart\Config\Loader\Traits\ConfigLoaderTrait;
-use Aedart\Scaffold\Tasks\CopyFiles;
-use Aedart\Scaffold\Tasks\CreateDirectories;
 use Aedart\Scaffold\Traits\TaskRunner;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Config\Repository as RepositoryInterface;
