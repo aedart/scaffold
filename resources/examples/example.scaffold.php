@@ -209,6 +209,17 @@ return [
         'authorEmail' => [
             'value'       => 'aedart@gmail.com'
         ],
+
+        'requirePredefinedDev' => [
+            'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::CONFIRM,
+            'question'      => 'Require predefined development packages (composer.json "require-dev" property)?',
+            'value'         => false,
+        ],
+
+        'envPassword' => [
+            'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::HIDDEN,
+            'question'      => 'What password should be stored inside the .env?',
+        ],
     ],
 
     /* ------------------------------------------------------------
