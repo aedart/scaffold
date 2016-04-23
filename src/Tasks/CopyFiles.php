@@ -12,6 +12,8 @@ use Aedart\Scaffold\Containers\IoC;
  */
 class CopyFiles extends BaseTask
 {
+    protected $description = 'Copies a set of source files into the output path';
+
     public function performTask()
     {
         // Check if there are any files to be copied
