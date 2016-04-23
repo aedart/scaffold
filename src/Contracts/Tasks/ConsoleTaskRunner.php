@@ -20,7 +20,7 @@ interface ConsoleTaskRunner
     /**
      * Execute the given console tasks
      *
-     * @param string[] $tasks Class paths to the tasks that must be executed
+     * @param string[]|ConsoleTask[] $tasks Class paths to the tasks that must be executed
      * @param InputInterface $input Console input
      * @param OutputInterface $output Console output
      * @param Repository $config Configuration to be passed to each task
