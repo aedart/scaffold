@@ -172,21 +172,41 @@ return [
      | for a value
      */
     'templateData' => [
-        'name' => [
-            'ask'           => true,
-            'description'   => 'Name of the project',
+        'packageName' => [
+            'type'          => \Aedart\Scaffold\Contracts\Templates\Data\ValueType::QUESTION,
+            'question'      => 'What this package\'s name (composer.json "name" property)?',
+            'value'         => 'aedart/scaffold-example',
+            'validate'      => function($answer){
+                if(strtr($answer, '/') !== false){
+                    return $answer;
+                }
+
+                throw new \RuntimeException('Package name must contain vendor and project name, separated by "/"');
+            },
+            'maxAttempts'   => 2,
+            'postProcess'   => function($answer){
+                return trim(strtolower($answer));
+            }
+        ],
+
+        'packageType' => [
+            'type'          => \Aedart\Scaffold\Contracts\Templates\Data\ValueType::CHOICE,
+            'question'      => 'What type of this package is this (composer.json "type" property)?',
+            'choices'       => [
+                'library',
+                'project',
+                'metapackage',
+                'composer-plugin'
+            ],
+            'value'         => 'library',
         ],
 
         'authorName' => [
-            'ask'           => false,
-            'description'   => 'Author\'s name',
-            'default'       => 'Alin Eugen Deac'
+            'value'       => 'Alin Eugen Deac'
         ],
 
         'authorEmail' => [
-            'ask'           => false,
-            'description'   => 'Author\'s email',
-            'default'       => 'aedart@gmail.com'
+            'value'       => 'aedart@gmail.com'
         ],
     ],
 
