@@ -40,16 +40,21 @@ class TaskRunner implements ConsoleTaskRunner
     /**
      * Init and return the console task
      *
-     * @param string $taskPath Class path of the task
+     * @param string $task Class path of the task
      *
      * @return \Aedart\Scaffold\Contracts\Tasks\ConsoleTask
      *
      * @throws CannotExecuteTaskException
      */
-    protected function initTask($taskPath)
+    protected function initTask($task)
     {
         try {
-            $consoleTask = (new $taskPath);
+            // Check if task is already initialised instance
+            if($task instanceof ConsoleTask){
+                return $task;
+            }
+
+            $consoleTask = (new $task);
             $this->assertIsConsoleTask($consoleTask);
 
             return $consoleTask;
