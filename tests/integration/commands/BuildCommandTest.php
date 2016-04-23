@@ -35,6 +35,21 @@ class BuildCommandTest extends BaseIntegrationTest
     /**
      * @test
      *
+     * @covers ::formatHelp
+     * @covers ::formatTasksDescriptions
+     */
+    public function canObtainCommandHelpText()
+    {
+        $command = $this->getCommandFromApp('build');
+
+        $txt = $command->getHelp();
+
+        $this->assertNotEmpty($txt);
+    }
+
+    /**
+     * @test
+     *
      * @covers ::runCommand
      *
      * @covers ::configure
