@@ -2,6 +2,7 @@
 
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Aedart\Scaffold\Contracts\Tasks\ConsoleTask;
 use Mockery as m;
 
 /**
@@ -17,6 +18,16 @@ abstract class ConsoleTest extends BaseUnitTest
     /********************************************************
      * Helpers
      *******************************************************/
+
+    /**
+     * Returns a console task mock
+     *
+     * @return m\MockInterface|ConsoleTask
+     */
+    public function makeTaskMock()
+    {
+        return m::mock(ConsoleTask::class);
+    }
 
     /**
      * Returns input mock
