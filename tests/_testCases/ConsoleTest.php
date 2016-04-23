@@ -22,11 +22,26 @@ abstract class ConsoleTest extends BaseUnitTest
     /**
      * Returns a console task mock
      *
-     * @return m\MockInterface|ConsoleTask
+     * @param bool $withName [optional]
+     * @param bool $withDesc [optional]
+     *
+     * @return ConsoleTask|m\MockInterface
      */
-    public function makeTaskMock()
+    public function makeTaskMock($withName = true, $withDesc = true)
     {
-        return m::mock(ConsoleTask::class);
+        $task = m::mock(ConsoleTask::class);
+
+        if($withName){
+            $task->shouldReceive('getName')
+                ->andReturn($this->faker->unique()->word);
+        }
+
+        if($withDesc){
+            $task->shouldReceive('getDescription')
+                ->andReturn($this->faker->unique()->sentence);
+        }
+
+        return $task;
     }
 
     /**
