@@ -8,9 +8,11 @@ use Aedart\Scaffold\Contracts\Collections\Files as FilesInterface;
 use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler as DirectoriesHandlerInterface;
 use Aedart\Scaffold\Contracts\Handlers\FilesHandler as FilesHandlerInterface;
 use Aedart\Scaffold\Contracts\Tasks\ConsoleTaskRunner;
+use Aedart\Scaffold\Contracts\Templates\Data\Property as PropertyInterface;
 use Aedart\Scaffold\Handlers\DirectoriesHandler;
 use Aedart\Scaffold\Handlers\FilesHandler;
 use Aedart\Scaffold\Tasks\TaskRunner;
+use Aedart\Scaffold\Templates\Data\Property;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Config\Repository as RepositoryInterface;
 use Illuminate\Filesystem\Filesystem;
@@ -39,6 +41,7 @@ class ScaffoldServiceProvider extends ServiceProvider
         $this->registerFilesHandler();
         $this->registerFilesCollection();
         $this->registerConsoleTaskRunner();
+        $this->registerTemplateDataProperty();
     }
 
     /******************************************************
@@ -118,6 +121,16 @@ class ScaffoldServiceProvider extends ServiceProvider
     {
         $this->app->bind(ConsoleTaskRunner::class, function($app, array $data = []){
             return new TaskRunner();
+        });
+    }
+
+    /**
+     * Register the Template Data Property
+     */
+    protected function registerTemplateDataProperty()
+    {
+        $this->app->bind(PropertyInterface::class, function($app, array $data = []){
+            return new Property($data, $app);
         });
     }
 }
