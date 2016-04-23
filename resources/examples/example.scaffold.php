@@ -194,14 +194,20 @@ return [
      | Scaffold handlers
      | ------------------------------------------------------------
      |
-     | Here you can change the default handlers for this scaffold.
+     | These handlers are used by some of the default tasks. They
+     | provide an additional level of flexibility, in which you
+     | can use the default tasks, yet change the way that each of
+     | them handles certain operations.
+     |
+     | If you do not plan to change the default tasks' behaviour,
+     | then you can leave out the part of the configuration.
      */
-    'handlers' => [
-
-        'directory'     =>    \Aedart\Scaffold\Handlers\DirectoriesHandler::class,
-
-        'file'           =>    \Aedart\Scaffold\Handlers\FilesHandler::class,
-
-        'templates'       =>    \Aedart\Scaffold\Handlers\TemplateHandler::class,
-    ],
+//    'handlers' => [
+//
+//        'directory'     =>    \Aedart\Scaffold\Handlers\DirectoriesHandler::class,
+//
+//        'file'          =>    \Aedart\Scaffold\Handlers\FilesHandler::class,
+//
+//        'templates'     =>    \Aedart\Scaffold\Handlers\TemplateHandler::class,
+//    ],
 ];
