@@ -113,7 +113,7 @@ class BuildCommand extends BaseCommand
         $taskDescriptions = $this->formatTasksDescriptions();
 
         return <<<EOT
-Base on a scaffold configuration file, this command will do the following;
+Based on a scaffold configuration file, this command will do the following;
 
 {$taskDescriptions}
 Usage:
