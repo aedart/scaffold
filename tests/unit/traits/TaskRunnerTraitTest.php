@@ -52,7 +52,7 @@ class TaskRunnerTraitTest extends GetterSetterTraitTestCase
      * @covers ::hasDefaultTaskRunner
      * @covers ::getDefaultTaskRunner
      */
-    public function taskRunnerTraitMethods(){
+    public function runTaskRunnerTraitMethods(){
         $this->assertGetterSetterTraitMethods($this->makeConsoleTaskRunnerMock(), null);
     }
 }
