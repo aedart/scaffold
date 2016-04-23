@@ -1,5 +1,6 @@
 <?php namespace Aedart\Scaffold\Contracts\Tasks;
 
+use Aedart\Scaffold\Exceptions\CannotExecuteTaskException;
 use Illuminate\Contracts\Config\Repository;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -25,6 +26,8 @@ interface ConsoleTaskRunner
      * @param Repository $config Configuration to be passed to each task
      *
      * @return void
+     *
+     * @throws CannotExecuteTaskException
      */
     public function execute(array $tasks, InputInterface $input, OutputInterface $output, Repository $config);
 }
