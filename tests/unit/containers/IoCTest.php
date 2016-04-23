@@ -13,7 +13,7 @@ use Illuminate\Contracts\Container\Container;
  * @group resolvers
  * @group ioc
  *
- * @coversDefaultClass Aedart\Scaffold\Resolvers\IoC
+ * @coversDefaultClass Aedart\Scaffold\Containers\IoC
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
 class IoCTest extends BaseUnitTest
