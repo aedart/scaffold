@@ -1,9 +1,9 @@
 <?php namespace Aedart\Scaffold\Contracts\Templates\Data;
 
 /**
- * Template Value Type
+ * Template Data Property Type
  *
- * Various supported template "value" types. Depending upon
+ * Various supported template data "property" types. Depending upon
  * what type is specified, different action must be performed
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
@@ -11,7 +11,6 @@
  */
 interface Type
 {
-
     /**
      * Default - the user is not prompted
      * for any value.
