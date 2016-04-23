@@ -97,6 +97,7 @@ class TaskRunner implements ConsoleTaskRunner
         // Special formatting, if Symfony Style is provided
         if($output instanceof StyleInterface){
             $output->section($task->getName());
+            $output->text($task->getDescription());
             $output->text($taskXofY);
             $output->newLine();
             return;
@@ -105,6 +106,7 @@ class TaskRunner implements ConsoleTaskRunner
         // Std. formatting
         $output->writeln($task->getName());
         $output->writeln('--------------------------------');
+        $output->writeln($task->getDescription());
         $output->writeln($taskXofY);
         $output->writeln('');
     }
