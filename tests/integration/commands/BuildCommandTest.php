@@ -52,6 +52,7 @@ class BuildCommandTest extends BaseIntegrationTest
      *
      * @covers ::runCommand
      *
+     * @covers ::loadAndResolveConfiguration
      * @covers ::configure
      *
      * @covers \Aedart\Scaffold\Tasks\CreateDirectories::performTask
@@ -102,6 +103,7 @@ class BuildCommandTest extends BaseIntegrationTest
      *
      * @covers ::runCommand
      *
+     * @covers ::loadAndResolveConfiguration
      * @covers ::configure
      *
      * @covers \Aedart\Scaffold\Tasks\CreateDirectories::performTask
