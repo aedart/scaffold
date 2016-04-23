@@ -173,7 +173,7 @@ return [
      */
     'templateData' => [
         'packageName' => [
-            'type'          => \Aedart\Scaffold\Contracts\Templates\Data\ValueType::QUESTION,
+            'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::QUESTION,
             'question'      => 'What this package\'s name (composer.json "name" property)?',
             'value'         => 'aedart/scaffold-example',
             'validate'      => function($answer){
@@ -190,7 +190,7 @@ return [
         ],
 
         'packageType' => [
-            'type'          => \Aedart\Scaffold\Contracts\Templates\Data\ValueType::CHOICE,
+            'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::CHOICE,
             'question'      => 'What type of this package is this (composer.json "type" property)?',
             'choices'       => [
                 'library',
