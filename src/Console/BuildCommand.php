@@ -98,16 +98,12 @@ class BuildCommand extends BaseCommand
 
     protected function formatHelp()
     {
-        // TODO: Autoload the desc. from each task and add it to the help, via a {tasksDesc}
+        $taskDescriptions = $this->formatTasksDescriptions();
 
         return <<<EOT
 Base on a scaffold configuration file, this command will do the following;
 
-1) Create specified directories
-2) Copy a set of source files into specified destinations
-3) Aks you for eventual input, based on 'templateData' and 'templates' sections of the given configuration
-4) Generate files based on specified templates and eventual given input
-
+{$taskDescriptions}
 Usage:
 
 <info>php scaffold build resources/scaffold_aedart_composer_example.php</info>
@@ -118,5 +114,26 @@ You can, however, also specify a desired output directory:
 
 <info>php scaffold build resources/scaffold_aedart_composer_example.php --output /home/vagrant/Aedart/MyProject/</info>
 EOT;
+    }
+
+    /**
+     * Returns each added task's description
+     *
+     * @return string
+     */
+    protected function formatTasksDescriptions()
+    {
+        $output = "";
+
+        $i = 1;
+        foreach($this->tasks as $task){
+            $desc = (new $task)->getDescription();
+            
+            $output .= "<info>{$i}</info> {$desc}" . PHP_EOL;
+
+            $i++;
+        }
+
+        return $output;
     }
 }
