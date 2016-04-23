@@ -17,6 +17,9 @@ interface Files extends IPartialCollection
      * Put a new source file and its destination into
      * this collection
      *
+     * If the source file has already been added, it's
+     * destination will be replaced with the new one.
+     *
      * @param string $sourceFile Path to the source file
      * @param string $destination Path to where the source file should be copied or moved to
      *
