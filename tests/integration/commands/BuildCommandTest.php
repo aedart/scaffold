@@ -36,7 +36,6 @@ class BuildCommandTest extends BaseIntegrationTest
      * @test
      *
      * @covers ::formatHelp
-     * @covers ::formatTasksDescriptions
      */
     public function canObtainCommandHelpText()
     {
