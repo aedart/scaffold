@@ -1,4 +1,4 @@
-<?php namespace Aedart\Scaffold\Resolvers;
+<?php namespace Aedart\Scaffold\Containers;
 
 use Aedart\Config\Loader\Providers\ConfigurationLoaderServiceProvider;
 use Aedart\Scaffold\Exceptions\ForbiddenException;

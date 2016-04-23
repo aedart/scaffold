@@ -1,7 +1,7 @@
 <?php namespace Aedart\Scaffold;
 
 use Aedart\Scaffold\Console\BuildCommand;
-use Aedart\Scaffold\Resolvers\IoC;
+use Aedart\Scaffold\Containers\IoC;
 use Symfony\Component\Console\Application;
 
 /**

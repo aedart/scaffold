@@ -2,7 +2,7 @@
 
 use Aedart\Scaffold\Contracts\Collections\Files;
 use Aedart\Scaffold\Contracts\Handlers\FilesHandler;
-use Aedart\Scaffold\Resolvers\IoC;
+use Aedart\Scaffold\Containers\IoC;
 
 /**
  * Copy Files Task

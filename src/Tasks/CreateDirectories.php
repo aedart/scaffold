@@ -2,7 +2,7 @@
 
 use Aedart\Scaffold\Contracts\Collections\Directories;
 use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler;
-use Aedart\Scaffold\Resolvers\IoC;
+use Aedart\Scaffold\Containers\IoC;
 use Aedart\Scaffold\Transformers\DirectoryPaths;
 
 /**

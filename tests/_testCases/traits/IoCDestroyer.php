@@ -1,6 +1,6 @@
 <?php
 
-use Aedart\Scaffold\Resolvers\IoC;
+use Aedart\Scaffold\Containers\IoC;
 
 /**
  * IoC Destroyer

@@ -3,7 +3,7 @@
 use Aedart\Scaffold\Collections\Directories as DirectoriesCollection;
 use Aedart\Scaffold\Contracts\Collections\Directories;
 use Aedart\Scaffold\Handlers\DirectoriesHandler;
-use Aedart\Scaffold\Resolvers\IoC;
+use Aedart\Scaffold\Containers\IoC;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Container\Container;
 

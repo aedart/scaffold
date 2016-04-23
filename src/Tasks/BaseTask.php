@@ -3,7 +3,7 @@
 use Aedart\Model\Traits\Strings\DescriptionTrait;
 use Aedart\Model\Traits\Strings\NameTrait;
 use Aedart\Scaffold\Contracts\Tasks\ConsoleTask;
-use Aedart\Scaffold\Resolvers\IoC;
+use Aedart\Scaffold\Containers\IoC;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Input\InputInterface;
