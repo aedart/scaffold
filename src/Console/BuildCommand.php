@@ -49,29 +49,8 @@ class BuildCommand extends BaseCommand
      */
     public function runCommand()
     {
-        // Load configuration
-        $config = $this->getConfigLoader()->parse($this->input->getArgument('config'));
-
-        // Get the filename (without file extension) so that we know what
-        // part of the configuration to fetch. The filename acts as the
-        // configuration's entry key.
-        $filename = strtolower(pathinfo($this->input->getArgument('config'), PATHINFO_FILENAME));
-
-        // Fetch the content of the configuration and pass it
-        // into a new configuration, which is the one that we are
-        // going to pass on to each task
-        $config = new Repository($config->get($filename));
-
-        // Resolve the output path and added it to the configuration
-        $outputPath = $this->input->getOption('output');
-        if(substr($outputPath, -1) != DIRECTORY_SEPARATOR){
-            $outputPath = $outputPath . DIRECTORY_SEPARATOR;
-        }
-        $config->set('outputPath', $outputPath);
-
-        // Output title and what configuration file is being used
-        $this->output->title(sprintf('Building %s', $config->get('name')));
-        $this->output->text(sprintf('Using: %s', $this->input->getArgument('config')));
+        // Load and resolve the configuration
+        $config = $this->loadAndResolveConfiguration($this->input->getArgument('config'), $this->input->getOption('output'));
 
         // Execute builder's tasks
         $i = 1;
@@ -96,6 +75,48 @@ class BuildCommand extends BaseCommand
         $this->output->success(sprintf('%s completed', $config->get('name')));
     }
 
+    /**
+     * Loads and resolves the scaffold configuration
+     *
+     * @param string $pathToConfig
+     * @param string $outputPath
+     *
+     * @return Repository|\Illuminate\Contracts\Config\Repository
+     */
+    protected function loadAndResolveConfiguration($pathToConfig, $outputPath)
+    {
+        // Load configuration
+        $config = $this->getConfigLoader()->parse($pathToConfig);
+
+        // Get the filename (without file extension) so that we know what
+        // part of the configuration to fetch. The filename acts as the
+        // configuration's entry key.
+        $filename = strtolower(pathinfo($pathToConfig, PATHINFO_FILENAME));
+
+        // Fetch the content of the configuration and pass it
+        // into a new configuration, which is the one that we are
+        // going to pass on to each task
+        $config = new Repository($config->get($filename));
+
+        // Resolve the output path and added it to the configuration
+        if(substr($outputPath, -1) != DIRECTORY_SEPARATOR){
+            $outputPath = $outputPath . DIRECTORY_SEPARATOR;
+        }
+        $config->set('outputPath', $outputPath);
+
+        // Output title and what configuration file is being used
+        $this->output->title(sprintf('Building %s', $config->get('name')));
+        $this->output->text(sprintf('Using: %s', $pathToConfig));
+
+        // Finally, return the configuration
+        return $config;
+    }
+
+    /**
+     * Formats and returns this commands help text
+     *
+     * @return string
+     */
     protected function formatHelp()
     {
         $taskDescriptions = $this->formatTasksDescriptions();
