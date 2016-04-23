@@ -7,8 +7,10 @@ use Aedart\Scaffold\Contracts\Collections\Directories as DirectoriesInterface;
 use Aedart\Scaffold\Contracts\Collections\Files as FilesInterface;
 use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler as DirectoriesHandlerInterface;
 use Aedart\Scaffold\Contracts\Handlers\FilesHandler as FilesHandlerInterface;
+use Aedart\Scaffold\Contracts\Tasks\ConsoleTaskRunner;
 use Aedart\Scaffold\Handlers\DirectoriesHandler;
 use Aedart\Scaffold\Handlers\FilesHandler;
+use Aedart\Scaffold\Tasks\TaskRunner;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Config\Repository as RepositoryInterface;
 use Illuminate\Filesystem\Filesystem;
@@ -36,6 +38,7 @@ class ScaffoldServiceProvider extends ServiceProvider
         $this->registerDirectoriesCollection();
         $this->registerFilesHandler();
         $this->registerFilesCollection();
+        $this->registerConsoleTaskRunner();
     }
 
     /******************************************************
@@ -105,6 +108,16 @@ class ScaffoldServiceProvider extends ServiceProvider
     {
         $this->app->bind(FilesInterface::class, function($app, array $data = []){
             return new Files($data);
+        });
+    }
+
+    /**
+     * Register the Console Task Runner
+     */
+    protected function registerConsoleTaskRunner()
+    {
+        $this->app->bind(ConsoleTaskRunner::class, function($app, array $data = []){
+            return new TaskRunner();
         });
     }
 }
