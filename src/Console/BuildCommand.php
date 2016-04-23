@@ -27,7 +27,7 @@ class BuildCommand extends BaseCommand
             ->setName('build')
             ->setDescription('Executes the tasks that are defined inside the provided scaffold configuration')
             ->addArgument('config', InputArgument::REQUIRED, 'Path to the scaffold configuration file')
-            ->addOption('output', null, InputOption::VALUE_OPTIONAL, 'Path where to build the scaffold folders and files', getcwd())
+            ->addOption('output', null, InputOption::VALUE_OPTIONAL, 'Path where to build project or resource', getcwd())
             ->setHelp($this->formatHelp());
     }
 
