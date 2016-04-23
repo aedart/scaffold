@@ -37,6 +37,18 @@ return [
     'basePath' => __DIR__ . '/resources/',
 
     /* ------------------------------------------------------------
+     | Tasks
+     | ------------------------------------------------------------
+     |
+     | List of all the tasks that must be executed, in order to
+     | build a project (or resources), based on this scaffold.
+     */
+    'tasks' => [
+        \Aedart\Scaffold\Tasks\CreateDirectories::class,
+        \Aedart\Scaffold\Tasks\CopyFiles::class
+    ],
+
+    /* ------------------------------------------------------------
      | Folders
      | ------------------------------------------------------------
      |
