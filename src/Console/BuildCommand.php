@@ -128,7 +128,7 @@ EOT;
         $i = 1;
         foreach($this->tasks as $task){
             $desc = (new $task)->getDescription();
-            
+
             $output .= "<info>{$i}</info> {$desc}" . PHP_EOL;
 
             $i++;
