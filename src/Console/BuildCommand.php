@@ -59,7 +59,7 @@ class BuildCommand extends BaseCommand
         $config = $this->loadAndResolveConfiguration($this->input->getArgument('config'), $this->input->getOption('output'));
 
         // Execute builder's tasks
-        $this->getTaskRunner()->execute($this->tasks, $this->input, $this->output, $config);
+        $this->getTaskRunner()->execute($config->get('tasks', []), $this->input, $this->output, $config);
 
         // Output done msg
         $this->output->newLine();

@@ -8,6 +8,10 @@ return [
 
     'basePath' => __DIR__ ,
 
+    'tasks' => [
+        \Aedart\Scaffold\Tasks\CreateDirectories::class,
+    ],
+
     'folders' => [
             'app',
             'config',

@@ -8,6 +8,10 @@ return [
 
     'basePath' => __DIR__ . '/resources/',
 
+    'tasks' => [
+        \Aedart\Scaffold\Tasks\CopyFiles::class
+    ],
+
     'files' => [
         // Source files (inside 'basePath')  =>  Destination
         '.gitkeep'                  =>  '.gitkeep',
