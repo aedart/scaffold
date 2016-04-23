@@ -3,8 +3,10 @@
 
 use Aedart\Scaffold\Collections\Directories;
 use Aedart\Scaffold\Collections\Files;
+use Aedart\Scaffold\Collections\TemplateProperties;
 use Aedart\Scaffold\Contracts\Collections\Directories as DirectoriesInterface;
 use Aedart\Scaffold\Contracts\Collections\Files as FilesInterface;
+use Aedart\Scaffold\Contracts\Collections\TemplateProperties as TemplatePropertiesInterface;
 use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler as DirectoriesHandlerInterface;
 use Aedart\Scaffold\Contracts\Handlers\FilesHandler as FilesHandlerInterface;
 use Aedart\Scaffold\Contracts\Tasks\ConsoleTaskRunner;
@@ -41,6 +43,7 @@ class ScaffoldServiceProvider extends ServiceProvider
         $this->registerFilesHandler();
         $this->registerFilesCollection();
         $this->registerConsoleTaskRunner();
+        $this->registerTemplatePropertiesCollection();
         $this->registerTemplateDataProperty();
     }
 
@@ -121,6 +124,16 @@ class ScaffoldServiceProvider extends ServiceProvider
     {
         $this->app->bind(ConsoleTaskRunner::class, function($app, array $data = []){
             return new TaskRunner();
+        });
+    }
+
+    /**
+     * Register the Template Data Property Collection
+     */
+    protected function registerTemplatePropertiesCollection()
+    {
+        $this->app->bind(TemplatePropertiesInterface::class, function($app, array $data = []){
+            return new TemplateProperties($data);
         });
     }
 
