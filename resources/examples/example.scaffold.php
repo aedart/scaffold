@@ -45,7 +45,8 @@ return [
      */
     'tasks' => [
         \Aedart\Scaffold\Tasks\CreateDirectories::class,
-        \Aedart\Scaffold\Tasks\CopyFiles::class
+        \Aedart\Scaffold\Tasks\CopyFiles::class,
+        \Aedart\Scaffold\Tasks\AskForTemplateData::class,
     ],
 
     /* ------------------------------------------------------------
@@ -176,17 +177,17 @@ return [
             'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::QUESTION,
             'question'      => 'What this package\'s name (composer.json "name" property)?',
             'value'         => 'aedart/scaffold-example',
-            'validate'      => function($answer){
-                if(strtr($answer, '/') !== false){
-                    return $answer;
-                }
-
-                throw new \RuntimeException('Package name must contain vendor and project name, separated by "/"');
-            },
-            'maxAttempts'   => 2,
-            'postProcess'   => function($answer){
-                return trim(strtolower($answer));
-            }
+//            'validate'      => function($answer){
+//                if(strtr($answer, '/') !== false){
+//                    return $answer;
+//                }
+//
+//                throw new \RuntimeException('Package name must contain vendor and project name, separated by "/"');
+//            },
+//            'maxAttempts'   => 2,
+//            'postProcess'   => function($answer){
+//                return trim(strtolower($answer));
+//            }
         ],
 
         'packageType' => [
