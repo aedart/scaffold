@@ -4,8 +4,12 @@ use Aedart\Config\Loader\Traits\ConfigLoaderTrait;
 use Aedart\Scaffold\Tasks\CopyFiles;
 use Aedart\Scaffold\Tasks\CreateDirectories;
 use Illuminate\Config\Repository;
+use Illuminate\Contracts\Config\Repository as RepositoryInterface;
 use Symfony\Component\Console\Input\InputArgument;
+use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
+use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Style\StyleInterface;
 
 /**
  * Build Command
@@ -53,26 +57,42 @@ class BuildCommand extends BaseCommand
         $config = $this->loadAndResolveConfiguration($this->input->getArgument('config'), $this->input->getOption('output'));
 
         // Execute builder's tasks
+        $this->executeTasks($this->tasks, $this->input, $this->output, $config);
+
+        // Output done msg
+        $this->output->newLine();
+        $this->output->success(sprintf('%s completed', $config->get('name')));
+    }
+
+    /**
+     * Execute the given tasks
+     *
+     * @param string[] $tasks Class paths to the tasks that must be executed
+     * @param InputInterface $input
+     * @param OutputInterface $output
+     * @param RepositoryInterface $config Configuration to be passed to each task
+     */
+    protected function executeTasks(array $tasks, InputInterface $input, OutputInterface $output, RepositoryInterface $config)
+    {
         $i = 1;
-        $total = count($this->tasks);
-        foreach($this->tasks as $task){
+        $total = count($tasks);
+
+        foreach($tasks as $task){
             // Create new task instance
             /** @var \Aedart\Scaffold\Contracts\Tasks\ConsoleTask $taskToExecute */
             $taskToExecute = (new $task);
 
             // Output task info
-            $this->output->section($taskToExecute->getName());
-            $this->output->text("Task ({$i}/{$total})");
-            $this->output->newLine();
+            if($output instanceof StyleInterface){
+                $output->section($taskToExecute->getName());
+                $output->text("Task ({$i}/{$total})");
+                $output->newLine();
+            }
 
             // Execute the task
-            $taskToExecute->execute($this->input, $this->output, $config);
+            $taskToExecute->execute($input, $output, $config);
             $i++;
         }
-
-        // Output done msg
-        $this->output->newLine();
-        $this->output->success(sprintf('%s completed', $config->get('name')));
     }
 
     /**
@@ -81,7 +101,7 @@ class BuildCommand extends BaseCommand
      * @param string $pathToConfig
      * @param string $outputPath
      *
-     * @return Repository|\Illuminate\Contracts\Config\Repository
+     * @return Repository|RepositoryInterface
      */
     protected function loadAndResolveConfiguration($pathToConfig, $outputPath)
     {
