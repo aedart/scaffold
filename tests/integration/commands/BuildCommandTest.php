@@ -75,7 +75,7 @@ class BuildCommandTest extends BaseIntegrationTest
 
         $commandTester->execute([
             'command'   => $command->getName(),
-            'config'    => $this->dataPath() . 'foldersOnly.php',
+            'config'    => $this->dataPath() . 'foldersOnly.scaffold.php',
             '--output'  => $outputPath
         ]);
 
@@ -128,7 +128,7 @@ class BuildCommandTest extends BaseIntegrationTest
 
         $commandTester->execute([
             'command'   => $command->getName(),
-            'config'    => $this->dataPath() . 'filesOnly.php',
+            'config'    => $this->dataPath() . 'filesOnly.scaffold.php',
             '--output'  => $outputPath
         ]);
 
