@@ -9,7 +9,7 @@
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Contracts\Templates
  */
-interface ValueType
+interface Type
 {
 
     /**
