@@ -14,6 +14,8 @@ use Aedart\Scaffold\Transformers\DirectoryPaths;
 class CreateDirectories extends BaseTask
 {
 
+    protected $description = 'Creates predefined directories inside the output path';
+
     public function performTask()
     {
         // Check if there are any directories to be created
