@@ -15,6 +15,8 @@ use Mockery as m;
  */
 abstract class ConsoleTest extends BaseUnitTest
 {
+    use TaskRunnerUtils;
+
     /********************************************************
      * Helpers
      *******************************************************/
