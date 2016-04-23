@@ -7,15 +7,13 @@ use Aedart\Scaffold\Traits\TaskRunner;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Config\Repository as RepositoryInterface;
 use Symfony\Component\Console\Input\InputArgument;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\StyleInterface;
 
 /**
  * Build Command
  *
- * Builds folders and files, based on the given configuration
+ * Executes a series of console tasks, which should be
+ * defined in a scaffold configuration
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Console
@@ -24,19 +22,6 @@ class BuildCommand extends BaseCommand
 {
     use ConfigLoaderTrait;
     use TaskRunner;
-
-    /**
-     * List of console tasks (paths) that this command
-     * must perform / execute.
-     *
-     * NB: The list is ordered !
-     *
-     * @var string[]
-     */
-    protected $tasks = [
-        CreateDirectories::class,
-        CopyFiles::class,
-    ];
 
     protected function configure()
     {
@@ -110,42 +95,19 @@ class BuildCommand extends BaseCommand
      */
     protected function formatHelp()
     {
-        $taskDescriptions = $this->formatTasksDescriptions();
-
         return <<<EOT
-Based on a scaffold configuration file, this command will do the following;
+Execute a series of tasks, which should be defined inside the provided
+scaffold configuration.
 
-{$taskDescriptions}
 Usage:
 
-<info>php scaffold build resources/scaffold_aedart_composer_example.php</info>
+<info>php scaffold build resources/examples/example.scaffold.php</info>
 
 The above command will load and read the specified scaffold configuration file and process it.
 All directories and files will be created, copied or generated into the <debug>current working directory</debug>.
 You can, however, also specify a desired output directory:
 
-<info>php scaffold build resources/scaffold_aedart_composer_example.php --output /home/vagrant/Aedart/MyProject/</info>
+<info>php scaffold build resources/examples/example.scaffold.php --output /home/vagrant/Aedart/MyProject/</info>
 EOT;
-    }
-
-    /**
-     * Returns each added task's description
-     *
-     * @return string
-     */
-    protected function formatTasksDescriptions()
-    {
-        $output = "";
-
-        $i = 1;
-        foreach($this->tasks as $task){
-            $desc = (new $task)->getDescription();
-
-            $output .= "<info>{$i}</info> {$desc}" . PHP_EOL;
-
-            $i++;
-        }
-
-        return $output;
     }
 }
