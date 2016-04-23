@@ -53,8 +53,9 @@ class BuildCommandTest extends BaseIntegrationTest
      * @covers ::runCommand
      *
      * @covers ::loadAndResolveConfiguration
-     * @covers ::executeTasks
      * @covers ::configure
+     *
+     * @covers \Aedart\Scaffold\Facades\TaskRunner::getFacadeAccessor
      *
      * @covers \Aedart\Scaffold\Tasks\CreateDirectories::performTask
      *
@@ -105,8 +106,9 @@ class BuildCommandTest extends BaseIntegrationTest
      * @covers ::runCommand
      *
      * @covers ::loadAndResolveConfiguration
-     * @covers ::executeTasks
      * @covers ::configure
+     *
+     * @covers \Aedart\Scaffold\Facades\TaskRunner::getFacadeAccessor
      *
      * @covers \Aedart\Scaffold\Tasks\CreateDirectories::performTask
      * @covers \Aedart\Scaffold\Tasks\CopyFiles::performTask
