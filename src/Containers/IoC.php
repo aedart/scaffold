@@ -95,6 +95,7 @@ class IoC
     {
         $this->container = null;
 
+        App::clearResolvedInstances();
         App::setFacadeApplication(null);
 
         self::$instance = null;
