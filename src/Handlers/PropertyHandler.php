@@ -217,13 +217,66 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
         return $this->output->confirm($property->getQuestion(), $property->getValue());
     }
 
-    protected function handleHiddenType(Property $property)
+    /**
+     * Process property of the type 'hidden'
+     *
+     * Method will ask the user for a value and thereafter
+     * ask the user to confirm that value. Just like when
+     * you are asked for creating a password, in most
+     * systems.
+     *
+     * If the the hidden value is not conformed correctly,
+     * the method will try again (ask the user again), until
+     * there are no more attempts left.
+     *
+     * @param Property $property
+     * @param int $maxAttempts [optional]
+     * @param int $attemptNumber [optional]
+     *
+     * @return string
+     *
+     * @throws CannotProcessPropertyException If maximum attempts has been reached
+     */
+    protected function handleHiddenType(Property $property, $maxAttempts = 3, $attemptNumber = 1)
     {
         // TODO: Implement validation
 
+        // TODO: Implement dynamic max attempts based on Property
+
         // TODO: Hidden should always be confirmed - usage most likely for passwords...
 
-        return $this->output->askHidden($property->getQuestion(), null);
+        $value = $this->output->askHidden($property->getQuestion(), null);
+
+        // Confirm the value that has been given
+        // NOTE: We cannot use the builtin validation for this confirmation,
+        // because the question helper is repeatedly going to ask for
+        // the same value. However, the user might NOT know where the mistake
+        // was made; first time the hidden value was typed or the second time?
+        // Therefore, we must manually validate the two values
+        $confirmedValue = $this->output->askHidden("Repeat ({$property->getQuestion()})!", null);
+
+        // Check if values match
+        if($confirmedValue == $value){
+            return $value;
+        }
+
+        // This means that the values do not match.
+        // Thus, we must check if we have any attempts left...
+        if($attemptNumber >= $maxAttempts){
+            throw new CannotProcessPropertyException("Incorrect values have been given for '{$property->getId()}', maximum attempts reached!");
+        }
+
+        // If reached here, it means that the two values do not match,
+        // and we still have one or more attempts to resolve the issue.
+        // We do so by simply asking the user again.
+        // Warn the user
+        $this->output->warning("The two values do not match. Please try again. Attempt no.: ({$attemptNumber}/{$maxAttempts})");
+
+        // Increase attempt and
+        $attemptNumber++;
+
+        // Try again...
+        return $this->handleHiddenType($property, $maxAttempts, $attemptNumber);
     }
 
     /**
