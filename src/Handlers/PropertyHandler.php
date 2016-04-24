@@ -124,14 +124,29 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
      */
     protected function outputStatus($value, $type, $id)
     {
-        // Output if type is not hidden
-        if($type != Type::HIDDEN){
-            $this->output->text("Using <info>{$value}</info> for <comment>{$id}</comment>");
-            return;
+        // The value to be displayed in the console
+        $valueToDisplay = $value;
+
+        // The format to use
+        $format = 'info';
+
+        // Check the type of the value
+        if(is_null($value)){
+            $valueToDisplay = 'null';
         }
 
-        // If type is hidden
-        $this->output->text("Using <error>[censored]</error> for <comment>{$id}</comment>");
+        if(is_bool($value)){
+            $valueToDisplay = ($value === true) ? 'true' : 'false';
+        }
+
+        // Check if type is hidden
+        if($type == Type::HIDDEN){
+            $valueToDisplay = '[censored]';
+            $format = 'error';
+        }
+
+        // Finally, output the status
+        $this->output->text("Using <{$format}>{$valueToDisplay}</{$format}> for <comment>{$id}</comment>");
     }
 
     protected function obtainValueFor(Property $property)
@@ -228,7 +243,7 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
     protected function handleUnknownType(Property $property)
     {
         $message = "Unknown property type '{$property->getType()}' on '{$property->getId()}'." . PHP_EOL;
-        $message .= "Using fallback of type 'VALUE' to process property";
+        $message .= "Using fallback of type 'VALUE' to process property.";
 
         $this->output->warning($message);
 
