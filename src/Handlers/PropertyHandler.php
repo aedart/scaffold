@@ -254,9 +254,7 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
      */
     protected function handleQuestionType(Property $property)
     {
-        // TODO: Implement validation
-
-        return $this->output->ask($property->getQuestion(), $property->getValue(), null);
+        return $this->output->ask($property->getQuestion(), $property->getValue(), $property->getValidation());
     }
 
     /**
@@ -312,11 +310,7 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
      */
     protected function handleHiddenType(Property $property, $maxAttempts = 3, $attemptNumber = 1)
     {
-        // TODO: Implement validation
-
-        // TODO: Hidden should always be confirmed - usage most likely for passwords...
-
-        $value = $this->output->askHidden($property->getQuestion(), null);
+        $value = $this->output->askHidden($property->getQuestion(), $property->getValidation());
 
         // Confirm the value that has been given
         // NOTE: We cannot use the builtin validation for this confirmation,
