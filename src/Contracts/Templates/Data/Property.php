@@ -27,7 +27,7 @@ interface Property extends IdAware,
 
     // TODO: validate aware
     // TODO: max Attempts aware
-    // TODO: post Process aware
+    PostProcessAware,
 
     ArrayAccess,
     Arrayable,
