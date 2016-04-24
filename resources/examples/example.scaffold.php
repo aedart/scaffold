@@ -240,6 +240,8 @@ return [
 //
 //        'file'          =>    \Aedart\Scaffold\Handlers\FilesHandler::class,
 //
+//        'property'      =>    \Aedart\Scaffold\Handlers\PropertyHandler::class,
+//
 //        'templates'     =>    \Aedart\Scaffold\Handlers\TemplateHandler::class,
 //    ],
 ];
