@@ -334,6 +334,7 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
         // If reached here, it means that the two values do not match,
         // and we still have one or more attempts to resolve the issue.
         // We do so by simply asking the user again.
+
         // Warn the user
         $this->output->warning("The two values do not match. Please try again. Attempt no.: ({$attemptNumber}/{$maxAttempts})");
 
