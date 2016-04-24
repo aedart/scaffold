@@ -8,6 +8,7 @@ use Aedart\Model\Traits\Strings\QuestionTrait;
 use Aedart\Model\Traits\Strings\ValueTrait;
 use Aedart\Scaffold\Contracts\Templates\Data\Property as PropertyInterface;
 use Aedart\Scaffold\Contracts\Templates\Data\Type;
+use Aedart\Scaffold\Traits\PostProcess;
 
 /**
  * Template Data Property
@@ -24,6 +25,7 @@ class Property extends DataTransferObject implements PropertyInterface
     use QuestionTrait;
     use ChoicesTrait;
     use ValueTrait;
+    use PostProcess;
 
     // TODO: validate trait
     // TODO: max Attempts trait
