@@ -17,8 +17,11 @@ use Aedart\Scaffold\Tasks\TaskRunner;
 use Aedart\Scaffold\Templates\Data\Property;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Config\Repository as RepositoryInterface;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Filesystem\Filesystem;
 use Illuminate\Support\ServiceProvider;
+use Symfony\Component\Console\Style\StyleInterface;
+use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Scaffold Service Provider
@@ -38,6 +41,7 @@ class ScaffoldServiceProvider extends ServiceProvider
     {
         $this->registerFilesystem();
         $this->registerConfig();
+        $this->registerConsoleOutputStyle();
         $this->registerDirectoriesHandler();
         $this->registerDirectoriesCollection();
         $this->registerFilesHandler();
@@ -144,6 +148,27 @@ class ScaffoldServiceProvider extends ServiceProvider
     {
         $this->app->bind(PropertyInterface::class, function($app, array $data = []){
             return new Property($data, $app);
+        });
+    }
+
+    /**
+     * Register a console output style
+     *
+     * @see \Symfony\Component\Console\Style\StyleInterface
+     */
+    protected function registerConsoleOutputStyle()
+    {
+        $this->app->bind(StyleInterface::class, function($app, array $data = []){
+            if(!array_key_exists('input', $data) || !array_key_exists('output', $data)){
+
+                $target = StyleInterface::class;
+
+                $msg = "Target {$target} cannot be build. Missing arguments; e.g. ['input' => (InputInterface), 'output' => (OutputInterface)]";
+
+                throw new BindingResolutionException($msg);
+            }
+
+            return new SymfonyStyle($data['input'], $data['output']);
         });
     }
 }
