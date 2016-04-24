@@ -12,8 +12,12 @@ use Aedart\Scaffold\Exceptions\CannotProcessPropertyException;
 interface PropertyHandler
 {
     /**
-     * Process the given template data property. If needed,
-     * the method will ask the user for a value.
+     * Process the given template data property.
+     *
+     * Method is responsible for somehow process and obtain
+     * the property's value, which thereafter can be used in
+     * some context. If needed, this method will "ask" the
+     * user for a value to be used.
      *
      * @see Property
      *
