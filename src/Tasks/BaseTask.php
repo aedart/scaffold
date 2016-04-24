@@ -44,6 +44,14 @@ abstract class BaseTask implements ConsoleTask
     protected $config;
 
     /**
+     * Class path of the last handler
+     * that was resolved
+     *
+     * @var string
+     */
+    protected $lastHandler;
+
+    /**
      * Execute this given task
      *
      * @param InputInterface $input
@@ -86,11 +94,26 @@ abstract class BaseTask implements ConsoleTask
 
         // Output some information about what handler is being
         // applied for something
-        $handlerClass = get_class($handler);
-        $this->output->text("Using handler: {$handlerClass}");
+        $this->outputAppliedHandler($handler);
 
         // Finally, return the handler
         return $handler;
+    }
+
+    /**
+     * Outputs the handler that has been applied (resolved), but
+     * only if the given handler is not the same as the last
+     * handler.
+     *
+     * @param \Aedart\Scaffold\Contracts\Handlers\Handler $handler
+     */
+    protected function outputAppliedHandler($handler)
+    {
+        $handlerClass = get_class($handler);
+        if($handlerClass != $this->lastHandler){
+            $this->lastHandler = $handlerClass;
+            $this->output->text("Using handler: {$handlerClass}");
+        }
     }
 
     public function getDefaultName()
