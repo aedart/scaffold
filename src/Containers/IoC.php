@@ -136,17 +136,18 @@ class IoC
      *
      * @param string $entry Configuration or instance identifier
      * @param Repository $config
+     * @param array $parameters [optional]
      *
      * @return mixed
      */
-    public function resolveFromConfig($entry, Repository $config)
+    public function resolveFromConfig($entry, Repository $config, array $parameters = [])
     {
         if($config->has($entry)){
             $instance = $config->get($entry);
             return new $instance;
         }
 
-        return $this->container()->make($entry);
+        return $this->container()->make($entry, $parameters);
     }
 
     /**
@@ -179,15 +180,16 @@ class IoC
      *
      * @param string $alias
      * @param Repository $config
-     *
-     * @see IoC::resolveFromConfig()
+     * @param array $parameters [optional]
      *
      * @return \Aedart\Scaffold\Contracts\Handlers\Handler
+     * @see IoC::resolveFromConfig()
+     *
      */
-    public function resolveHandler($alias, Repository $config)
+    public function resolveHandler($alias, Repository $config, array $parameters = [])
     {
         /** @var \Aedart\Scaffold\Contracts\Handlers\Handler $handler */
-        $handler = $this->resolveFromConfig($alias, $config);
+        $handler = $this->resolveFromConfig($alias, $config, $parameters);
 
         // Set base path
         $basePathKey = 'basePath';

@@ -72,16 +72,17 @@ abstract class BaseTask implements ConsoleTask
      * Resolve a handler
      *
      * @param string $alias
-     *
-     * @see IoC::resolveHandler()
+     * @param array $parameters [optional]
      *
      * @return \Aedart\Scaffold\Contracts\Handlers\Handler
+     * @see IoC::resolveHandler()
+     *
      */
-    protected function resolveHandler($alias)
+    protected function resolveHandler($alias, array $parameters = [])
     {
         // Resolve from IoC
         $ioc = IoC::getInstance();
-        $handler = $ioc->resolveHandler($alias, $this->config);
+        $handler = $ioc->resolveHandler($alias, $this->config, $parameters);
 
         // Output some information about what handler is being
         // applied for something
