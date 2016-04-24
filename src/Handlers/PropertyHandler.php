@@ -71,7 +71,7 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
     {
         $value = $this->obtainValueFor($element);
 
-        // TODO: Implement "post process" of value, based on callable method in property
+        $value = $this->applyPostProcessOn($value, $element);
 
         $this->saveValueFor($element, $value);
     }
@@ -202,6 +202,29 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
 
         // Finally, return the final value
         return $value;
+    }
+
+    /**
+     * Applies the given property's post-process
+     * callable method on the given value.
+     *
+     * If property has no post-process method, then
+     * the value is returned.
+     *
+     * @param mixed $value
+     * @param Property $property
+     *
+     * @return mixed
+     */
+    protected function applyPostProcessOn($value, Property $property)
+    {
+        if(!$property->hasPostProcess() && !$property->hasDefaultPostProcess()){
+            return $value;
+        }
+
+        $this->output->text("Applying post-process on <comment>{$property->getId()}</comment>");
+
+        return call_user_func($property->getPostProcess(), $value);
     }
 
     /**
