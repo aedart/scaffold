@@ -14,7 +14,7 @@ use Aedart\Scaffold\Traits\Validation;
 /**
  * Template Data Property
  *
- * TODO: should adhere to an interface...
+ * @see \Aedart\Scaffold\Contracts\Templates\Data\Property
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Templates\Data
