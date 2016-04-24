@@ -9,10 +9,12 @@ use Aedart\Scaffold\Contracts\Collections\Files as FilesInterface;
 use Aedart\Scaffold\Contracts\Collections\TemplateProperties as TemplatePropertiesInterface;
 use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler as DirectoriesHandlerInterface;
 use Aedart\Scaffold\Contracts\Handlers\FilesHandler as FilesHandlerInterface;
+use Aedart\Scaffold\Contracts\Handlers\PropertyHandler as PropertyHandlerInterface;
 use Aedart\Scaffold\Contracts\Tasks\ConsoleTaskRunner;
 use Aedart\Scaffold\Contracts\Templates\Data\Property as PropertyInterface;
 use Aedart\Scaffold\Handlers\DirectoriesHandler;
 use Aedart\Scaffold\Handlers\FilesHandler;
+use Aedart\Scaffold\Handlers\PropertyHandler;
 use Aedart\Scaffold\Tasks\TaskRunner;
 use Aedart\Scaffold\Templates\Data\Property;
 use Illuminate\Config\Repository;
@@ -49,6 +51,7 @@ class ScaffoldServiceProvider extends ServiceProvider
         $this->registerConsoleTaskRunner();
         $this->registerTemplatePropertiesCollection();
         $this->registerTemplateDataProperty();
+        $this->registerPropertyHandler();
     }
 
     /******************************************************
@@ -149,6 +152,30 @@ class ScaffoldServiceProvider extends ServiceProvider
         $this->app->bind(PropertyInterface::class, function($app, array $data = []){
             return new Property($data, $app);
         });
+    }
+
+    /**
+     * Register the files handler
+     */
+    protected function registerPropertyHandler()
+    {
+        $this->app->bind(PropertyHandlerInterface::class, function($app, array $data = []){
+            if(!array_key_exists('config', $data) ||
+               !array_key_exists('key', $data) ||
+               !array_key_exists('output', $data)
+            ){
+
+                $target = PropertyHandlerInterface::class;
+
+                $msg = "Target {$target} cannot be build. Missing arguments; e.g. ['config' => (Repository), 'key' => (string), 'output' => (StyleInterface)]";
+
+                throw new BindingResolutionException($msg);
+            }
+
+            return new PropertyHandler($data['config'], $data['key'], $data['output']);
+        });
+
+        $this->app->alias(PropertyHandlerInterface::class, 'handlers.property');
     }
 
     /**
