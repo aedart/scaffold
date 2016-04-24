@@ -40,13 +40,13 @@ return [
      | Tasks
      | ------------------------------------------------------------
      |
-     | List of all the tasks that must be executed, in order to
-     | build a project (or resources), based on this scaffold.
+     | Ordered list of all the tasks that must be executed. These
+     | tasks are responsible for building your project or resource.
      */
     'tasks' => [
+        \Aedart\Scaffold\Tasks\AskForTemplateData::class,
         \Aedart\Scaffold\Tasks\CreateDirectories::class,
         \Aedart\Scaffold\Tasks\CopyFiles::class,
-        \Aedart\Scaffold\Tasks\AskForTemplateData::class,
     ],
 
     /* ------------------------------------------------------------
