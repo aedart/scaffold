@@ -107,9 +107,31 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
         $this->config->set($this->key, $valueToBeSaved);
 
         // Output what value is being used
-        // TODO: Do NOT display value, if type is hidden!
-        // TODO: Display 'true / false' for boolean values
-        $this->output->text("Using <info>{$valueToBeSaved}</info> for <comment>{$property->getId()}</comment>");
+        $this->outputStatus($valueToBeSaved, $property->getType(), $property->getId());
+    }
+
+    /**
+     * Writes to the console what value is being used.
+     *
+     * Method will NOT display the value, if the type
+     * corresponds to Type::HIDDEN
+     *
+     * @see \Aedart\Scaffold\Contracts\Templates\Data\Type::HIDDEN
+     *
+     * @param mixed $value
+     * @param int $type
+     * @param string $id
+     */
+    protected function outputStatus($value, $type, $id)
+    {
+        // Output if type is not hidden
+        if($type != Type::HIDDEN){
+            $this->output->text("Using <info>{$value}</info> for <comment>{$id}</comment>");
+            return;
+        }
+
+        // If type is hidden
+        $this->output->text("Using <error>[censored]</error> for <comment>{$id}</comment>");
     }
 
     protected function obtainValueFor(Property $property)
