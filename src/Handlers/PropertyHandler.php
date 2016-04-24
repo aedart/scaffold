@@ -141,33 +141,27 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
 
         switch($type){
             case Type::VALUE:
-                $value = $property->getValue();
+                $value = $this->handleValueType($property);
                 break;
 
             case Type::QUESTION:
-                // TODO: Implement validation
-                $value = $this->output->ask($property->getQuestion(), $property->getValue(), null);
+                $value = $this->handleQuestionType($property);
                 break;
 
             case Type::CHOICE:
-                $value = $this->output->choice($property->getQuestion(), $property->getChoices(), $property->getValue());
+                $value = $this->handleChoiceType($property);
                 break;
 
             case Type::CONFIRM:
-                $value = $this->output->confirm($property->getQuestion(), $property->getValue());
+                $value = $this->handleConfirmType($property);
                 break;
 
             case Type::HIDDEN:
-                // TODO: Implement validation
-
-                // TODO: Hidden should always be confirmed - usage most likely for passwords...
-
-                $value = $this->output->askHidden($property->getQuestion(), null);
+                $value = $this->handleHiddenType($property);
                 break;
 
             default:
-                // TODO: Fail here...
-                $this->output->warning("throw exception for '{$property->getId()}', type {$property->getType()} is unsupported");
+                $value = $this->handleUnknownType($property);
                 break;
         }
 
@@ -175,5 +169,43 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
 
         // Finally, return the final value
         return $value;
+    }
+
+    protected function handleValueType(Property $property)
+    {
+        return $property->getValue();
+    }
+
+    protected function handleQuestionType(Property $property)
+    {
+        // TODO: Implement validation
+        return $this->output->ask($property->getQuestion(), $property->getValue(), null);
+    }
+
+    protected function handleChoiceType(Property $property)
+    {
+        return $this->output->choice($property->getQuestion(), $property->getChoices(), $property->getValue());
+    }
+
+    protected function handleConfirmType(Property $property)
+    {
+        return $this->output->confirm($property->getQuestion(), $property->getValue());
+    }
+
+    protected function handleHiddenType(Property $property)
+    {
+        // TODO: Implement validation
+
+        // TODO: Hidden should always be confirmed - usage most likely for passwords...
+
+        return $this->output->askHidden($property->getQuestion(), null);
+    }
+
+    protected function handleUnknownType(Property $property)
+    {
+        // TODO: Fail here...
+        $this->output->warning("throw exception for '{$property->getId()}', type {$property->getType()} is unsupported");
+
+        return $this->handleValueType($property);
     }
 }
