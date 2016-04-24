@@ -9,6 +9,7 @@ use Aedart\Model\Traits\Strings\ValueTrait;
 use Aedart\Scaffold\Contracts\Templates\Data\Property as PropertyInterface;
 use Aedart\Scaffold\Contracts\Templates\Data\Type;
 use Aedart\Scaffold\Traits\PostProcess;
+use Aedart\Scaffold\Traits\Validation;
 
 /**
  * Template Data Property
@@ -26,10 +27,7 @@ class Property extends DataTransferObject implements PropertyInterface
     use ChoicesTrait;
     use ValueTrait;
     use PostProcess;
-
-    // TODO: validate trait
-    // TODO: max Attempts trait
-    // TODO: post Process trait
+    use Validation;
 
     public function getDefaultType()
     {
