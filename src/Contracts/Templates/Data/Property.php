@@ -14,7 +14,12 @@ use JsonSerializable;
 /**
  * Template Data Property
  *
- * TODO: Desc...
+ * A data object that contains the final
+ * value which can be used inside a template and or
+ * meta information on how to obtain the value.
+ *
+ * Each property has a type, which can be used to
+ * determine how the value must be obtained.
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Contracts\Templates\Data
@@ -26,7 +31,6 @@ interface Property extends IdAware,
     ValueAware,
     ValidationAware,
     PostProcessAware,
-
     ArrayAccess,
     Arrayable,
     Jsonable,
