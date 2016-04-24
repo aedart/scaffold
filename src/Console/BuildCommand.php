@@ -80,6 +80,7 @@ class BuildCommand extends BaseCommand
 
         // Output title and what configuration file is being used
         $this->output->title(sprintf('Building %s', $config->get('name')));
+        $this->output->text(sprintf('%s', $config->get('description')));
         $this->output->text(sprintf('Using: %s', $pathToConfig));
 
         // Finally, return the configuration
