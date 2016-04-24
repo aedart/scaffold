@@ -201,10 +201,26 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
         return $this->output->askHidden($property->getQuestion(), null);
     }
 
+    /**
+     * Process property of unknown type
+     *
+     * Method warns the user about the unknown type
+     * and then uses a fallback; it attempts to just
+     * handle the property as if it was of the type
+     * 'value'
+     *
+     * @see handleValueType()
+     *
+     * @param Property $property
+     *
+     * @return null|string
+     */
     protected function handleUnknownType(Property $property)
     {
-        // TODO: Fail here...
-        $this->output->warning("throw exception for '{$property->getId()}', type {$property->getType()} is unsupported");
+        $message = "Unknown property type '{$property->getType()}' on '{$property->getId()}'." . PHP_EOL;
+        $message .= "Using fallback of type 'VALUE' to process property";
+
+        $this->output->warning($message);
 
         return $this->handleValueType($property);
     }
