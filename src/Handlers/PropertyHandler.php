@@ -71,6 +71,8 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
     {
         $value = $this->obtainValueFor($element);
 
+        // TODO: Implement "post process" of value, based on callable method in property
+
         $this->saveValueFor($element, $value);
     }
 
@@ -149,6 +151,24 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
         $this->output->text("Using <{$format}>{$valueToDisplay}</{$format}> for <comment>{$id}</comment>");
     }
 
+    /**
+     * Obtain the value from the given property
+     *
+     * Depending upon the property's type, a different
+     * action is performed, in order to retrieve the
+     * value.
+     *
+     * E.g. If the property has a type of 'question',
+     * then the user is asked that question and the
+     * his/hers answer is then returned by this method.
+     *
+     * @see \Aedart\Scaffold\Contracts\Templates\Data\Type
+     * @see \Aedart\Scaffold\Contracts\Templates\Data\Property
+     *
+     * @param Property $property
+     *
+     * @return mixed The property's processed value
+     */
     protected function obtainValueFor(Property $property)
     {
         $type = $property->getType();
@@ -180,8 +200,6 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
                 break;
         }
 
-        // TODO: Implement "post process" of value
-
         // Finally, return the final value
         return $value;
     }
@@ -194,24 +212,56 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
      *
      * @param Property $property
      *
-     * @return null|string
+     * @return null|string Property's value
      */
     protected function handleValueType(Property $property)
     {
         return $property->getValue();
     }
 
+    /**
+     * Process property of the type 'question'
+     *
+     * Method will ask the user a question and return
+     * the user's answer.
+     *
+     * @param Property $property
+     *
+     * @return string Answer to the question
+     */
     protected function handleQuestionType(Property $property)
     {
         // TODO: Implement validation
+
         return $this->output->ask($property->getQuestion(), $property->getValue(), null);
     }
 
+    /**
+     * Process property of type 'choice'
+     *
+     * Method will ask user to select one or the given
+     * choices that are available in the property.
+     *
+     * @see \Aedart\Scaffold\Contracts\Templates\Data\Property::getChoices()
+     *
+     * @param Property $property
+     *
+     * @return string Selected choice
+     */
     protected function handleChoiceType(Property $property)
     {
         return $this->output->choice($property->getQuestion(), $property->getChoices(), $property->getValue());
     }
 
+    /**
+     * Process property of type 'confirm'
+     *
+     * Method will ask the user to confirm something.
+     *
+     * @param Property $property
+     *
+     * @return bool
+     */
     protected function handleConfirmType(Property $property)
     {
         return $this->output->confirm($property->getQuestion(), $property->getValue());
@@ -233,7 +283,7 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
      * @param int $maxAttempts [optional]
      * @param int $attemptNumber [optional]
      *
-     * @return string
+     * @return string The hidden value
      *
      * @throws CannotProcessPropertyException If maximum attempts has been reached
      */
@@ -291,7 +341,7 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
      *
      * @param Property $property
      *
-     * @return null|string
+     * @return null|string Property's value
      */
     protected function handleUnknownType(Property $property)
     {
