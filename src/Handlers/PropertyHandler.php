@@ -314,8 +314,6 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
     {
         // TODO: Implement validation
 
-        // TODO: Implement dynamic max attempts based on Property
-
         // TODO: Hidden should always be confirmed - usage most likely for passwords...
 
         $value = $this->output->askHidden($property->getQuestion(), null);

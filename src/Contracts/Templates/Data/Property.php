@@ -24,9 +24,7 @@ interface Property extends IdAware,
     QuestionAware,
     ChoicesAware,
     ValueAware,
-
     // TODO: validate aware
-    // TODO: max Attempts aware
     PostProcessAware,
 
     ArrayAccess,
