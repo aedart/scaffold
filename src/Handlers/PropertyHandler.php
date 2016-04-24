@@ -171,6 +171,16 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
         return $value;
     }
 
+    /**
+     * Process property of type 'value'
+     *
+     * Method just returns the value that is
+     * specified in the given property.
+     *
+     * @param Property $property
+     *
+     * @return null|string
+     */
     protected function handleValueType(Property $property)
     {
         return $property->getValue();
