@@ -185,9 +185,9 @@ return [
 //                throw new \RuntimeException('Package name must contain vendor and project name, separated by "/"');
 //            },
 //            'maxAttempts'   => 2,
-//            'postProcess'   => function($answer){
-//                return trim(strtolower($answer));
-//            }
+            'postProcess'   => function($answer){
+                return trim(strtolower($answer));
+            }
         ],
 
         'packageType' => [
