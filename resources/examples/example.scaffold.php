@@ -177,13 +177,13 @@ return [
             'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::QUESTION,
             'question'      => 'What this package\'s name (composer.json "name" property)?',
             'value'         => 'aedart/scaffold-example',
-//            'validate'      => function($answer){
-//                if(strtr($answer, '/') !== false){
-//                    return $answer;
-//                }
-//
-//                throw new \RuntimeException('Package name must contain vendor and project name, separated by "/"');
-//            },
+            'validation'    => function($answer){
+                if(strpos($answer, '/') !== false){
+                    return $answer;
+                }
+
+                throw new \RuntimeException('Package name must contain vendor and project name, separated by "/"');
+            },
             'postProcess'   => function($answer){
                 return trim(strtolower($answer));
             }
@@ -218,6 +218,13 @@ return [
         'envPassword' => [
             'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::HIDDEN,
             'question'      => 'What password should be stored inside the .env?',
+            'validation'    => function($answer){
+                if(strlen($answer) >= 6){
+                    return $answer;
+                }
+
+                throw new \RuntimeException('The password should be at least 6 characters long');
+            },
         ],
     ],
 
