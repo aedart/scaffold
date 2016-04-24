@@ -1,10 +1,10 @@
 <?php namespace Aedart\Scaffold\Console;
 
+use Aedart\Scaffold\Containers\IoC;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\StyleInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Base Command
@@ -27,14 +27,19 @@ abstract class BaseCommand extends Command
     /**
      * The output
      *
-     * @var OutputInterface|StyleInterface
+     * @var StyleInterface
      */
     protected $output;
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
+        $ioc = IoC::getInstance();
+
         $this->input = $input;
-        $this->output = new SymfonyStyle($input, $output);
+        $this->output = $ioc->make(StyleInterface::class, [
+            'input'     => $input,
+            'output'    => $output,
+        ]);
 
         return $this->runCommand();
     }
