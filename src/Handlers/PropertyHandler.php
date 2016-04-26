@@ -169,7 +169,7 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
      *
      * @return mixed The property's processed value
      */
-    protected function obtainValueFor(Property $property)
+    public function obtainValueFor(Property $property)
     {
         $type = $property->getType();
         $value = null;
