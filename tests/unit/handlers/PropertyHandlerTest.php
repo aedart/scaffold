@@ -1,5 +1,6 @@
 <?php
 
+use Aedart\Scaffold\Contracts\Templates\Data\Property;
 use Aedart\Scaffold\Contracts\Templates\Data\Type;
 use Aedart\Scaffold\Handlers\PropertyHandler;
 use Illuminate\Contracts\Config\Repository;
@@ -41,6 +42,36 @@ class PropertyHandlerTest extends ConsoleTest
         }
 
         return $handler;
+    }
+
+    /********************************************************
+     * Custom assertions
+     *******************************************************/
+
+    /**
+     * Assert that the handler is able to obtain a value
+     * for the given property's type
+     *
+     * @param Property $property
+     * @param StyleInterface $output
+     * @param $expectedValue
+     * @param string $failMsg [optional]
+     */
+    public function assertCanObtainValueFor(
+        Property $property,
+        StyleInterface $output,
+        $expectedValue,
+        $failMsg = 'Incorrect value obtained'
+    ) {
+        $key = $this->faker->word;
+
+        $config = $this->makeConfigRepositoryMock();
+
+        $handler = $this->makePropertyHandler($config, $key, $output);
+
+        $result = $handler->obtainValueFor($property);
+
+        $this->assertSame($expectedValue, $result, $failMsg);
     }
 
     /********************************************************
@@ -104,5 +135,165 @@ class PropertyHandlerTest extends ConsoleTest
         $handler = $this->makePropertyHandler($config, $key, $output);
 
         $handler->processProperty($property);
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::obtainValueFor
+     * @covers ::handleValueType
+     */
+    public function canObtainValueForTypeValue()
+    {
+        $output = $this->makeStyleInterfaceMock();
+
+        $value = $this->faker->uuid;
+        $property = $this->makePropertyMock(Type::VALUE);
+        $property->shouldReceive('getValue')
+            ->andReturn($value);
+
+        $this->assertCanObtainValueFor($property, $output, $value, 'Cannot obtain value for type: Value');
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::obtainValueFor
+     * @covers ::handleQuestionType
+     */
+    public function canObtainValueForTypeQuestion()
+    {
+        $value = $this->faker->uuid;
+        $processedValue = $this->faker->uuid;
+
+        $question = $this->faker->sentence;
+
+        $validation = function($answer){return $answer;};
+
+        $property = $this->makePropertyMock(Type::QUESTION);
+        $property->shouldReceive('getValue')
+            ->andReturn($value);
+        $property->shouldReceive('getQuestion')
+            ->andReturn($question);
+        $property->shouldReceive('getValidation')
+            ->andReturn($validation);
+
+        $output = $this->makeStyleInterfaceMock();
+        $output->shouldReceive('ask')
+            ->with($question, $value, $validation)
+            ->andReturn($processedValue);
+
+        $this->assertCanObtainValueFor($property, $output, $processedValue, 'Cannot obtain value for type: Question');
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::obtainValueFor
+     * @covers ::handleChoiceType
+     */
+    public function canObtainValueForTypeChoice()
+    {
+        $value = $this->faker->uuid;
+        $processedValue = $this->faker->uuid;
+
+        $question = $this->faker->sentence;
+
+        $choices = [
+            $this->faker->sentence,
+            $this->faker->sentence,
+            $this->faker->sentence,
+        ];
+
+        $property = $this->makePropertyMock(Type::CHOICE);
+        $property->shouldReceive('getValue')
+            ->andReturn($value);
+        $property->shouldReceive('getQuestion')
+            ->andReturn($question);
+        $property->shouldReceive('getChoices')
+            ->andReturn($choices);
+
+        $output = $this->makeStyleInterfaceMock();
+        $output->shouldReceive('choice')
+            ->with($question, $choices, $value)
+            ->andReturn($processedValue);
+
+        $this->assertCanObtainValueFor($property, $output, $processedValue, 'Cannot obtain value for type: Choice');
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::obtainValueFor
+     * @covers ::handleConfirmType
+     */
+    public function canObtainValueForTypeConfirm()
+    {
+        $value = $this->faker->uuid;
+        $processedValue = $this->faker->uuid;
+
+        $question = $this->faker->sentence;
+
+        $property = $this->makePropertyMock(Type::CONFIRM);
+        $property->shouldReceive('getValue')
+            ->andReturn($value);
+        $property->shouldReceive('getQuestion')
+            ->andReturn($question);
+
+        $output = $this->makeStyleInterfaceMock();
+        $output->shouldReceive('confirm')
+            ->with($question, $value)
+            ->andReturn($processedValue);
+
+        $this->assertCanObtainValueFor($property, $output, $processedValue, 'Cannot obtain value for type: Confirm');
+    }
+
+//    /**
+//     * @test
+//     *
+//     * @covers ::obtainValueFor
+//     * @covers ::handleHiddenType
+//     */
+//    public function canObtainValueForTypeHidden()
+//    {
+//        $value = $this->faker->uuid;
+//        $processedValue = $this->faker->uuid;
+//
+//        $question = $this->faker->sentence;
+//
+//        $property = $this->makePropertyMock(Type::HIDDEN);
+//        $property->shouldReceive('getValue')
+//            ->andReturn($value);
+//        $property->shouldReceive('getQuestion')
+//            ->andReturn($question);
+//
+//        $output = $this->makeStyleInterfaceMock();
+//        $output->shouldReceive('askHidden')
+//            ->with($question, $value)
+//            ->andReturn($processedValue);
+//
+//        $this->assertCanObtainValueFor($property, $output, $processedValue, 'Cannot obtain value for type: Hidden');
+//    }
+
+    /**
+     * @test
+     *
+     * @covers ::obtainValueFor
+     * @covers ::handleUnknownType
+     */
+    public function canObtainValueForTypeUnknown()
+    {
+        $value = $this->faker->uuid;
+
+        $property = $this->makePropertyMock(null);
+        $property->shouldReceive('getValue')
+            ->andReturn($value);
+
+        $output = $this->makeStyleInterfaceMock();
+
+        $output->shouldReceive('warning')
+            ->with(m::type('string'));
+
+        $this->assertCanObtainValueFor($property, $output, $value, 'Cannot obtain value for type: unknown');
     }
 }
