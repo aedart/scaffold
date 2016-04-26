@@ -16,7 +16,7 @@ use Mockery as m;
  * @coversDefaultClass Aedart\Scaffold\Handlers\PropertyHandler
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
-class PropertyHandlerTest extends BaseUnitTest
+class PropertyHandlerTest extends ConsoleTest
 {
     /**
      * Returns a new Property handler instance
