@@ -248,32 +248,101 @@ class PropertyHandlerTest extends ConsoleTest
         $this->assertCanObtainValueFor($property, $output, $processedValue, 'Cannot obtain value for type: Confirm');
     }
 
-//    /**
-//     * @test
-//     *
-//     * @covers ::obtainValueFor
-//     * @covers ::handleHiddenType
-//     */
-//    public function canObtainValueForTypeHidden()
-//    {
-//        $value = $this->faker->uuid;
-//        $processedValue = $this->faker->uuid;
-//
-//        $question = $this->faker->sentence;
-//
-//        $property = $this->makePropertyMock(Type::HIDDEN);
-//        $property->shouldReceive('getValue')
-//            ->andReturn($value);
-//        $property->shouldReceive('getQuestion')
-//            ->andReturn($question);
-//
-//        $output = $this->makeStyleInterfaceMock();
-//        $output->shouldReceive('askHidden')
-//            ->with($question, $value)
-//            ->andReturn($processedValue);
-//
-//        $this->assertCanObtainValueFor($property, $output, $processedValue, 'Cannot obtain value for type: Hidden');
-//    }
+    /**
+     * @test
+     *
+     * @covers ::obtainValueFor
+     * @covers ::handleHiddenType
+     */
+    public function canObtainValueForTypeHidden()
+    {
+        $value = $this->faker->uuid;
+        $processedValue = $this->faker->uuid;
+
+        $question = $this->faker->sentence;
+
+        $validation = function($answer){return $answer;};
+
+        $property = $this->makePropertyMock(Type::HIDDEN);
+        $property->shouldReceive('getValue')
+            ->andReturn($value);
+        $property->shouldReceive('getQuestion')
+            ->andReturn($question);
+        $property->shouldReceive('getValidation')
+            ->andReturn($validation);
+
+        $output = $this->makeStyleInterfaceMock();
+
+        // 1st askHidden call
+        $output->shouldReceive('askHidden')
+            ->once()
+            ->ordered()
+            ->with($question, $validation)
+            ->andReturn($processedValue);
+
+        // 2nd askHidden call
+        $output->shouldReceive('askHidden')
+            ->once()
+            ->ordered()
+            ->with(m::type('string'), null)
+            ->andReturn($processedValue);
+
+        $this->assertCanObtainValueFor($property, $output, $processedValue, 'Cannot obtain value for type: Hidden');
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::obtainValueFor
+     * @covers ::handleHiddenType
+     *
+     * @expectedException \Aedart\Scaffold\Exceptions\CannotProcessPropertyException
+     */
+    public function failsWhenValueIsNotConfirmedForTypeHidden()
+    {
+        $value = $this->faker->uuid;
+        $processedValue = $this->faker->uuid;
+
+        $incorrectConfirmedValue = $this->faker->word;
+
+        $question = $this->faker->sentence;
+
+        $validation = function($answer){return $answer;};
+
+        $property = $this->makePropertyMock(Type::HIDDEN);
+        $property->shouldReceive('getValue')
+            ->andReturn($value);
+        $property->shouldReceive('getQuestion')
+            ->andReturn($question);
+        $property->shouldReceive('getValidation')
+            ->andReturn($validation);
+
+        $output = $this->makeStyleInterfaceMock();
+
+        // 1st askHidden call
+        $output->shouldReceive('askHidden')
+            ->times(3)
+            ->with($question, $validation)
+            ->andReturn($processedValue);
+
+        // 2nd askHidden call
+        $output->shouldReceive('askHidden')
+            ->times(3)
+            ->with(m::type('string'), null)
+            ->andReturn($incorrectConfirmedValue);
+
+        // Warning call...
+        $output->shouldReceive('warning')
+            ->twice()
+            ->with(m::type('string'));
+
+        // Finally, invoke the obtain value method
+        $key = $this->faker->word;
+        $config = $this->makeConfigRepositoryMock();
+        $handler = $this->makePropertyHandler($config, $key, $output);
+
+        $handler->obtainValueFor($property);
+    }
 
     /**
      * @test
