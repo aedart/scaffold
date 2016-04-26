@@ -28,46 +28,6 @@ class TemplatePropertiesTest extends BaseUnitTest
     }
 
     /**
-     * Returns a Template Data Property mock
-     *
-     * @return m\MockInterface|Property
-     */
-    public function makePropertyMock()
-    {
-        $prop = m::mock(Property::class);
-
-        $id = $this->faker->unique()->word;
-
-        $prop->shouldReceive('getId')
-            ->andReturn($id);
-
-        $prop->shouldReceive('setId')
-            ->withAnyArgs();
-
-        return $prop;
-    }
-
-    /**
-     * Returns a list of mocked Template Data Properties
-     *
-     * @param int $amount [optional]
-     *
-     * @return Property[]
-     */
-    public function makePropertiesList($amount = 3)
-    {
-        $output = [];
-
-        while($amount--){
-            $property = $this->makePropertyMock();
-
-            $output[$property->getId()] = $property;
-        }
-
-        return $output;
-    }
-
-    /**
      * Returns a list of Template Data properties,
      * stated as array data
      *
