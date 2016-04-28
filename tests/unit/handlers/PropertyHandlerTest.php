@@ -140,6 +140,40 @@ class PropertyHandlerTest extends ConsoleTest
     /**
      * @test
      *
+     * @covers ::applyPostProcessOn
+     */
+    public function canInvokePostProcessMethod()
+    {
+        $value = $this->faker->uuid;
+        $processedValue = $this->faker->uuid;
+
+        $key = $this->faker->word;
+
+        $config = $this->makeConfigRepositoryMock();
+
+        $output = $this->makeStyleInterfaceMock();
+        $output->shouldReceive('text')
+            ->with(m::type('string'));
+
+        $postProcessMethod = function($v) use ($processedValue){return $processedValue;};
+
+        $property = $this->makePropertyMock(Type::VALUE);
+        $property->makePartial();
+        $property->shouldReceive('hasPostProcess')
+            ->andReturn(true);
+        $property->shouldReceive('getPostProcess')
+            ->andReturn($postProcessMethod);
+
+        $handler = $this->makePropertyHandler($config, $key, $output);
+
+        $result = $handler->applyPostProcessOn($value, $property);
+
+        $this->assertSame($processedValue, $result);
+    }
+
+    /**
+     * @test
+     *
      * @covers ::obtainValueFor
      * @covers ::handleValueType
      */
