@@ -124,38 +124,38 @@ class DirectoriesHandlerTest extends BaseUnitTest
         $handler->processDirectories($directoriesCollection);
     }
 
-    // TODO: Problem with test - how to make mkdir actually fail and return false?
+    /**
+     * @test
+     *
+     * @covers ::createDirectory
+     *
+     * @expectedException \Aedart\Scaffold\Exceptions\CannotCreateDirectoryException
+     */
+    public function failsWhenUnableMakeDirectory()
+    {
+        // Get some directory paths
+        $paths = $this->makeFolderPaths();
+        $directoriesCollection = $this->makeDirectoriesCollectionMock();
+        $directoriesCollection->shouldReceive('all')
+            //->once()
+            ->andReturn($paths);
 
-//    /**
-//     * @test
-//     *
-//     * @covers ::processDirectories
-//     * @covers ::processElement
-//     *
-//     * @covers ::createDirectory
-//     */
-//    public function failsWhenUnableToCreateDirectory()
-//    {
-//        // Get some directory paths
-//        $paths = $this->makeFolderPaths();
-//
-//        // Add invalid directory name
-//        $path[] = '??????';
-//
-//        $directoriesCollection = $this->makeDirectoriesCollectionMock();
-//        $directoriesCollection->shouldReceive('all')
-//            //->once()
-//            ->andReturn($paths);
-//
-//        // Get a log mock
-//        $log = $this->makeLogMock();
-//        $log->shouldReceive('info')
-//            ->withAnyArgs();
-//
-//        // Get the directory handler
-//        $handler = $this->makeDirectoryHandler($log);
-//
-//        // Process paths
-//        $handler->processDirectories($directoriesCollection);
-//    }
+        // Filesystem mock that fails to make directories
+        $filesystem = $this->makeFilesystemMock();
+
+        $filesystem->shouldReceive('exists')
+            ->andReturn(false);
+
+        $filesystem->shouldReceive('makeDirectory')
+            ->withAnyArgs()
+            ->andReturn(false);
+
+        $log = $this->makeLogMock();
+        $log->shouldNotReceive('info');
+
+        $handler = $this->makeDirectoryHandler($log);
+        $handler->setFile($filesystem);
+
+        $handler->processElement($directoriesCollection);
+    }
 }
