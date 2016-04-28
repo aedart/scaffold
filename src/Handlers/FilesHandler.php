@@ -81,6 +81,6 @@ class FilesHandler extends BaseHandler implements FilesHandlerInterface
      */
     public function processFiles(Files $collection)
     {
-        $this->processElement($collection);
+        $this->process($collection);
     }
 }

@@ -172,6 +172,6 @@ class FilesHandlerTest extends BaseUnitTest
         $handler = $this->makeFilesHandler($log);
         $handler->setFile($filesystem);
 
-        $handler->processFiles($filesCollection);
+        $handler->processElement($filesCollection);
     }
 }
