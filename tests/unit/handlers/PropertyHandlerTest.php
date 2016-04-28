@@ -174,6 +174,29 @@ class PropertyHandlerTest extends ConsoleTest
     /**
      * @test
      *
+     * @covers ::outputStatus
+     */
+    public function canOutputStatus()
+    {
+        $value = $this->faker->uuid;
+
+        $key = $this->faker->word;
+
+        $config = $this->makeConfigRepositoryMock();
+
+        $output = $this->makeStyleInterfaceMock();
+        $output->shouldReceive('text')
+            ->once()
+            ->with(m::type('string'));
+
+        $handler = $this->makePropertyHandler($config, $key, $output);
+
+        $handler->outputStatus($value, Type::VALUE, $this->faker->word);
+    }
+
+    /**
+     * @test
+     *
      * @covers ::obtainValueFor
      * @covers ::handleValueType
      */
