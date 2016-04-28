@@ -64,6 +64,7 @@ class BaseTaskTest extends ConsoleTest
      * @test
      *
      * @covers ::resolveHandler
+     * @covers ::outputAppliedHandler
      *
      * NOTE: This test is an overlap of the IoCTest::canResolveAndConfigureAHandler !
      * We only test this here (again), because of (a) code coverage and (b) it is an
