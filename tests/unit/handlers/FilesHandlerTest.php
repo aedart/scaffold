@@ -141,4 +141,37 @@ class FilesHandlerTest extends BaseUnitTest
         $handler->setLog($log);
         $handler->processFiles($filesCollection);
     }
+
+    /**
+     * @test
+     *
+     * @covers ::copyFile
+     *
+     * @expectedException \Aedart\Scaffold\Exceptions\CannotCopyFileException
+     */
+    public function failsWhenUnableToCopyFile()
+    {
+        $files = $this->getFilesList();
+        $filesCollection = $this->makeFilesCollectionMock();
+        $filesCollection->shouldReceive('all')
+            ->andReturn($files);
+
+        // Filesystem mock that fails to copy
+        $filesystem = $this->makeFilesystemMock();
+
+        $filesystem->shouldReceive('exists')
+            ->andReturn(false);
+
+        $filesystem->shouldReceive('copy')
+            ->withAnyArgs()
+            ->andReturn(false);
+
+        $log = $this->makeLogMock();
+        $log->shouldNotReceive('info');
+
+        $handler = $this->makeFilesHandler($log);
+        $handler->setFile($filesystem);
+
+        $handler->processFiles($filesCollection);
+    }
 }
