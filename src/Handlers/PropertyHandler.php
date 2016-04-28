@@ -124,7 +124,7 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
      * @param int $type
      * @param string $id
      */
-    protected function outputStatus($value, $type, $id)
+    public function outputStatus($value, $type, $id)
     {
         // The value to be displayed in the console
         $valueToDisplay = $value;
@@ -216,7 +216,7 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
      *
      * @return mixed
      */
-    protected function applyPostProcessOn($value, Property $property)
+    public function applyPostProcessOn($value, Property $property)
     {
         if(!$property->hasPostProcess() && !$property->hasDefaultPostProcess()){
             return $value;
