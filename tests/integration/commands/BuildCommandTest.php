@@ -28,6 +28,27 @@ class BuildCommandTest extends BaseIntegrationTest
         return parent::dataPath() . 'build/';
     }
 
+    /**
+     * Returns a input stream
+     *
+     * Utility method for helping to test commands that
+     * require interaction.
+     *
+     * @see http://symfony.com/doc/current/components/console/helpers/questionhelper.html#testing-a-command-that-expects-input
+     *
+     * @param $input
+     *
+     * @return resource
+     */
+    public function getInputStream($input)
+    {
+        $stream = fopen('php://memory', 'r+', false);
+        fputs($stream, $input);
+        rewind($stream);
+
+        return $stream;
+    }
+
     /********************************************************
      * Actual tests
      *******************************************************/
@@ -109,7 +130,6 @@ class BuildCommandTest extends BaseIntegrationTest
      *
      * @covers \Aedart\Scaffold\Facades\TaskRunner::getFacadeAccessor
      *
-     * @covers \Aedart\Scaffold\Tasks\CreateDirectories::performTask
      * @covers \Aedart\Scaffold\Tasks\CopyFiles::performTask
      *
      * @covers \Aedart\Scaffold\Tasks\CopyFiles::parseFiles
@@ -140,5 +160,50 @@ class BuildCommandTest extends BaseIntegrationTest
         ];
 
         $this->assertPathsOrFilesExist($expectedPaths);
+    }
+
+    /**
+     * NOTE: This test does NOT handle user interaction. It therefore
+     * only tests if the given output display contains a processed value.
+     * See <i>_data/commands/build/templateDataOnly.scaffold.php</i> for further
+     * details
+     *
+     * @test
+     *
+     * @covers ::runCommand
+     *
+     * @covers ::loadAndResolveConfiguration
+     * @covers ::configure
+     *
+     * @covers \Aedart\Scaffold\Facades\TaskRunner::getFacadeAccessor
+     *
+     * @covers \Aedart\Scaffold\Tasks\AskForTemplateData::performTask
+     *
+     * @covers \Aedart\Scaffold\Tasks\AskForTemplateData::parsePropertiesCollection
+     * @covers \Aedart\Scaffold\Tasks\AskForTemplateData::getPropertyHandler
+     */
+    public function canAskForTemplateData()
+    {
+        //$givenInput = ' ACME/TEST-PACKAGE ';
+
+        $command = $this->getCommandFromApp('build');
+
+        // Will not work, because a task contains the Style Interface, which
+        // is very hard to obtain at this level
+        //$helper = $command->getHelper('question');
+        //$helper->setInputStream($this->getInputStream($givenInput . '\\n'));
+
+        $commandTester = $this->makeCommandTester($command);
+
+        $commandTester->execute([
+            'command'   => $command->getName(),
+            'config'    => $this->dataPath() . 'templateDataOnly.scaffold.php',
+        ]);
+
+        //$expectedPackageName = strtolower(trim($givenInput));
+
+        $expectedPackageName = 'aedart/scaffold-example';
+
+        $this->assertContains($expectedPackageName, $commandTester->getDisplay());
     }
 }
