@@ -110,16 +110,77 @@ return [
      | Template Data
      | ------------------------------------------------------------
      |
-     | All of these properties will be assigned to ALL templates
-     | for this scaffold. Just like the filename, for each template,
-     | you can set 'ask' to true and the user will be prompted
-     | for a value
+     | In this section, all the "variables" that are needed by
+     | templates are defined. (Internally, these are called
+     | "properties").
+     |
+     | Each defined variable or "property" has a type, that
+     | determines how the system should deal with it. Depending on
+     | that type, a value is either just passed on to the templates
+     | or the end-user is prompted (asked) for a value, in the
+     | console.
+     |
+     | By default, the system supports the types that are defined
+     | within the Type interface.
+     | @see \Aedart\Scaffold\Contracts\Templates\Data\Type
+     | ------------------------------------------------------------
+     |
+     | Syntax
+     |
+     | As a minimum, each variable should be defined in the
+     | following way;
+     |
+     | 'name-of-property' => [
+     |      'value' => (the value of the property)
+     | ],
+     |
+     | If you need the end-user to provide you with a value, then
+     | you must state a type. It will determine how the user is
+     | going to be asked for that value. Furthermore, additional
+     | settings might be required, such as a 'question' property,
+     | that is displayed to the user.
+     |
+     | 'name-of-property' => [
+     |      'type'      => \Aedart\Scaffold\Contracts\Templates\Data\Type::QUESTION
+     |      'question'  => 'The question to ask the user'
+     |      'value'     => (default value, in case user just hits enter)
+     | ],
+     |
+     | See the resources/examples/example.scaffold.php for what
+     | settings are supported by the default types.
+     | ------------------------------------------------------------
+     |
+     | Validation and post processing
+     |
+     | Validation and post-processing of the values is also
+     | supported. This is done so, via callback methods.
+     |
+     | 'name-of-property' => [
+     |      'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::QUESTION
+     |      'question'      => 'The question to ask the user'
+     |      'value'         => (default value, in case user just hits enter),
+     |      'validation'    => function($answer){return $answer;},
+     |      'postProcess'   => function($answer){return $answer;},
+     | ],
+     | ------------------------------------------------------------
+     |
+     | Behind the scenes, the Symfony Style utility is used as a
+     | helper to prompt the user for a value.
+     | @see http://symfony.com/blog/new-in-symfony-2-8-console-style-guide
      */
     'templateData' => [
+
+        //
+        // Ask the user for a package name
+        //
         'packageName' => [
+
             'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::QUESTION,
+
             'question'      => 'What this package\'s name (composer.json "name" property)?',
+
             'value'         => 'aedart/scaffold-example',
+
             'validation'    => function($answer){
                 if(strpos($answer, '/') !== false){
                     return $answer;
@@ -127,40 +188,53 @@ return [
 
                 throw new \RuntimeException('Package name must contain vendor and project name, separated by "/"');
             },
+
             'postProcess'   => function($answer){
                 return trim(strtolower($answer));
             }
         ],
 
+        //
+        // Ask the user for a package type; allow only predefined answers.
+        //
         'packageType' => [
+
             'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::CHOICE,
+
             'question'      => 'What type of this package is this (composer.json "type" property)?',
+
             'choices'       => [
                 'library',
                 'project',
                 'metapackage',
                 'composer-plugin'
             ],
+
             'value'         => 'library',
         ],
 
-        'authorName' => [
-            'value'       => 'Alin Eugen Deac'
-        ],
-
-        'authorEmail' => [
-            'value'       => 'aedart@gmail.com'
-        ],
-
+        //
+        // Ask the user to confirm something; (yes / no)
+        //
         'requirePredefinedDev' => [
+
             'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::CONFIRM,
+
             'question'      => 'Require predefined development packages (composer.json "require-dev" property)?',
+
             'value'         => false,
         ],
 
+        //
+        // Ask the user for some sensitive information (the input is not displayed)
+        // and then ask the user to repeat his/hers answer.
+        //
         'envPassword' => [
+
             'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::HIDDEN,
+
             'question'      => 'What password should be stored inside the .env?',
+
             'validation'    => function($answer){
                 if(strlen($answer) >= 6){
                     return $answer;
@@ -168,6 +242,22 @@ return [
 
                 throw new \RuntimeException('The password should be at least 6 characters long');
             },
+        ],
+
+        //
+        // Define a default property; don't ask the user anything.
+        // (Type defaults to \Aedart\Scaffold\Contracts\Templates\Data\Type::VALUE)
+        //
+        'authorName' => [
+            'value'       => 'Alin Eugen Deac'
+        ],
+
+        //
+        // Define a default property; don't ask the user anything.
+        // (Type defaults to \Aedart\Scaffold\Contracts\Templates\Data\Type::VALUE)
+        //
+        'authorEmail' => [
+            'value'       => 'aedart@gmail.com'
         ],
     ],
 
@@ -238,7 +328,7 @@ return [
      | them handles certain operations.
      |
      | If you do not plan to change the default tasks' behaviour,
-     | then you can leave out the part of the configuration.
+     | then you can leave out this part of the configuration.
      */
 //    'handlers' => [
 //
