@@ -107,63 +107,6 @@ return [
     ],
 
     /* ------------------------------------------------------------
-     | Templates
-     | ------------------------------------------------------------
-     |
-     | Think of these as snippets that will be used to generate
-     | some kind of file. It could be a composer file, a PHP Class,
-     | a .env configuration or perhaps a default README file.
-     |
-     | Each template has a source template file, e.g. a *.twig
-     | file, a destination where it will be created and a
-     | filename, which you can prompt the user about, before
-     | the file is generated.
-     |
-     | Furthermore, the source, destination and filename will
-     | assigned as a template variable, and made available
-     | inside the template itself!
-     |
-     | Example
-     | 'composer' => [
-     |      'source' => 'snippets/composer.json.twig'
-     |      'filename' => 'composer.json'
-     |      ...
-     | ]
-     | Will be available inside the 'snippets/composer.json.twig'
-     | template as {{ composer.source }}, {{ composer.filename }}
-     | ...etc
-     */
-    'templates' => [
-        'composer' => [
-            // Template to use, from within the 'basePath'
-            'source'        => 'snippets/composer.json.twig',
-
-            // Where the file must be generated into (current working directory is the root)
-            'destination'   => '',
-
-            // The filename, which is given to the generated file.
-            // if 'ask' is set to true, then the user is prompted
-            // and asked to state a filename. If so, then the
-            // description will be displayed.
-            'filename'      =>  [
-                'ask'           => false,
-                'description'   => 'Composer file\'s name?',
-                'default'       => 'composer.json'
-            ]
-        ],
-
-        'wiki' => [
-            'source'        => 'snippets/WIKI.md.twig',
-            'destination'   => 'docs',
-            'filename'      =>  [
-                'ask'           => true,
-                'description'   => 'Name of the Wiki article',
-                'default'       => 'WIKI.md'
-            ]
-        ],
-    ],
-
-    /* ------------------------------------------------------------
      | Template Data
      | ------------------------------------------------------------
      |
@@ -225,6 +168,63 @@ return [
 
                 throw new \RuntimeException('The password should be at least 6 characters long');
             },
+        ],
+    ],
+
+    /* ------------------------------------------------------------
+     | Templates
+     | ------------------------------------------------------------
+     |
+     | Think of these as snippets that will be used to generate
+     | some kind of file. It could be a composer file, a PHP Class,
+     | a .env configuration or perhaps a default README file.
+     |
+     | Each template has a source template file, e.g. a *.twig
+     | file, a destination where it will be created and a
+     | filename, which you can prompt the user about, before
+     | the file is generated.
+     |
+     | Furthermore, the source, destination and filename will
+     | assigned as a template variable, and made available
+     | inside the template itself!
+     |
+     | Example
+     | 'composer' => [
+     |      'source' => 'snippets/composer.json.twig'
+     |      'filename' => 'composer.json'
+     |      ...
+     | ]
+     | Will be available inside the 'snippets/composer.json.twig'
+     | template as {{ composer.source }}, {{ composer.filename }}
+     | ...etc
+     */
+    'templates' => [
+        'composer' => [
+            // Template to use, from within the 'basePath'
+            'source'        => 'snippets/composer.json.twig',
+
+            // Where the file must be generated into (current working directory is the root)
+            'destination'   => '',
+
+            // The filename, which is given to the generated file.
+            // if 'ask' is set to true, then the user is prompted
+            // and asked to state a filename. If so, then the
+            // description will be displayed.
+            'filename'      =>  [
+                'ask'           => false,
+                'description'   => 'Composer file\'s name?',
+                'default'       => 'composer.json'
+            ]
+        ],
+
+        'wiki' => [
+            'source'        => 'snippets/WIKI.md.twig',
+            'destination'   => 'docs',
+            'filename'      =>  [
+                'ask'           => true,
+                'description'   => 'Name of the Wiki article',
+                'default'       => 'WIKI.md'
+            ]
         ],
     ],
 
