@@ -293,28 +293,26 @@ return [
             // Template to use, from within the 'basePath'
             'source'        => 'snippets/composer.json.twig',
 
-            // Where the file must be generated into (current working directory is the root)
-            'destination'   => '',
+            // Destination of a composer file - uses a "default"
+            // property (Type defaults to \Aedart\Scaffold\Contracts\Templates\Data\Type::VALUE)
+            'destination'   => [
 
-            // The filename, which is given to the generated file.
-            // if 'ask' is set to true, then the user is prompted
-            // and asked to state a filename. If so, then the
-            // description will be displayed.
-            'filename'      =>  [
-                'ask'           => false,
-                'description'   => 'Composer file\'s name?',
-                'default'       => 'composer.json'
-            ]
+                'value'       => 'composer.json'
+            ],
         ],
 
         'wiki' => [
             'source'        => 'snippets/WIKI.md.twig',
-            'destination'   => 'docs',
-            'filename'      =>  [
-                'ask'           => true,
-                'description'   => 'Name of the Wiki article',
-                'default'       => 'WIKI.md'
-            ]
+
+            // Destination of a markdown file - uses a type "question" property
+            'destination'   => [
+
+                'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::QUESTION,
+
+                'question'      => 'Name and location of WIKI markdown file?',
+
+                'value'         => 'docs/WIKI.md',
+            ],
         ],
     ],
 
