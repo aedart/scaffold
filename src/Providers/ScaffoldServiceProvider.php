@@ -4,9 +4,11 @@
 use Aedart\Scaffold\Collections\Directories;
 use Aedart\Scaffold\Collections\Files;
 use Aedart\Scaffold\Collections\TemplateProperties;
+use Aedart\Scaffold\Collections\Templates;
 use Aedart\Scaffold\Contracts\Collections\Directories as DirectoriesInterface;
 use Aedart\Scaffold\Contracts\Collections\Files as FilesInterface;
 use Aedart\Scaffold\Contracts\Collections\TemplateProperties as TemplatePropertiesInterface;
+use Aedart\Scaffold\Contracts\Collections\Templates as TemplatesInterface;
 use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler as DirectoriesHandlerInterface;
 use Aedart\Scaffold\Contracts\Handlers\FilesHandler as FilesHandlerInterface;
 use Aedart\Scaffold\Contracts\Handlers\PropertyHandler as PropertyHandlerInterface;
@@ -55,6 +57,7 @@ class ScaffoldServiceProvider extends ServiceProvider
         $this->registerTemplateDataProperty();
         $this->registerPropertyHandler();
         $this->registerTemplate();
+        $this->registerTemplatesCollection();
     }
 
     /******************************************************
@@ -209,6 +212,16 @@ class ScaffoldServiceProvider extends ServiceProvider
     {
         $this->app->bind(TemplateInterface::class, function($app, array $data = []){
             return new Template($data, $app);
+        });
+    }
+
+    /**
+     * Register the Templates Collection
+     */
+    protected function registerTemplatesCollection()
+    {
+        $this->app->bind(TemplatesInterface::class, function($app, array $data = []){
+            return new Templates($data);
         });
     }
 }
