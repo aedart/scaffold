@@ -271,23 +271,33 @@ return [
      | a .env configuration or perhaps a default README file.
      |
      | Each template has a source template file, e.g. a *.twig
-     | file, a destination where it will be created and a
-     | filename, which you can prompt the user about, before
-     | the file is generated.
+     | file, a destination which you can prompt the user about,
+     | before the file is generated.
      |
-     | Furthermore, the source, destination and filename will
-     | assigned as a template variable, and made available
-     | inside the template itself!
+     | The "destination" property works just like the template
+     | data. See "templateData" documentation for further info.
+     |
+     | Furthermore, the source and destination will assigned as a
+     | template variable, and made available inside the template
+     | itself!
      |
      | Example
      | 'composer' => [
      |      'source' => 'snippets/composer.json.twig'
-     |      'filename' => 'composer.json'
+     |      'destination' => [
+     |          'value'       => 'composer.json'
+     |      ],
      |      ...
      | ]
+     |
      | Will be available inside the 'snippets/composer.json.twig'
-     | template as {{ composer.source }}, {{ composer.filename }}
+     | template as {{ composer.source }}, {{ composer.destination.value }}
      | ...etc
+     | ------------------------------------------------------------
+     |
+     | Each destination that you provide (or ask for) is relative
+     | to the "output path". This usually means the current working
+     | directory of where the scaffold is being installed into!
      */
     'templates' => [
         'composer' => [
