@@ -206,4 +206,40 @@ class BuildCommandTest extends BaseIntegrationTest
 
         $this->assertContains($expectedPackageName, $commandTester->getDisplay());
     }
+
+    /**
+     * NOTE: This test does NOT handle user interaction. It therefore
+     * only tests if the given output display contains a processed value.
+     * See <i>_data/commands/build/templateOnly.scaffold.php</i> for further
+     * details
+     *
+     * @test
+     *
+     * @covers ::runCommand
+     *
+     * @covers ::loadAndResolveConfiguration
+     * @covers ::configure
+     *
+     * @covers \Aedart\Scaffold\Facades\TaskRunner::getFacadeAccessor
+     *
+     * @covers \Aedart\Scaffold\Tasks\AskForTemplateDestination::performTask
+     *
+     * @covers \Aedart\Scaffold\Tasks\AskForTemplateDestination::parseTemplatesCollection
+     * @covers \Aedart\Scaffold\Handlers\Utility\PropertyHandlerResolver::makePropertyHandler
+     */
+    public function canAskForTemplateDestination()
+    {
+        $command = $this->getCommandFromApp('build');
+
+        $commandTester = $this->makeCommandTester($command);
+
+        $commandTester->execute([
+            'command'   => $command->getName(),
+            'config'    => $this->dataPath() . 'templateOnly.scaffold.php',
+        ]);
+
+        $expectedPackageName = 'models/User.php';
+
+        $this->assertContains($expectedPackageName, $commandTester->getDisplay());
+    }
 }
