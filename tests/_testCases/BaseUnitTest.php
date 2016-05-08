@@ -22,6 +22,7 @@ abstract class BaseUnitTest extends UnitTestCase
     use OutputPath;
     use IoCDestroyer;
     use PropertyUtil;
+    use TemplateUtil;
 
     protected function _before()
     {
