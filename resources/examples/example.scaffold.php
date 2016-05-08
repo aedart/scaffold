@@ -45,6 +45,7 @@ return [
      */
     'tasks' => [
         \Aedart\Scaffold\Tasks\AskForTemplateData::class,
+        \Aedart\Scaffold\Tasks\AskForTemplateDestination::class,
         \Aedart\Scaffold\Tasks\CreateDirectories::class,
         \Aedart\Scaffold\Tasks\CopyFiles::class,
     ],
