@@ -15,11 +15,6 @@ class AskForTemplateData extends BaseTask
 
     protected $description = 'Processes template data properties';
 
-    /**
-     * Performs the actual task execution
-     *
-     * @return void
-     */
     public function performTask()
     {
         // Check if there are any template data properties to ask for...
