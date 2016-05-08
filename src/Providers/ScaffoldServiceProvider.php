@@ -12,11 +12,13 @@ use Aedart\Scaffold\Contracts\Handlers\FilesHandler as FilesHandlerInterface;
 use Aedart\Scaffold\Contracts\Handlers\PropertyHandler as PropertyHandlerInterface;
 use Aedart\Scaffold\Contracts\Tasks\ConsoleTaskRunner;
 use Aedart\Scaffold\Contracts\Templates\Data\Property as PropertyInterface;
+use Aedart\Scaffold\Contracts\Templates\Template as TemplateInterface;
 use Aedart\Scaffold\Handlers\DirectoriesHandler;
 use Aedart\Scaffold\Handlers\FilesHandler;
 use Aedart\Scaffold\Handlers\PropertyHandler;
 use Aedart\Scaffold\Tasks\TaskRunner;
 use Aedart\Scaffold\Templates\Data\Property;
+use Aedart\Scaffold\Templates\Template;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Config\Repository as RepositoryInterface;
 use Illuminate\Contracts\Container\BindingResolutionException;
@@ -52,6 +54,7 @@ class ScaffoldServiceProvider extends ServiceProvider
         $this->registerTemplatePropertiesCollection();
         $this->registerTemplateDataProperty();
         $this->registerPropertyHandler();
+        $this->registerTemplate();
     }
 
     /******************************************************
@@ -196,6 +199,16 @@ class ScaffoldServiceProvider extends ServiceProvider
             }
 
             return new SymfonyStyle($data['input'], $data['output']);
+        });
+    }
+
+    /**
+     * Register the Template
+     */
+    protected function registerTemplate()
+    {
+        $this->app->bind(TemplateInterface::class, function($app, array $data = []){
+            return new Template($data, $app);
         });
     }
 }
