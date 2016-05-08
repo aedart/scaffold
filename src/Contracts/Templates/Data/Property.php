@@ -1,7 +1,7 @@
 <?php namespace Aedart\Scaffold\Contracts\Templates\Data;
 
 use Aedart\Model\Contracts\Arrays\ChoicesAware;
-use Aedart\Model\Contracts\Integers\IdAware;
+use Aedart\Model\Contracts\Strings\IdAware;
 use Aedart\Model\Contracts\Integers\TypeAware;
 use Aedart\Model\Contracts\Strings\QuestionAware;
 use Aedart\Model\Contracts\Strings\ValueAware;
