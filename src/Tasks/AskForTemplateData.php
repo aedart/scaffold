@@ -2,7 +2,7 @@
 
 use Aedart\Scaffold\Containers\IoC;
 use Aedart\Scaffold\Contracts\Collections\TemplateProperties;
-use Aedart\Scaffold\Contracts\Handlers\PropertyHandler;
+use Aedart\Scaffold\Handlers\Utility\PropertyHandlerResolver;
 
 /**
  * Ask For Template Data Task
@@ -12,6 +12,7 @@ use Aedart\Scaffold\Contracts\Handlers\PropertyHandler;
  */
 class AskForTemplateData extends BaseTask
 {
+    use PropertyHandlerResolver;
 
     protected $description = 'Processes template data properties';
 
@@ -34,7 +35,7 @@ class AskForTemplateData extends BaseTask
             $key = $templateDataKey . '.' . $id . '.value';
 
             // Get the handler
-            $handler = $this->getPropertyHandler($key);
+            $handler = $this->makePropertyHandler($key);
 
             // Process the property
             $handler->processProperty($property);
@@ -53,24 +54,5 @@ class AskForTemplateData extends BaseTask
         $ioc = IoC::getInstance();
 
         return $ioc->make(TemplateProperties::class, $properties);
-    }
-
-    /**
-     * Get the property handler
-     *
-     * @see \Aedart\Scaffold\Handlers\PropertyHandler
-     *
-     * @param string $key The "key" or "index" inside the configuration repository,
-     *                           in which the final processed value must be stored.
-     *
-     * @return PropertyHandler
-     */
-    protected function getPropertyHandler($key)
-    {
-        return $this->resolveHandler('handlers.property', [
-            'config'    => $this->config,
-            'key'       => $key,
-            'output'    => $this->output
-        ]);
     }
 }
