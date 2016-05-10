@@ -291,8 +291,8 @@ return [
      | ]
      |
      | Will be available inside the 'snippets/composer.json.twig'
-     | template as {{ composer.source }}, {{ composer.destination.value }}
-     | ...etc
+     | template as {{ template.composer.source }},
+     | {{ template.composer.destination }} ...etc
      | ------------------------------------------------------------
      |
      | Each destination that you provide (or ask for) is relative
