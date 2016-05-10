@@ -123,6 +123,14 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
             $data = $this->prepareTemplateData($this->getTemplateData());
         }
 
+        // Assign source and destination to data
+        $data['template'] = [
+            $template->getId() => [
+                'source'        => $templatePath,
+                'destination'   => $destination
+            ]
+        ];
+
         // Finally, generate the file...
         $this->generateFile($templatePath, $destination, $data);
     }
