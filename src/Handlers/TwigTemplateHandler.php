@@ -86,50 +86,6 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
     }
 
     /**
-     * Returns template engine options
-     *
-     * @return array
-     */
-    protected function getEngineOptions()
-    {
-        return $this->engineOptions;
-    }
-
-    /**
-     * Renders the given template and returns content
-     *
-     * @param string $templatePath Path to the template
-     * @param array $data [optional] Context data to be assigned to the template
-     *
-     * @return string Rendered template content
-     */
-    protected function renderTemplate($templatePath, array $data = [])
-    {
-        return $this->engine
-            ->loadTemplate($templatePath)
-            ->render($data);
-    }
-
-    /**
-     * Parse the given collection into an array, which can be
-     * assigned to a template.
-     *
-     * @param TemplateProperties $collection
-     *
-     * @return array
-     */
-    protected function prepareTemplateData(TemplateProperties $collection)
-    {
-        $output = [];
-
-        foreach($collection->all() as $id => $property){
-            $output[$id] = $property->getValue();
-        }
-
-        return $output;
-    }
-
-    /**
      * Generate a file based on the given template.
      *
      * If this handler has any template data set, it will
@@ -198,5 +154,49 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
         } catch (Exception $e){
             throw new CannotProcessTemplateException($e->getMessage(), $e->getCode(), $e);
         }
+    }
+
+    /**
+     * Renders the given template and returns content
+     *
+     * @param string $templatePath Path to the template
+     * @param array $data [optional] Context data to be assigned to the template
+     *
+     * @return string Rendered template content
+     */
+    protected function renderTemplate($templatePath, array $data = [])
+    {
+        return $this->engine
+            ->loadTemplate($templatePath)
+            ->render($data);
+    }
+
+    /**
+     * Parse the given collection into an array, which can be
+     * assigned to a template.
+     *
+     * @param TemplateProperties $collection
+     *
+     * @return array
+     */
+    protected function prepareTemplateData(TemplateProperties $collection)
+    {
+        $output = [];
+
+        foreach($collection->all() as $id => $property){
+            $output[$id] = $property->getValue();
+        }
+
+        return $output;
+    }
+
+    /**
+     * Returns template engine options
+     *
+     * @return array
+     */
+    protected function getEngineOptions()
+    {
+        return $this->engineOptions;
     }
 }
