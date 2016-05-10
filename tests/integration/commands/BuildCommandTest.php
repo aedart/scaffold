@@ -224,7 +224,7 @@ class BuildCommandTest extends BaseIntegrationTest
      *
      * @covers \Aedart\Scaffold\Tasks\AskForTemplateDestination::performTask
      *
-     * @covers \Aedart\Scaffold\Tasks\AskForTemplateDestination::parseTemplatesCollection
+     * @covers \Aedart\Scaffold\Collections\Utility\TemplateCollectionParser::parseTemplatesCollection
      * @covers \Aedart\Scaffold\Handlers\Utility\PropertyHandlerResolver::makePropertyHandler
      */
     public function canAskForTemplateDestination()
