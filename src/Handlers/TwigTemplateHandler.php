@@ -35,6 +35,15 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
     protected $engine = null;
 
     /**
+     * Template engine options
+     *
+     * @var array
+     */
+    protected $engineOptions = [
+        'strict_variables'      => true,
+    ];
+
+    /**
      * Perform the actual element processing
      *
      * @param mixed $element
@@ -56,18 +65,26 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
         $loader = new Twig_Loader_Filesystem([$this->getBasePath()]);
 
         // Create new instance of the Twig engine
-        $this->engine = new Twig_Environment($loader, [
-            'strict_variables'      => true,
-        ]);
+        $this->engine = new Twig_Environment($loader, $this->getEngineOptions());
     }
 
     /**
-     * Render the given template
+     * Returns template engine options
+     *
+     * @return array
+     */
+    protected function getEngineOptions()
+    {
+        return $this->engineOptions;
+    }
+
+    /**
+     * Renders the given template and returns content
      *
      * @param string $templatePath Path to the template
      * @param array $data [optional] Context data to be assigned to the template
      *
-     * @return string
+     * @return string Rendered template content
      */
     protected function renderTemplate($templatePath, array $data = [])
     {
