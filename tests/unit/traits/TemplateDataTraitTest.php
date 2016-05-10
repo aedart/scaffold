@@ -23,7 +23,7 @@ class TemplateDataTraitTest extends GetterSetterTraitTestCase
     {
         m::close();
     }
-    
+
     /**
      * Returns the class path to the trait in question
      *
