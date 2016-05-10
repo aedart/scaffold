@@ -57,6 +57,23 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
     }
 
     /**
+     * Process the given template - compile and generate a file
+     * based on the given template
+     *
+     * @see Template
+     *
+     * @param Template $template The template to use in order to build a file
+     *
+     * @return void
+     *
+     * @throws CannotProcessTemplateException
+     */
+    public function processTemplate(Template $template)
+    {
+        $this->process($template);
+    }
+
+    /**
      * Setup the template engine
      */
     protected function setupEngine()
@@ -101,7 +118,7 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
      *
      * @return array
      */
-    protected function parseTemplateDataToArray(TemplateProperties $collection)
+    protected function prepareTemplateData(TemplateProperties $collection)
     {
         $output = [];
 
@@ -147,7 +164,7 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
 
         // Parse template data properties to array, if any available
         if($this->hasTemplateData()){
-            $data = $this->parseTemplateDataToArray($this->getTemplateData());
+            $data = $this->prepareTemplateData($this->getTemplateData());
         }
 
         // Finally, generate the file...
@@ -181,22 +198,5 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
         } catch (Exception $e){
             throw new CannotProcessTemplateException($e->getMessage(), $e->getCode(), $e);
         }
-    }
-
-    /**
-     * Process the given template - compile and generate a file
-     * based on the given template
-     *
-     * @see Template
-     *
-     * @param Template $template The template to use in order to build a file
-     *
-     * @return void
-     *
-     * @throws CannotProcessTemplateException
-     */
-    public function processTemplate(Template $template)
-    {
-        $this->process($template);
     }
 }
