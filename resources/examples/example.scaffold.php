@@ -48,6 +48,7 @@ return [
         \Aedart\Scaffold\Tasks\AskForTemplateDestination::class,
         \Aedart\Scaffold\Tasks\CreateDirectories::class,
         \Aedart\Scaffold\Tasks\CopyFiles::class,
+        \Aedart\Scaffold\Tasks\GenerateFilesFromTemplates::class,
     ],
 
     /* ------------------------------------------------------------
@@ -322,7 +323,7 @@ return [
 
                 'question'      => 'Name and location of WIKI markdown file?',
 
-                'value'         => 'docs/WIKI.md',
+                'value'         => 'WIKI.md',
             ],
         ],
     ],
