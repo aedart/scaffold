@@ -179,7 +179,7 @@ class BuildCommandTest extends BaseIntegrationTest
      *
      * @covers \Aedart\Scaffold\Tasks\AskForTemplateData::performTask
      *
-     * @covers \Aedart\Scaffold\Tasks\AskForTemplateData::parsePropertiesCollection
+     * @covers \Aedart\Scaffold\Collections\Utility\PropertiesCollectionParser::parsePropertiesCollection
      * @covers \Aedart\Scaffold\Handlers\Utility\PropertyHandlerResolver::makePropertyHandler
      */
     public function canAskForTemplateData()

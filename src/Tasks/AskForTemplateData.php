@@ -1,7 +1,6 @@
 <?php namespace Aedart\Scaffold\Tasks;
 
-use Aedart\Scaffold\Containers\IoC;
-use Aedart\Scaffold\Contracts\Collections\TemplateProperties;
+use Aedart\Scaffold\Collections\Utility\PropertiesCollectionParser;
 use Aedart\Scaffold\Handlers\Utility\PropertyHandlerResolver;
 
 /**
@@ -13,6 +12,7 @@ use Aedart\Scaffold\Handlers\Utility\PropertyHandlerResolver;
 class AskForTemplateData extends BaseTask
 {
     use PropertyHandlerResolver;
+    use PropertiesCollectionParser;
 
     protected $description = 'Processes template data properties';
 
@@ -40,19 +40,5 @@ class AskForTemplateData extends BaseTask
             // Process the property
             $handler->processProperty($property);
         }
-    }
-
-    /**
-     * Parse the given properties list and return a collection
-     *
-     * @param array $properties
-     *
-     * @return TemplateProperties
-     */
-    protected function parsePropertiesCollection(array $properties = [])
-    {
-        $ioc = IoC::getInstance();
-
-        return $ioc->make(TemplateProperties::class, $properties);
     }
 }
