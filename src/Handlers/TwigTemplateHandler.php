@@ -115,6 +115,7 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
     protected function generateFileFrom(Template $template)
     {
         // Set a few variables...
+        $log = $this->getLog();
         $fs = $this->getFile();
         $source = $template->getSource();
         $destination = $this->outputPath . $template->getDestination()->getValue();
@@ -124,9 +125,10 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
             throw new CannotProcessTemplateException(sprintf('Template %s does not exist', $source));
         }
 
-        // Fail if destination file already exists
+        // Abort if destination file already exists
         if($fs->exists($destination)){
-            throw new CannotProcessTemplateException(sprintf('File %s already exists, will not overwrite!', $destination));
+            $log->notice('skipped "{templateId}", file already exists in "{destination}"', ['templateId' => $template->getId(), 'destination' => $destination]);
+            return;
         }
 
         // Parse template data properties to array, if any available
@@ -136,7 +138,7 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
         $this->generateFile($source, $destination, $data);
 
         // Finally, log the output
-        $this->getLog()->info('generated "{path}" for {templateId} template', ['path' => $destination, 'templateId' => $template->getId()]);
+        $log->info('generated "{path}" for {templateId} template', ['path' => $destination, 'templateId' => $template->getId()]);
     }
 
     /**
