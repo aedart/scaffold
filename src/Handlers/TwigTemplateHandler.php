@@ -104,13 +104,12 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
     {
         // Set a few variables...
         $fs = $this->getFile();
-        $templatePath = $this->getBasePath() . $template->getSource();
+        $source = $this->getBasePath() . $template->getSource();
         $destination = $this->outputPath . $template->getDestination()->getValue();
-        $data = [];
 
         // Fail if source template does not exist
-        if(!$fs->exists($templatePath)){
-            throw new CannotProcessTemplateException(sprintf('Template %s does not exist', $templatePath));
+        if(!$fs->exists($source)){
+            throw new CannotProcessTemplateException(sprintf('Template %s does not exist', $source));
         }
 
         // Fail if destination file already exists
@@ -119,38 +118,28 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
         }
 
         // Parse template data properties to array, if any available
-        if($this->hasTemplateData()){
-            $data = $this->prepareTemplateData($this->getTemplateData());
-        }
-
-        // Assign source and destination to data
-        $data['template'] = [
-            $template->getId() => [
-                'source'        => $templatePath,
-                'destination'   => $destination
-            ]
-        ];
+        $data = $this->prepareTemplateData($template->getId(), $source, $destination);
 
         // Finally, generate the file...
-        $this->generateFile($templatePath, $destination, $data);
+        $this->generateFile($source, $destination, $data);
     }
 
     /**
      * Generates a file at given destination, based on the
      * given template and context data
      *
-     * @param string $templatePath Path to the template
+     * @param string $source Path to the template
      * @param string $destination Location and file name to be generated
      * @param array $data [optional] Context data to be assigned to the template
      *
      * @throws CannotProcessTemplateException If unable to render template or write file to
      * the disk
      */
-    protected function generateFile($templatePath, $destination, array $data = [])
+    protected function generateFile($source, $destination, array $data = [])
     {
         try {
             // Render the template
-            $content = $this->renderTemplate($templatePath, $data);
+            $content = $this->renderTemplate($source, $data);
 
             // Write the file
             $bytes = $this->getFile()->append($destination, $content);
@@ -180,6 +169,38 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
     }
 
     /**
+     * Prepare the template data, for the given template
+     *
+     * Method assigns any available Template Data Properties
+     * to an array, as well as the given template's source
+     * and destination.
+     *
+     * @param string $templateId Id of the template
+     * @param string $source The source location of the template
+     * @param string $destination The destination of the file to be generated
+     *
+     * @return array
+     */
+    protected function prepareTemplateData($templateId, $source, $destination)
+    {
+        $data = [];
+
+        if($this->hasTemplateData()){
+            $data = $this->parseTemplateDataToArray($this->getTemplateData());
+        }
+
+        // Assign source and destination to data
+        $data['template'] = [
+            $templateId => [
+                'source'        => $source,
+                'destination'   => $destination
+            ]
+        ];
+
+        return $data;
+    }
+
+    /**
      * Parse the given collection into an array, which can be
      * assigned to a template.
      *
@@ -187,7 +208,7 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
      *
      * @return array
      */
-    protected function prepareTemplateData(TemplateProperties $collection)
+    protected function parseTemplateDataToArray(TemplateProperties $collection)
     {
         $output = [];
 
