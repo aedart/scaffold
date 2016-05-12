@@ -116,11 +116,11 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
     {
         // Set a few variables...
         $fs = $this->getFile();
-        $source = $this->getBasePath() . $template->getSource();
+        $source = $template->getSource();
         $destination = $this->outputPath . $template->getDestination()->getValue();
 
         // Fail if source template does not exist
-        if(!$fs->exists($source)){
+        if(!$fs->exists($this->getBasePath() . $source)){
             throw new CannotProcessTemplateException(sprintf('Template %s does not exist', $source));
         }
 
