@@ -16,13 +16,17 @@ trait TemplateUtil
      *
      * @param Property $destination [optional]
      *
+     * @param string $id [optional]
+     *
      * @return Template|m\MockInterface
      */
-    public function makeTemplateMock(Property $destination = null)
+    public function makeTemplateMock(Property $destination = null, $id = null)
     {
         $template = m::mock(Template::class);
 
-        $id = $this->faker->unique()->word;
+        if(is_null($id)){
+            $id = $this->faker->unique()->word;
+        }
 
         $template->shouldReceive('getId')
             ->andReturn($id);
