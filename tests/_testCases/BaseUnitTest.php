@@ -195,4 +195,23 @@ abstract class BaseUnitTest extends UnitTestCase
             $this->assertFileExists($this->outputPath() . $path, 'Path does not exist');
         }
     }
+
+    /**
+     * Assert that the given file contains a list of values,
+     * inside the output path
+     *
+     * @see outputPath()
+     *
+     * @param string $file
+     * @param array $data
+     * @param string $message [optional]
+     */
+    public function assertFileContainsData($file, array $data, $message = 'File does NOT contain correct data')
+    {
+        $content = file_get_contents($this->outputPath() . $file);
+
+        foreach($data as $value){
+            $this->assertContains($value, $content, $message);
+        }
+    }
 }
