@@ -29,7 +29,7 @@ abstract class BaseHandler implements Handler
             $this->processElement($element);
         } catch(Exception $e){
             $this->getLog()->error($e->getMessage(), ['trace' => $e->getTraceAsString()]);
-            throw new UnableToProcessElementException('Cannot process element', $e->getCode(), $e);
+            throw new UnableToProcessElementException($e->getMessage(), $e->getCode(), $e);
         }
     }
 
