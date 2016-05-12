@@ -44,6 +44,18 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
     ];
 
     /**
+     * TwigTemplateHandler constructor.
+     *
+     * @param TemplateProperties $collection [optional]
+     */
+    public function __construct(TemplateProperties $collection = null)
+    {
+        if(!is_null($collection)){
+            $this->setTemplateData($collection);
+        }
+    }
+
+    /**
      * Perform the actual element processing
      *
      * @param mixed $element
