@@ -347,6 +347,6 @@ return [
 //
 //        'property'      =>    \Aedart\Scaffold\Handlers\PropertyHandler::class,
 //
-//        'templates'     =>    \Aedart\Scaffold\Handlers\TemplateHandler::class,
+//        'template'      =>    \Aedart\Scaffold\Handlers\TwigTemplateHandler::class,
 //    ],
 ];
