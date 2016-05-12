@@ -91,7 +91,7 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
     protected function setupEngine()
     {
         // New loader instance, set the base path
-        $loader = new Twig_Loader_Filesystem([$this->getBasePath()]);
+        $loader = new Twig_Loader_Filesystem($this->getBasePath());
 
         // Create new instance of the Twig engine
         $this->engine = new Twig_Environment($loader, $this->getEngineOptions());
