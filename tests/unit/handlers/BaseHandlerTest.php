@@ -59,13 +59,8 @@ class BaseHandlerTest extends BaseUnitTest
      */
     public function canHandleError()
     {
-        $log = $this->makeLogMock();
-        $log->shouldReceive('error')
-            ->once()
-            ->withAnyArgs();
 
         $handler = $this->makeBaseHandlerMock();
-        $handler->setLog($log);
 
         $element = $this->faker->word;
 
