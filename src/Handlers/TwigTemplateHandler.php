@@ -1,6 +1,9 @@
 <?php namespace Aedart\Scaffold\Handlers;
 
+use Aedart\Scaffold\Containers\IoC;
+use Aedart\Scaffold\Contracts\Collections\Directories;
 use Aedart\Scaffold\Contracts\Collections\TemplateProperties;
+use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler as DirHandler;
 use Aedart\Scaffold\Contracts\Handlers\TemplateHandler;
 use Aedart\Scaffold\Contracts\Templates\Template;
 use Aedart\Scaffold\Exceptions\CannotProcessTemplateException;
@@ -28,6 +31,13 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
     use TemplateData;
 
     /**
+     * Instance of a directory handler
+     *
+     * @var \Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler|null
+     */
+    protected $directoryHandler = null;
+
+    /**
      * The Template Engine
      *
      * @var Twig_Environment
@@ -46,10 +56,13 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
     /**
      * TwigTemplateHandler constructor.
      *
+     * @param DirHandler $directoriesHandler
      * @param TemplateProperties $collection [optional]
      */
-    public function __construct(TemplateProperties $collection = null)
+    public function __construct(DirHandler $directoriesHandler, TemplateProperties $collection = null)
     {
+        $this->directoryHandler = $directoriesHandler;
+
         if(!is_null($collection)){
             $this->setTemplateData($collection);
         }
@@ -159,12 +172,7 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
             $content = $this->renderTemplate($source, $data);
 
             // Write the file
-            $bytes = $this->getFile()->append($destination, $content);
-
-            // Check if file was written
-            if($bytes === false){
-                throw new \RuntimeException(sprintf('Unable to write %s to the disk. Please check your permissions!', $destination));
-            }
+            $this->writeFile($destination, $content);
         } catch (Exception $e){
             throw new CannotProcessTemplateException($e->getMessage(), $e->getCode(), $e);
         }
@@ -183,6 +191,77 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
         return $this->engine
             ->loadTemplate($templatePath)
             ->render($data);
+    }
+
+    /**
+     * Write the content to the given file
+     *
+     * If the destination directory does not exist, it
+     * will be created.
+     *
+     * @see prepareDestinationPath()
+     *
+     * @param string $destination
+     * @param string $content
+     *
+     * @throws \RuntimeException If unable to write content to file
+     */
+    protected function writeFile($destination, $content)
+    {
+        // Prepare the path
+        $this->prepareDestinationPath(pathinfo($destination, PATHINFO_DIRNAME));
+
+        // Actual writing of file
+        $bytes = $this->getFile()->append($destination, $content);
+
+        // Check if file was written
+        if($bytes === false){
+            throw new \RuntimeException(sprintf('Unable to write %s to the disk. Please check your permissions!', $destination));
+        }
+    }
+
+    /**
+     * Creates the destination directory, if it does not
+     * already exist
+     *
+     * @param string $destination
+     */
+    protected function prepareDestinationPath($destination)
+    {
+        // Before a file is generated, we need to make sure
+        // that it's destination directory exists. If not,
+        // then we need to make sure that it is created or
+        // the end-user will get frustrated that this handler
+        // doesn't take care of it automatically. However, skip
+        // if already exists - no need to process this via the
+        // directory handler
+        if($this->getFile()->exists($destination)){
+            return;
+        }
+
+        // We could do simply use the file system (see getFile()),
+        // to check and create the directory. However, in case
+        // that the end-user specified a different handler for
+        // making directories, which follows a different set of
+        // rules, e.g. the access mode, then it would be nice
+        // if this handler could re-use that and avoid dual
+        // implementation.
+
+        // Remove the "output path" from the destination, before
+        // passing it further to the directories handler, which
+        // automatically ensures to apply the output path!
+        $destination = str_replace($this->getOutputPath(), '', $destination);
+        
+        // Configure the directory handler - this needs to be
+        // done here, because the file system, logger and paths
+        // might change per iteration
+        $this->configureDirectoryHandler();
+
+        /** @var Directories $collection */
+        $collection = IoC::getInstance()->make(Directories::class, [$destination]);
+
+        // Process the destination directory
+        $this->directoryHandler->processDirectories($collection);
     }
 
     /**
@@ -244,5 +323,16 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
     protected function getEngineOptions()
     {
         return $this->engineOptions;
+    }
+
+    /**
+     * Configure the directory handler
+     */
+    protected function configureDirectoryHandler()
+    {
+        $this->directoryHandler->setFile($this->getFile());
+        $this->directoryHandler->setLog($this->getLog());
+        $this->directoryHandler->setBasePath($this->getBasePath());
+        $this->directoryHandler->setOutputPath($this->getOutputPath());
     }
 }

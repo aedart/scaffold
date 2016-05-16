@@ -234,13 +234,20 @@ class ScaffoldServiceProvider extends ServiceProvider
     protected function registerTemplateHandler()
     {
         $this->app->bind(TemplateHandler::class, function($app, array $data = []){
-            $collection = null;
+            if(!isset($data['directoryHandler'])){
+                $target = DirectoriesHandlerInterface::class;
 
+                $msg = "Target {$target} cannot be build, for the template handler. Missing arguments; e.g. ['directoryHandler' => (DirectoriesHandler)]";
+
+                throw new BindingResolutionException($msg);
+            }
+
+            $collection = null;
             if(isset($data['templateData'])){
                 $collection = $data['templateData'];
             }
 
-            return new TwigTemplateHandler($collection);
+            return new TwigTemplateHandler($data['directoryHandler'], $collection);
         });
 
         $this->app->alias(TemplateHandler::class, 'handlers.template');

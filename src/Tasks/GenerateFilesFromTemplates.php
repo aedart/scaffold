@@ -59,7 +59,8 @@ class GenerateFilesFromTemplates extends BaseTask
     public function makeTemplateHandler(TemplateProperties $templateData)
     {
         return $this->resolveHandler('handlers.template', [
-            'templateData'    => $templateData,
+            'directoryHandler'  => $this->resolveHandler('handlers.directory'),
+            'templateData'      => $templateData,
         ]);
     }
 

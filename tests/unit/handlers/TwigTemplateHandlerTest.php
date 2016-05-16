@@ -1,6 +1,7 @@
 <?php
 
 use Aedart\Scaffold\Contracts\Collections\TemplateProperties;
+use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler;
 use Aedart\Scaffold\Contracts\Templates\Data\Type;
 use Aedart\Scaffold\Handlers\TwigTemplateHandler;
 use Illuminate\Contracts\Logging\Log;
@@ -46,7 +47,9 @@ class TwigTemplateHandlerTest extends BaseUnitTest
      */
     public function makeTemplateHandler(Log $log = null, TemplateProperties $collection = null)
     {
-        $handler = new TwigTemplateHandler($collection);
+        $directoryHandler = $this->makeDirectoryHandlerMock();
+
+        $handler = new TwigTemplateHandler($directoryHandler, $collection);
 
         $handler->setBasePath($this->dataPath());
         $handler->setOutputPath($this->outputPath());
@@ -55,6 +58,33 @@ class TwigTemplateHandlerTest extends BaseUnitTest
         if(!is_null($log)){
             $handler->setLog($log);
         }
+
+        return $handler;
+    }
+
+    /**
+     * Returns a directory handler mock
+     *
+     * @return m\MockInterface|DirectoriesHandler
+     */
+    public function makeDirectoryHandlerMock()
+    {
+        $handler = m::mock(DirectoriesHandler::class);
+
+        $handler->shouldReceive('setFile')
+            ->withAnyArgs();
+
+        $handler->shouldReceive('setLog')
+            ->withAnyArgs();
+
+        $handler->shouldReceive('setBasePath')
+            ->withAnyArgs();
+
+        $handler->shouldReceive('setOutputPath')
+            ->withAnyArgs();
+
+        $handler->shouldReceive('processDirectories')
+            ->withAnyArgs();
 
         return $handler;
     }
@@ -115,6 +145,9 @@ class TwigTemplateHandlerTest extends BaseUnitTest
      * @covers ::prepareTemplateData
      * @covers ::generateFile
      * @covers ::renderTemplate
+     * @covers ::writeFile
+     * @covers ::prepareDestinationPath
+     * @covers ::configureDirectoryHandler
      */
     public function canGenerateFileFromTemplate()
     {
