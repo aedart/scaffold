@@ -251,7 +251,7 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
         // passing it further to the directories handler, which
         // automatically ensures to apply the output path!
         $destination = str_replace($this->getOutputPath(), '', $destination);
-        
+
         // Configure the directory handler - this needs to be
         // done here, because the file system, logger and paths
         // might change per iteration
