@@ -1,6 +1,7 @@
 <?php namespace Aedart\Scaffold;
 
 use Aedart\Scaffold\Console\BuildCommand;
+use Aedart\Scaffold\Console\IndexCommand;
 use Aedart\Scaffold\Containers\IoC;
 use Symfony\Component\Console\Application;
 
@@ -19,6 +20,7 @@ class ScaffoldApplication extends Application
      */
     protected $appCommands = [
         BuildCommand::class,
+        IndexCommand::class
     ];
 
     /**
