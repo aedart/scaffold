@@ -159,7 +159,7 @@ class IndexBuilder
         $fs = $this->getFile();
 
         // Add expires date
-        $index['expiresAt'] = (string) Carbon::now()->addMinutes(30);
+        $content['expiresAt'] = (string) Carbon::now()->addMinutes(30);
 
         // Path of the index file
         // TODO: ... uhm, name of the index file...
