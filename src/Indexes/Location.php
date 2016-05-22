@@ -16,7 +16,7 @@ use Aedart\Scaffold\Contracts\Indexes\ScaffoldLocation as ScaffoldLocationInterf
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Indexes
  */
-class ScaffoldLocation extends DataTransferObject implements ScaffoldLocationInterface
+class Location extends DataTransferObject implements ScaffoldLocationInterface
 {
     use VendorTrait;
     use PackageTrait;
