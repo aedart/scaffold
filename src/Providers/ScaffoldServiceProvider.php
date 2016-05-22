@@ -21,7 +21,7 @@ use Aedart\Scaffold\Handlers\DirectoriesHandler;
 use Aedart\Scaffold\Handlers\FilesHandler;
 use Aedart\Scaffold\Handlers\PropertyHandler;
 use Aedart\Scaffold\Handlers\TwigTemplateHandler;
-use Aedart\Scaffold\Indexes\ScaffoldLocation;
+use Aedart\Scaffold\Indexes\Location;
 use Aedart\Scaffold\Tasks\TaskRunner;
 use Aedart\Scaffold\Templates\Data\Property;
 use Aedart\Scaffold\Templates\Template;
@@ -262,7 +262,7 @@ class ScaffoldServiceProvider extends ServiceProvider
     protected function registerScaffoldLocation()
     {
         $this->app->bind(ScaffoldLocationInterface::class, function($app, array $data = []){
-            return new ScaffoldLocation($data, $app);
+            return new Location($data, $app);
         });
     }
 }
