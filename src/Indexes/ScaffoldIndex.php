@@ -46,6 +46,9 @@ class ScaffoldIndex implements Index
         $this->populate($locations);
     }
 
+    /**
+     * Setup a few default entries
+     */
     protected function setupDefaultKeys()
     {
         $collection = $this->getInternalCollection();
