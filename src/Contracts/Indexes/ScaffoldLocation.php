@@ -5,6 +5,11 @@ use Aedart\Model\Contracts\Strings\FilePathAware;
 use Aedart\Model\Contracts\Strings\NameAware;
 use Aedart\Model\Contracts\Strings\PackageAware;
 use Aedart\Model\Contracts\Strings\VendorAware;
+use ArrayAccess;
+use Illuminate\Contracts\Support\Arrayable;
+use Illuminate\Contracts\Support\Jsonable;
+use JsonSerializable;
+use Aedart\Util\Interfaces\Populatable;
 
 /**
  * Scaffold Location
@@ -19,7 +24,12 @@ interface ScaffoldLocation extends VendorAware,
     PackageAware,
     NameAware,
     DescriptionAware,
-    FilePathAware
+    FilePathAware,
+    ArrayAccess,
+    Arrayable,
+    Jsonable,
+    JsonSerializable,
+    Populatable
 {
 
 }

@@ -1,5 +1,6 @@
 <?php namespace Aedart\Scaffold\Indexes;
 
+use Aedart\DTO\DataTransferObject;
 use Aedart\Model\Traits\Strings\DescriptionTrait;
 use Aedart\Model\Traits\Strings\FilePathTrait;
 use Aedart\Model\Traits\Strings\NameTrait;
@@ -15,7 +16,7 @@ use Aedart\Scaffold\Contracts\Indexes\ScaffoldLocation as ScaffoldLocationInterf
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Indexes
  */
-class ScaffoldLocation implements ScaffoldLocationInterface
+class ScaffoldLocation extends DataTransferObject implements ScaffoldLocationInterface
 {
     use VendorTrait;
     use PackageTrait;
