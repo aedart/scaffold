@@ -126,6 +126,8 @@ class ScaffoldIndexTest extends BaseUnitTest
      * @covers ::makeVendorKey
      * @covers ::makeLocationKey
      * @covers ::makePackageKey
+     *
+     * @covers ::setupDefaultKeys
      */
     public function canRegisterLocations()
     {
@@ -135,5 +137,29 @@ class ScaffoldIndexTest extends BaseUnitTest
         $this->assertCount(count($locations), $index);
     }
 
+    /**
+     * @test
+     *
+     * @covers ::register
+     * @covers ::hasBeenRegistered
+     * @covers ::has
+     * @covers ::getLocationsFor
+     */
+    public function canRegisterASingleLocation()
+    {
+        $location = $this->makeScaffoldLocation();
 
+        $index = $this->makeScaffoldIndex();
+
+        $index->register($location);
+
+        // Assert that it exists
+        $this->assertTrue($index->hasBeenRegistered($location), 'Location should had been registered');
+
+        // Obtain list and assert that location is within index
+        $locations = $index->getLocationsFor($location->getVendor(), $location->getPackage());
+
+
+        $this->assertSame($location, $locations[0], 'Incorrect location returned');
+    }
 }
