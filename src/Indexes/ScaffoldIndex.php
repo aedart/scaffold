@@ -147,29 +147,19 @@ class ScaffoldIndex implements Index
         }
     }
 
-    /**
-     * Check if the given location has been registered by
-     * this index
-     *
-     * @param ScaffoldLocation $location
-     *
-     * @return bool
-     */
     public function hasBeenRegistered(ScaffoldLocation $location)
     {
-        // TODO: Implement hasBeenRegistered() method.
+
+        $locationKey = $this->makeLocationKey($location);
+
+        return $this->has($locationKey);
     }
 
-    /**
-     * Check if a given location exists in this index
-     *
-     * @param string $locationIndex
-     *
-     * @return bool
-     */
     public function has($locationIndex)
     {
-        // TODO: Implement has() method.
+        $collection = $this->getInternalCollection();
+
+        return $collection->has($locationIndex);
     }
 
     /**
@@ -222,19 +212,22 @@ class ScaffoldIndex implements Index
     {
         return $collection = $this->getInternalCollection()->get($this->makeVendorKey($vendor), []);
     }
-
-    /**
-     * Returns a list of scaffold locations that have been
-     * registered for the given vendor and package name
-     *
-     * @param string $vendor Name of vendor
-     * @param string $package Name of package
-     *
-     * @return ScaffoldLocation[]
-     */
+    
     public function getLocationsFor($vendor, $package)
     {
-        // TODO: Implement getLocationsFor() method.
+        $output = [];
+
+        $collection = $this->getInternalCollection();
+
+        $packageKey = $this->makePackageKey($vendor, $package);
+
+        $locationKeys = $collection->get($packageKey, []);
+
+        foreach($locationKeys as $key){
+            $output[] = $collection->get($key);
+        }
+
+        return $output;
     }
 
     /**
