@@ -36,6 +36,14 @@ class ScaffoldIndex implements Index
     const COUNT_KEY = 'total';
 
     /**
+     * Raw key
+     * Used for populate method
+     *
+     * @see populate()
+     */
+    const RAW_KEY = 'raw';
+
+    /**
      * ScaffoldIndex constructor.
      *
      * @param ScaffoldLocation[] $locations [optional]
@@ -56,6 +64,7 @@ class ScaffoldIndex implements Index
         $collection->put(self::VENDORS_KEY, []);
         $collection->put(self::EXPIRES_KEY, null);
         $collection->put(self::COUNT_KEY, 0);
+        $collection->put(self::RAW_KEY, 1);
     }
 
     public function register(ScaffoldLocation $location)
@@ -251,33 +260,6 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Returns this index's raw internal data structure
-     *
-     * NOTE: If you wish to persist this index, then use
-     * this method to obtain the internal data structure
-     * and save it to a file or perhaps some type of
-     * memory caching
-     *
-     * @return array
-     */
-    public function raw()
-    {
-        return $this->getInternalCollection()->all();
-    }
-
-    /**
-     * Populate this index from raw data
-     *
-     * @see raw()
-     *
-     * @param array $data
-     */
-    public function populateFromRaw(array $data)
-    {
-        $this->setInternalCollection($this->getInternalCollection()->make($data));
-    }
-
-    /**
      * Returns all the scaffold locations that this
      * collection contains
      *
@@ -285,7 +267,7 @@ class ScaffoldIndex implements Index
      */
     public function all()
     {
-        // TODO: Implement all() method.
+        return $this->getInternalCollection()->toArray();
     }
 
     /**
@@ -311,6 +293,13 @@ class ScaffoldIndex implements Index
             return;
         }
 
+        // Perform a raw populate of the collection, if "raw" key is set
+        if(isset($data[self::RAW_KEY])){
+            $this->populateFromRaw($data);
+            return;
+        }
+
+        // Perform a normal populate, one location at the time...
         foreach($data as $location){
 
             if($location instanceof ScaffoldLocation){
@@ -461,5 +450,17 @@ class ScaffoldIndex implements Index
             $vendor,
             $package,
         ]);
+    }
+
+    /**
+     * Populate this index from raw data
+     *
+     * @see raw()
+     *
+     * @param array $data
+     */
+    protected function populateFromRaw(array $data)
+    {
+        $this->setInternalCollection($this->getInternalCollection()->make($data));
     }
 }
