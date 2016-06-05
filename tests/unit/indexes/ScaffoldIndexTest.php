@@ -126,6 +126,7 @@ class ScaffoldIndexTest extends BaseUnitTest
      * @covers ::makeVendorKey
      * @covers ::makeLocationKey
      * @covers ::makePackageKey
+     * @covers ::generateHash
      *
      * @covers ::setupDefaultKeys
      */
@@ -183,5 +184,80 @@ class ScaffoldIndexTest extends BaseUnitTest
         $index = $this->makeScaffoldIndex($locations);
 
         $this->assertSame($expectedVendors, $index->getVendors());
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::getPackagesFor
+     */
+    public function canObtainPackagesForVendor()
+    {
+        $locations = $this->makeLocationsList();
+
+        $targetVendor = $this->faker->unique()->company;
+        $amount = 3;
+
+        $expectedPackages = [];
+
+        for($i = 0; $i < $amount; $i++){
+            $location = $locations[$i];
+
+            $location->setVendor($targetVendor);
+
+            if(!in_array($location->getPackage(), $expectedPackages)){
+                $expectedPackages[] = $location->getPackage();
+            }
+        }
+
+        $index = $this->makeScaffoldIndex($locations);
+
+        $this->assertSame($expectedPackages, $index->getPackagesFor($targetVendor));
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::unregister
+     * @covers ::remove
+     * @covers ::getLocationsFor
+     *
+     * @covers ::removePackage
+     * @covers ::excludePackageFrom
+     * @covers ::excludeVendor
+     */
+    public function canRemoveALocation()
+    {
+        $locations = $this->makeLocationsList();
+
+        $targetLocation = $this->makeScaffoldLocation();
+        $targetLocation->setVendor($this->faker->unique()->company);
+        $targetLocation->setPackage($this->faker->unique()->word);
+
+        $index = $this->makeScaffoldIndex($locations);
+        $index->register($targetLocation);
+
+        $result = $index->unregister($targetLocation);
+
+        $this->assertTrue($result, 'Should had been removed');
+        $this->assertFalse($index->hasBeenRegistered($targetLocation), 'Should no longer be registered');
+    }
+
+    /**
+     * @test
+     *
+     * @covers ::__debugInfo
+     */
+    public function canBeDebugged()
+    {
+        $locations = $this->makeLocationsList();
+        $index = $this->makeScaffoldIndex($locations);
+
+        $debugInfo = $index->__debugInfo();
+
+        //dd($debugInfo);
+
+        $this->assertInternalType('array', $debugInfo);
+        $this->assertNotEmpty($debugInfo);
     }
 }

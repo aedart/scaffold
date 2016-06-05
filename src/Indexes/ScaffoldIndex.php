@@ -20,6 +20,12 @@ class ScaffoldIndex implements Index
     use PartialCollectionTrait;
     use LocationMaker;
 
+    // TODO: NOPE... This has gotten way too complex... It would be fast for a large amount of locations,
+    // TODO: BUT I do not think this is worth it... Re-implement this entire think, and create a much more
+    // TODO: simple implementation - one that can support a direct to json output, which then can be appended
+    // TODO: to a file...
+
+
     /**
      * Index key for registered vendors
      */
@@ -99,7 +105,7 @@ class ScaffoldIndex implements Index
     {
         $collection = $this->getInternalCollection();
 
-        $vendors = $collection->get(self::VENDORS_KEY, []);
+        $vendors = $this->getVendors();
 
         if(!in_array($vendor, $vendors)){
             $vendors[] = $vendor;
@@ -150,9 +156,9 @@ class ScaffoldIndex implements Index
     public function hasBeenRegistered(ScaffoldLocation $location)
     {
 
-        $locationKey = $this->makeLocationKey($location);
+        $locationIndex = $this->makeLocationKey($location);
 
-        return $this->has($locationKey);
+        return $this->has($locationIndex);
     }
 
     public function has($locationIndex)
@@ -172,7 +178,9 @@ class ScaffoldIndex implements Index
      */
     public function unregister(ScaffoldLocation $location)
     {
-        // TODO: Implement unregister() method.
+        $locationIndex = $this->makeLocationKey($location);
+
+        return $this->remove($locationIndex);
     }
 
     /**
@@ -184,35 +192,42 @@ class ScaffoldIndex implements Index
      */
     public function remove($locationIndex)
     {
-        // TODO: Implement remove() method.
+        if(!$this->has($locationIndex)){
+            return false;
+        }
+
+        $collection = $this->getInternalCollection();
+
+        /** @var ScaffoldLocation $location */
+        $location = $collection->get($locationIndex);
+
+        // Get vendor and package
+        $vendor = $location->getVendor();
+        $package = $location->getPackage();
+
+        // Unset the location
+        $collection->forget($locationIndex);
+
+        // If package hos no more locations, remove it
+        $locations = $this->getLocationsFor($vendor, $package);
+        if(empty($locations)){
+            $this->removePackage($vendor, $package);
+        }
+
+        return true;
     }
 
-    /**
-     * Returns a list of all the vendors' names that
-     * have been registered by the added scaffold
-     * locations
-     *
-     * @return string[]
-     */
     public function getVendors()
     {
         return $collection = $this->getInternalCollection()->get(self::VENDORS_KEY, []);
     }
 
-    /**
-     * Returns a list of all the packages' names
-     * that have been registered by the added scaffold
-     * locations
-     *
-     * @param string $vendor Name of vendor
-     *
-     * @return string[]
-     */
+
     public function getPackagesFor($vendor)
     {
         return $collection = $this->getInternalCollection()->get($this->makeVendorKey($vendor), []);
     }
-    
+
     public function getLocationsFor($vendor, $package)
     {
         $output = [];
@@ -224,7 +239,9 @@ class ScaffoldIndex implements Index
         $locationKeys = $collection->get($packageKey, []);
 
         foreach($locationKeys as $key){
-            $output[] = $collection->get($key);
+            if($collection->has($key)){
+                $output[] = $collection->get($key);
+            }
         }
 
         return $output;
@@ -252,6 +269,8 @@ class ScaffoldIndex implements Index
         // TODO: Implement hasExpired() method.
     }
 
+
+
     /**
      * Returns all the scaffold locations that this
      * collection contains
@@ -260,7 +279,14 @@ class ScaffoldIndex implements Index
      */
     public function all()
     {
-        return $this->getInternalCollection()->toArray();
+        // TODO: WRONG - this MUST return all scaffolds - NOT the internal
+        // TODO: data structure!!
+
+        // TODO: Also, the toArray method NEEDS to be changed... as well as the serialisation methods?!
+
+        //return $this->getInternalCollection()->toArray();
+
+        dd('@todo - implement this correctly!');
     }
 
     /**
@@ -384,6 +410,11 @@ class ScaffoldIndex implements Index
         // TODO: Implement offsetUnset() method.
     }
 
+    public function __debugInfo()
+    {
+        return $this->getInternalCollection()->all();
+    }
+
     /**
      * Returns a hash of the given key
      *
@@ -455,5 +486,82 @@ class ScaffoldIndex implements Index
     protected function populateFromRaw(array $data)
     {
         $this->setInternalCollection($this->getInternalCollection()->make($data));
+    }
+
+    /**
+     * Remove the given package, from the given vendor
+     *
+     * @param string $vendor
+     * @param string $package
+     */
+    protected function removePackage($vendor, $package)
+    {
+        $collection = $this->getInternalCollection();
+
+        // Remove the package key
+        $packageKey = $this->makePackageKey($vendor, $package);
+        $collection->forget($packageKey);
+
+        // Exclude the package from the vendor's list of packages
+        $this->excludePackageFrom($vendor, $package);
+
+        // Check if packages are empty - if so, remove vendor
+        $vendorPackages = $this->getPackagesFor($vendor);
+        if(empty($vendorPackages)){
+            $this->excludeVendor($vendor);
+        }
+    }
+
+    /**
+     * Removes the given package from the vendor's list
+     * of available packages
+     *
+     * @param string $vendor
+     * @param string $packageToExclude
+     */
+    protected function excludePackageFrom($vendor, $packageToExclude)
+    {
+        $collection = $this->getInternalCollection();
+
+        $vendorKey = $this->makeVendorKey($vendor);
+
+        $vendorPackages = $this->getPackagesFor($vendor);
+
+        // Reassign vendor's available packages
+        $newVendorPackages = [];
+        foreach($vendorPackages as $p){
+            if($p != $packageToExclude){
+                $newVendorPackages[] = $p;
+            }
+        }
+
+        $collection->put($vendorKey, $newVendorPackages);
+    }
+
+    /**
+     * Remove the given vendor from the internal list of
+     * available vendors
+     *
+     * @param string $vendor
+     */
+    protected function excludeVendor($vendor)
+    {
+        $collection = $this->getInternalCollection();
+
+        $vendorKey = $this->makeVendorKey($vendor);
+
+        $collection->forget($vendorKey);
+
+        // Get list of vendors and re-assign it
+        $vendors = $this->getVendors();
+
+        $newVendors = [];
+        foreach($vendors as $v){
+            if($v != $vendor){
+                $newVendors[] = $v;
+            }
+        }
+
+        $collection->put(self::VENDORS_KEY, $newVendors);
     }
 }
