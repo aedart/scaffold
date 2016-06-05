@@ -162,4 +162,26 @@ class ScaffoldIndexTest extends BaseUnitTest
 
         $this->assertSame($location, $locations[0], 'Incorrect location returned');
     }
+
+    /**
+     * @test
+     *
+     * @covers ::getVendors
+     */
+    public function canObtainVendors()
+    {
+        $locations = $this->makeLocationsList();
+
+        $expectedVendors = [];
+
+        foreach($locations as $location){
+            if(!in_array($location->getVendor(), $expectedVendors)){
+                $expectedVendors[] = $location->getVendor();
+            }
+        }
+
+        $index = $this->makeScaffoldIndex($locations);
+
+        $this->assertSame($expectedVendors, $index->getVendors());
+    }
 }
