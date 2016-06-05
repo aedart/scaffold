@@ -110,27 +110,6 @@ interface Index extends IPartialCollection
     public function hasExpired();
 
     /**
-     * Returns this index's raw internal data structure
-     *
-     * NOTE: If you wish to persist this index, then use
-     * this method to obtain the internal data structure
-     * and save it to a file or perhaps some type of
-     * memory caching
-     *
-     * @return array
-     */
-    public function raw();
-
-    /**
-     * Populate this index from raw data
-     *
-     * @see raw()
-     *
-     * @param array $data
-     */
-    public function populateFromRaw(array $data);
-
-    /**
      * Returns all the scaffold locations that this
      * collection contains
      *
