@@ -15,6 +15,29 @@ use Aedart\Scaffold\Indexes\Location;
 class ScaffoldIndexTest extends BaseUnitTest
 {
     /**
+     * List of vendors
+     *
+     * @var string[]
+     */
+    protected $vendorList = [
+        'acme',
+        'bobs',
+        'tmps'
+    ];
+
+    /**
+     * List of packages
+     *
+     * @var string[]
+     */
+    protected $packageList = [
+        'lipsum',
+        'scaffolds',
+        'tests',
+        'resources'
+    ];
+
+    /**
      * Returns a new instance of the Scaffold Index
      *
      * @param Location[] $locations
@@ -35,23 +58,34 @@ class ScaffoldIndexTest extends BaseUnitTest
     public function makeScaffoldLocation()
     {
         $location = new Location([
-            'vendor'        => $this->faker->randomElement([
-                'acme',
-                'bobs',
-                'tmps'
-            ]),
-            'package'       => $this->faker->randomElement([
-                'lipsum',
-                'scaffolds',
-                'tests',
-                'resources'
-            ]),
+            'vendor'        => $this->makeVendor(),
+            'package'       => $this->makePackage(),
             'name'          => $this->faker->name,
             'description'   => $this->faker->sentence,
             'filePath'      => $this->faker->word . '.scaffold.php'
         ]);
 
         return $location;
+    }
+
+    /**
+     * Returns a vendor name
+     *
+     * @return string
+     */
+    public function makeVendor()
+    {
+        return $this->faker->randomElement($this->vendorList);
+    }
+
+    /**
+     * Returns a package name
+     *
+     * @return string
+     */
+    public function makePackage()
+    {
+        return $this->faker->randomElement($this->packageList);
     }
 
     /**
@@ -87,6 +121,8 @@ class ScaffoldIndexTest extends BaseUnitTest
      * @covers ::registerVendorPackage
      * @covers ::registerPackageScaffoldKey
      *
+     * @covers ::count
+     *
      * @covers ::makeVendorKey
      * @covers ::makeLocationKey
      * @covers ::makePackageKey
@@ -96,9 +132,8 @@ class ScaffoldIndexTest extends BaseUnitTest
         $locations = $this->makeLocationsList();
         $index = $this->makeScaffoldIndex($locations);
 
-        // TODO: a real assert... not just die!
-        dd($index->raw());
-
-        // TODO: json conversion needs either to do so based on raw or ...what? Perhaps not!
+        $this->assertCount(count($locations), $index);
     }
+
+
 }
