@@ -23,4 +23,12 @@ class Location extends DataTransferObject implements ScaffoldLocationInterface
     use NameTrait;
     use DescriptionTrait;
     use FilePathTrait;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function hash()
+    {
+        return md5($this->getVendor() . $this->getPackage() . $this->getName());
+    }
 }

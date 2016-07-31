@@ -32,4 +32,11 @@ interface ScaffoldLocation extends VendorAware,
     Populatable
 {
 
+    /**
+     * Returns a hash code that corresponds to this location
+     *
+     * @return string
+     */
+    public function hash();
+
 }
