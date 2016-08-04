@@ -110,6 +110,13 @@ interface Index extends IPartialCollection
     public function hasExpired();
 
     /**
+     * Returns the date of when this index expires
+     *
+     * @return Carbon
+     */
+    public function expiresAt();
+
+    /**
      * Returns all the scaffold locations that this
      * collection contains
      *
