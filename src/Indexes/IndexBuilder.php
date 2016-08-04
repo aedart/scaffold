@@ -38,7 +38,7 @@ class IndexBuilder
     protected $index = [];
 
     /**
-     * Locations where to search for
+     * Directories where to search for
      * scaffold files
      *
      * @var array
@@ -50,6 +50,7 @@ class IndexBuilder
      */
     public function __construct()
     {
+        // TODO: Needs a getter and setter - and perhaps accept this via constructor (optional)
         $this->placesToSearch = [
             getcwd() . DIRECTORY_SEPARATOR,
             // TODO: vendor path, ==> $composerConfig = \Composer\Factory::createConfig(null, getcwd());
