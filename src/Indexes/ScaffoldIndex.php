@@ -50,11 +50,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Register (add) a location to this index / collection
-     *
-     * @param ScaffoldLocation $location
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function register(ScaffoldLocation $location)
     {
@@ -74,12 +70,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Check if the given location has been registered by
-     * this index
-     *
-     * @param ScaffoldLocation $location
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function hasBeenRegistered(ScaffoldLocation $location)
     {
@@ -87,11 +78,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Check if a given location exists in this index
-     *
-     * @param string $locationIndex
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function has($locationIndex)
     {
@@ -99,12 +86,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Un-register (remove) the given location from this
-     * index
-     *
-     * @param ScaffoldLocation $location
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function unregister(ScaffoldLocation $location)
     {
@@ -112,11 +94,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Remove the location that matches the given location-index
-     *
-     * @param string $locationIndex
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function remove($locationIndex)
     {
@@ -129,11 +107,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Returns a list of all the vendors' names that
-     * have been registered by the added scaffold
-     * locations
-     *
-     * @return string[]
+     * {@inheritdoc}
      */
     public function getVendors()
     {
@@ -148,13 +122,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Returns a list of all the packages' names
-     * that have been registered by the added scaffold
-     * locations
-     *
-     * @param string $vendor Name of vendor
-     *
-     * @return string[]
+     * {@inheritdoc}
      */
     public function getPackagesFor($vendor)
     {
@@ -171,13 +139,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Returns a list of scaffold locations that have been
-     * registered for the given vendor and package name
-     *
-     * @param string $vendor Name of vendor
-     * @param string $package Name of package
-     *
-     * @return ScaffoldLocation[]
+     * {@inheritdoc}
      */
     public function getLocationsFor($vendor, $package)
     {
@@ -194,9 +156,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Set an expiration date of this index
-     *
-     * @param Carbon $when
+     * {@inheritdoc}
      */
     public function expires(Carbon $when)
     {
@@ -204,11 +164,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Check if this index has expired
-     *
-     * @see expires()
-     *
-     * @return bool
+     * {@inheritdoc}
      */
     public function hasExpired()
     {
@@ -218,9 +174,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Returns the date of when this index expires
-     *
-     * @return Carbon
+     * {@inheritdoc}
      */
     public function expiresAt()
     {
@@ -232,10 +186,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Returns all the scaffold locations that this
-     * collection contains
-     *
-     * @return ScaffoldLocation[]
+     * {@inheritdoc}
      */
     public function all()
     {
@@ -243,21 +194,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Populate this component via an array
-     *
-     * @param array $data Key-value pair, where the key corresponds to a
-     * property name and the value to be set, e.g. <p>
-     * <pre>
-     * [
-     *  'myProperty' => 'myPropertyValue',
-     *  'myOtherProperty' => 42.5
-     * ]
-     * </pre>
-     * </p>
-     *
-     * @return void
-     *
-     * @throws \Exception In case that one or more of the given array entries are invalid
+     * {@inheritdoc}
      */
     public function populate(array $data)
     {
@@ -301,16 +238,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Whether a offset exists
-     * @link http://php.net/manual/en/arrayaccess.offsetexists.php
-     * @param mixed $offset <p>
-     * An offset to check for.
-     * </p>
-     * @return boolean true on success or false on failure.
-     * </p>
-     * <p>
-     * The return value will be casted to boolean if non-boolean was returned.
-     * @since 5.0.0
+     * {@inheritdoc}
      */
     public function offsetExists($offset)
     {
@@ -318,13 +246,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Offset to retrieve
-     * @link http://php.net/manual/en/arrayaccess.offsetget.php
-     * @param mixed $offset <p>
-     * The offset to retrieve.
-     * </p>
-     * @return mixed Can return all value types.
-     * @since 5.0.0
+     * {@inheritdoc}
      */
     public function offsetGet($offset)
     {
@@ -332,16 +254,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Offset to set
-     * @link http://php.net/manual/en/arrayaccess.offsetset.php
-     * @param mixed $offset <p>
-     * The offset to assign the value to.
-     * </p>
-     * @param mixed $value <p>
-     * The value to set.
-     * </p>
-     * @return void
-     * @since 5.0.0
+     * {@inheritdoc}
      */
     public function offsetSet($offset, $value)
     {
@@ -349,13 +262,7 @@ class ScaffoldIndex implements Index
     }
 
     /**
-     * Offset to unset
-     * @link http://php.net/manual/en/arrayaccess.offsetunset.php
-     * @param mixed $offset <p>
-     * The offset to unset.
-     * </p>
-     * @return void
-     * @since 5.0.0
+     * {@inheritdoc}
      */
     public function offsetUnset($offset)
     {
