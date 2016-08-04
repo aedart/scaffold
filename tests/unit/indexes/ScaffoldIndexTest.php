@@ -2,6 +2,8 @@
 
 use Aedart\Scaffold\Indexes\ScaffoldIndex;
 use Aedart\Scaffold\Indexes\Location;
+use Carbon\Carbon;
+use Codeception\Util\Debug;
 
 /**
  * Class ScaffoldIndexTest
@@ -69,6 +71,50 @@ class ScaffoldIndexTest extends BaseUnitTest
     }
 
     /**
+     * Returns a list of scaffold locations
+     *
+     * @param int $amount [optional]
+     * @return Location[]
+     */
+    public function makeScaffoldLocationList($amount = 3)
+    {
+        $output = [];
+
+        while($amount--){
+            $output[] = $this->makeScaffoldLocation();
+        }
+
+        return $output;
+    }
+
+    /**
+     * Returns an array representation of a scaffold location
+     *
+     * @return array
+     */
+    public function makeScaffoldLocationArray()
+    {
+        return $this->makeScaffoldLocation()->toArray();
+    }
+
+    /**
+     * Returns a list of scaffold locations - array representation
+     *
+     * @param int $amount [optional]
+     * @return Location[]
+     */
+    public function makeScaffoldLocationArrayList($amount = 3)
+    {
+        $output = [];
+
+        while($amount--){
+            $output[] = $this->makeScaffoldLocationArray();
+        }
+
+        return $output;
+    }
+
+    /**
      * Returns a vendor name
      *
      * @return string
@@ -112,152 +158,311 @@ class ScaffoldIndexTest extends BaseUnitTest
 
     /**
      * @test
-     *
-     * @covers ::__construct
-     * @covers ::populate
-     * @covers ::register
-     *
-     * @covers ::registerVendor
-     * @covers ::registerVendorPackage
-     * @covers ::registerPackageScaffoldKey
-     *
-     * @covers ::count
-     *
-     * @covers ::makeVendorKey
-     * @covers ::makeLocationKey
-     * @covers ::makePackageKey
-     * @covers ::generateHash
-     *
-     * @covers ::setupDefaultKeys
      */
-    public function canRegisterLocations()
+    public function canObtainInstance()
     {
-        $locations = $this->makeLocationsList();
-        $index = $this->makeScaffoldIndex($locations);
+        $index = $this->makeScaffoldIndex();
 
-        $this->assertCount(count($locations), $index);
+        $this->assertNotNull($index);
     }
 
     /**
      * @test
-     *
-     * @covers ::register
-     * @covers ::hasBeenRegistered
-     * @covers ::has
-     * @covers ::getLocationsFor
      */
-    public function canRegisterASingleLocation()
+    public function canRegisterLocation()
     {
-        $location = $this->makeScaffoldLocation();
-
         $index = $this->makeScaffoldIndex();
+
+        $location = $this->makeScaffoldLocation();
 
         $index->register($location);
 
-        // Assert that it exists
-        $this->assertTrue($index->hasBeenRegistered($location), 'Location should had been registered');
+        $this->assertTrue($index->hasBeenRegistered($location), 'Location not included in index');
+        $this->assertTrue(isset($index[$location->hash()]), 'Location not included in index - via offset');
+        $this->assertSame($location, $index[$location->hash()], 'Incorrect location returned via offset');
+    }
 
-        // Obtain list and assert that location is within index
-        $locations = $index->getLocationsFor($location->getVendor(), $location->getPackage());
 
+    /**
+     * @test
+     */
+    public function canRegisterViaOffset()
+    {
+        $index = $this->makeScaffoldIndex();
 
-        $this->assertSame($location, $locations[0], 'Incorrect location returned');
+        $location = $this->makeScaffoldLocation();
+
+        $index[$location->hash()] = $location;
+
+        $this->assertSame($location, $index[$location->hash()], 'Incorrect location returned via offset');
+    }
+
+    /**
+     * @test
+     */
+    public function canUnregister()
+    {
+        $index = $this->makeScaffoldIndex();
+
+        $location = $this->makeScaffoldLocation();
+
+        $index->register($location);
+        $index->unregister($location);
+
+        $this->assertFalse($index->hasBeenRegistered($location), 'Location should not be in index');
+    }
+
+    /**
+     * @test
+     */
+    public function canUnregisterViaOffset()
+    {
+        $index = $this->makeScaffoldIndex();
+
+        $location = $this->makeScaffoldLocation();
+
+        $index->register($location);
+        unset($index[$location]);
+
+        $this->assertFalse($index->hasBeenRegistered($location), 'Location should not be in index');
+    }
+
+    /**
+     * @test
+     */
+    public function canPopulate()
+    {
+        $locations = $this->makeScaffoldLocationList();
+
+        $index = $this->makeScaffoldIndex($locations);
+
+        $this->assertCount(count($locations), $index, 'Incorrect amount of locations added');
+    }
+
+    /**
+     * @test
+     */
+    public function canPopulateFromArrayRepresentationOfLocations()
+    {
+        $locations = $this->makeScaffoldLocationArrayList();
+
+        $index = $this->makeScaffoldIndex($locations);
+
+        $this->assertCount(count($locations), $index, 'Incorrect amount of locations added');
     }
 
     /**
      * @test
      *
-     * @covers ::getVendors
+     * @expectedException \Aedart\Scaffold\Exceptions\CannotPopulateIndexException
      */
-    public function canObtainVendors()
+    public function failsPopulatingWhenLocationTypeIsNotKnown()
     {
-        $locations = $this->makeLocationsList();
+        $locations = $this->makeScaffoldLocationList();
 
-        $expectedVendors = [];
+        // Add 1 invalid location - is not supported by the populate method
+        $locations[] = new stdClass();
 
+        $index = $this->makeScaffoldIndex($locations);
+    }
+
+    /**
+     * @test
+     */
+    public function canObtainAllVendors()
+    {
+        $vendorA = $this->faker->word;
+        $vendorB = $this->faker->word;
+        $vendorC = $this->faker->word;
+
+        $locationA = $this->makeScaffoldLocation();
+        $locationA->setVendor($vendorA);
+
+        $locationB = $this->makeScaffoldLocation();
+        $locationB->setVendor($vendorB);
+
+        $locationC = $this->makeScaffoldLocation();
+        $locationC->setVendor($vendorC);
+
+        $locationD = $this->makeScaffoldLocation();
+        $locationD->setVendor($vendorC);
+
+        $locations = [
+            $locationA,
+            $locationB,
+            $locationC,
+            $locationD
+        ];
+
+        $index = $this->makeScaffoldIndex($locations);
+
+        $vendors = $index->getVendors();
+
+        $this->assertCount(3, $vendors, 'Incorrect amount of vendors returned');
+        foreach($vendors as $vendor){
+
+            Debug::debug($vendor);
+
+            $this->assertTrue(in_array($vendor, [$vendorA, $vendorB, $vendorC]), 'Unknown vendor returned from index');
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function canObtainAllPackages()
+    {
+        $vendorA = $this->faker->word;
+        $vendorB = $this->faker->word;
+
+        $packageA = $this->faker->word;
+        $packageB = $this->faker->word;
+        $packageC = $this->faker->word;
+        $packageD = $this->faker->word;
+
+        $locationA = $this->makeScaffoldLocation();
+        $locationA->setVendor($vendorA);
+        $locationA->setPackage($packageA);
+
+        $locationB = $this->makeScaffoldLocation();
+        $locationB->setVendor($vendorA);
+        $locationB->setPackage($packageB);
+
+        $locationC = $this->makeScaffoldLocation();
+        $locationC->setVendor($vendorA);
+        $locationC->setPackage($packageC);
+
+        $locationD = $this->makeScaffoldLocation();
+        $locationD->setVendor($vendorB);
+        $locationD->setPackage($packageD);
+
+        $locations = [
+            $locationA,
+            $locationB,
+            $locationC,
+            $locationD
+        ];
+
+        $index = $this->makeScaffoldIndex($locations);
+
+        $packages = $index->getPackagesFor($vendorA);
+
+        $this->assertCount(3, $packages, 'Incorrect amount of packages returned');
+        foreach($packages as $package){
+
+            Debug::debug($package);
+
+            $this->assertTrue(in_array($package, [$packageA, $packageB, $packageC]), 'Unknown package returned from index, for vendor ' . $vendorA);
+        }
+    }
+
+    /**
+     * @test
+     */
+    public function canObtainLocationsForSpecificVendorAndPackage()
+    {
+        $vendorA = $this->faker->word;
+        $vendorB = $this->faker->word;
+
+        $packageA = $this->faker->word;
+        $packageB = $this->faker->word;
+        $packageC = $this->faker->word;
+
+        $locationA = $this->makeScaffoldLocation();
+        $locationA->setVendor($vendorA);
+        $locationA->setPackage($packageA);
+
+        $locationB = $this->makeScaffoldLocation();
+        $locationB->setVendor($vendorA);
+        $locationB->setPackage($packageB);
+
+        $locationC = $this->makeScaffoldLocation();
+        $locationC->setVendor($vendorA);
+        $locationC->setPackage($packageB);
+
+        $locationD = $this->makeScaffoldLocation();
+        $locationD->setVendor($vendorB);
+        $locationD->setPackage($packageC);
+
+        $locations = [
+            $locationA,
+            $locationB,
+            $locationC,
+            $locationD
+        ];
+
+        $index = $this->makeScaffoldIndex($locations);
+
+        $locations = $index->getLocationsFor($vendorA, $packageB);
+
+        $this->assertCount(2, $locations, 'Incorrect amount of locations');
         foreach($locations as $location){
-            if(!in_array($location->getVendor(), $expectedVendors)){
-                $expectedVendors[] = $location->getVendor();
-            }
+
+            Debug::debug($location);
+
+            $this->assertTrue(in_array($location, [$locationB, $locationC, $packageC]), 'Unknown location returned from index, for vendor ' . $vendorA . ' and package ' . $packageB);
         }
-
-        $index = $this->makeScaffoldIndex($locations);
-
-        $this->assertSame($expectedVendors, $index->getVendors());
     }
 
     /**
      * @test
-     *
-     * @covers ::getPackagesFor
      */
-    public function canObtainPackagesForVendor()
+    public function canDetermineIfExpired()
     {
-        $locations = $this->makeLocationsList();
+        $index = $this->makeScaffoldIndex();
+        $this->assertFalse($index->hasExpired(), 'Should NOT have expired!');
 
-        $targetVendor = $this->faker->unique()->company;
-        $amount = 3;
-
-        $expectedPackages = [];
-
-        for($i = 0; $i < $amount; $i++){
-            $location = $locations[$i];
-
-            $location->setVendor($targetVendor);
-
-            if(!in_array($location->getPackage(), $expectedPackages)){
-                $expectedPackages[] = $location->getPackage();
-            }
-        }
-
-        $index = $this->makeScaffoldIndex($locations);
-
-        $this->assertSame($expectedPackages, $index->getPackagesFor($targetVendor));
+        $index->expires((new Carbon())->subMinutes(5));
+        $this->assertTrue($index->hasExpired(), 'Should have expired!');
     }
 
     /**
      * @test
-     *
-     * @covers ::unregister
-     * @covers ::remove
-     * @covers ::getLocationsFor
-     *
-     * @covers ::removePackage
-     * @covers ::excludePackageFrom
-     * @covers ::excludeVendor
      */
-    public function canRemoveALocation()
+    public function canPopulateExpiresAt()
     {
-        $locations = $this->makeLocationsList();
+        $locations = $this->makeScaffoldLocationList();
 
-        $targetLocation = $this->makeScaffoldLocation();
-        $targetLocation->setVendor($this->faker->unique()->company);
-        $targetLocation->setPackage($this->faker->unique()->word);
+        // Add a string expires at date
+        $expiresAt = (new Carbon())->addMinutes(5);
+
+        $locations[ScaffoldIndex::EXPIRES_AT_KEY] = (string) $expiresAt;
 
         $index = $this->makeScaffoldIndex($locations);
-        $index->register($targetLocation);
 
-        $result = $index->unregister($targetLocation);
+        Debug::debug((string) $index->expiresAt());
 
-        $this->assertTrue($result, 'Should had been removed');
-        $this->assertFalse($index->hasBeenRegistered($targetLocation), 'Should no longer be registered');
+        $this->assertTrue($index->expiresAt()->eq($expiresAt), 'Incorrect expires at date set');
     }
 
     /**
      * @test
-     *
-     * @covers ::__debugInfo
      */
-    public function canBeDebugged()
+    public function arrayExportContainsExpiresAtKey()
     {
-        $locations = $this->makeLocationsList();
+        $locations = $this->makeScaffoldLocationList();
         $index = $this->makeScaffoldIndex($locations);
 
-        $debugInfo = $index->__debugInfo();
+        $arr = $index->toArray();
 
-        //dd($debugInfo);
+        Debug::debug($arr);
 
-        $this->assertInternalType('array', $debugInfo);
-        $this->assertNotEmpty($debugInfo);
+        $this->assertArrayHasKey(ScaffoldIndex::EXPIRES_AT_KEY, $arr, 'Expires at key is not in array');
+        $this->assertNotEmpty($arr[ScaffoldIndex::EXPIRES_AT_KEY], 'No expires at value in array');
+    }
+
+    /**
+     * @test
+     */
+    public function canExportToJson()
+    {
+        $locations = $this->makeScaffoldLocationList();
+        $index = $this->makeScaffoldIndex($locations);
+
+        $json = $index->toJson(JSON_PRETTY_PRINT);
+
+        Debug::debug($json);
+
+        $this->assertJson($json);
     }
 }
