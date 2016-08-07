@@ -13,6 +13,7 @@ use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler as DirectoriesHandlerI
 use Aedart\Scaffold\Contracts\Handlers\FilesHandler as FilesHandlerInterface;
 use Aedart\Scaffold\Contracts\Handlers\PropertyHandler as PropertyHandlerInterface;
 use Aedart\Scaffold\Contracts\Handlers\TemplateHandler;
+use Aedart\Scaffold\Contracts\Indexes\Index;
 use Aedart\Scaffold\Contracts\Indexes\ScaffoldLocation as ScaffoldLocationInterface;
 use Aedart\Scaffold\Contracts\Tasks\ConsoleTaskRunner;
 use Aedart\Scaffold\Contracts\Templates\Data\Property as PropertyInterface;
@@ -22,6 +23,7 @@ use Aedart\Scaffold\Handlers\FilesHandler;
 use Aedart\Scaffold\Handlers\PropertyHandler;
 use Aedart\Scaffold\Handlers\TwigTemplateHandler;
 use Aedart\Scaffold\Indexes\Location;
+use Aedart\Scaffold\Indexes\ScaffoldIndex;
 use Aedart\Scaffold\Tasks\TaskRunner;
 use Aedart\Scaffold\Templates\Data\Property;
 use Aedart\Scaffold\Templates\Template;
@@ -64,6 +66,7 @@ class ScaffoldServiceProvider extends ServiceProvider
         $this->registerTemplatesCollection();
         $this->registerTemplateHandler();
         $this->registerScaffoldLocation();
+        $this->registerScaffoldIndex();
     }
 
     /******************************************************
@@ -263,6 +266,16 @@ class ScaffoldServiceProvider extends ServiceProvider
     {
         $this->app->bind(ScaffoldLocationInterface::class, function($app, array $data = []){
             return new Location($data, $app);
+        });
+    }
+
+    /**
+     * Register the scaffold index object
+     */
+    protected function registerScaffoldIndex()
+    {
+        $this->app->bind(Index::class, function($app, array $data = []){
+            return new ScaffoldIndex($data);
         });
     }
 }
