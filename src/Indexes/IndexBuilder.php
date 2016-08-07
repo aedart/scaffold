@@ -81,10 +81,11 @@ class IndexBuilder
      *
      * @param string[] $directories Paths where to search for scaffold files
      * @param bool $force [optional] If true, an index file will be build, regardless of expiration date
+     * @param int $expires [optional] How many minutes from now should the index expire
      *
      * @return Index Either a new index is build or a cached version is used
      */
-    public function build(array $directories, $force = false)
+    public function build(array $directories, $force = false, $expires = 5)
     {
         // Get the path to the index file
         $path = $this->getPathToIndexFile();
@@ -115,6 +116,9 @@ class IndexBuilder
 
         // Build the index file
         $this->buildIndexFile($this->index);
+
+        // Set a new expiration date
+        $this->index->expires($this->index->expiresAt()->addMinutes($expires));
 
         // Finally, return the index
         return $this->index;
