@@ -22,6 +22,7 @@ class IndexCommand extends BaseCommand
         $this
             ->setName('index')
             ->setDescription('TODO')
+            ->addOption('directories', 'd', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Locations where to search for *.scaffold.php files', $this->directories())
             ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force build a new index file')
             ->addOption('expire', 'e', InputOption::VALUE_OPTIONAL, 'When should the index expire. Value stated in minutes.', 5);
             //->addArgument('config', InputArgument::REQUIRED, 'Path to the scaffold configuration file')
@@ -40,7 +41,7 @@ class IndexCommand extends BaseCommand
 
         $builder = new IndexBuilder($this->output);
 
-        $builder->build($this->directories(), $this->input->getOption('force'), $this->input->getOption('expire'));
+        $builder->build($this->input->getOption('directories'), $this->input->getOption('force'), $this->input->getOption('expire'));
 
         $this->output->success('Indexing completed');
     }
