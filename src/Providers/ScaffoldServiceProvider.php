@@ -1,10 +1,10 @@
 <?php namespace Aedart\Scaffold\Providers;
 
-
 use Aedart\Scaffold\Collections\Directories;
 use Aedart\Scaffold\Collections\Files;
 use Aedart\Scaffold\Collections\TemplateProperties;
 use Aedart\Scaffold\Collections\Templates;
+use Aedart\Scaffold\Contracts\Builders\IndexBuilder as IndexBuilderInterface;
 use Aedart\Scaffold\Contracts\Collections\Directories as DirectoriesInterface;
 use Aedart\Scaffold\Contracts\Collections\Files as FilesInterface;
 use Aedart\Scaffold\Contracts\Collections\TemplateProperties as TemplatePropertiesInterface;
@@ -22,6 +22,7 @@ use Aedart\Scaffold\Handlers\DirectoriesHandler;
 use Aedart\Scaffold\Handlers\FilesHandler;
 use Aedart\Scaffold\Handlers\PropertyHandler;
 use Aedart\Scaffold\Handlers\TwigTemplateHandler;
+use Aedart\Scaffold\Indexes\IndexBuilder;
 use Aedart\Scaffold\Indexes\Location;
 use Aedart\Scaffold\Indexes\ScaffoldIndex;
 use Aedart\Scaffold\Tasks\TaskRunner;
@@ -67,6 +68,7 @@ class ScaffoldServiceProvider extends ServiceProvider
         $this->registerTemplateHandler();
         $this->registerScaffoldLocation();
         $this->registerScaffoldIndex();
+        $this->registerIndexBuilder();
     }
 
     /******************************************************
@@ -276,6 +278,16 @@ class ScaffoldServiceProvider extends ServiceProvider
     {
         $this->app->bind(Index::class, function($app, array $data = []){
             return new ScaffoldIndex($data);
+        });
+    }
+
+    /**
+     * Register the index builder
+     */
+    protected function registerIndexBuilder()
+    {
+        $this->app->bind(IndexBuilderInterface::class, function($app, array $data = []){
+            return $app->make(IndexBuilder::class);
         });
     }
 }
