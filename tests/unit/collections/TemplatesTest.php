@@ -124,7 +124,8 @@ class TemplatesTest extends BaseUnitTest
         $templates = $this->makeTemplatesList(mt_rand(3, 5));
         $collection = $this->makeTemplatesCollection($templates);
 
-        $id = array_shift(array_keys($templates));
+        $keys = array_keys($templates);
+        $id = array_shift($keys);
 
         $this->assertTrue(isset($collection[$id]), 'Template does not appear to exist in collection');
     }
@@ -140,7 +141,8 @@ class TemplatesTest extends BaseUnitTest
         $templates = $this->makeTemplatesList(mt_rand(3, 5));
         $collection = $this->makeTemplatesCollection($templates);
 
-        $id = array_shift(array_keys($templates));
+        $keys = array_keys($templates);
+        $id = array_shift($keys);
 
         $template = $collection[$id];
 
@@ -161,7 +163,8 @@ class TemplatesTest extends BaseUnitTest
         $templates = $this->makeTemplatesList(mt_rand(3, 5));
         $collection = $this->makeTemplatesCollection();
 
-        $id = array_shift(array_keys($templates));
+        $keys = array_keys($templates);
+        $id = array_shift($keys);
         $template = $templates[$id];
 
         $collection[$id] = $template;
@@ -182,7 +185,8 @@ class TemplatesTest extends BaseUnitTest
         $templates = $this->makeTemplatesList(mt_rand(3, 5));
         $collection = $this->makeTemplatesCollection($templates);
 
-        $id = array_shift(array_keys($templates));
+        $keys = array_keys($templates);
+        $id = array_shift($keys);
 
         unset($collection[$id]);
 

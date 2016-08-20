@@ -125,7 +125,8 @@ class TemplatePropertiesTest extends BaseUnitTest
         $properties = $this->makePropertiesList(mt_rand(3, 5));
         $collection = $this->makePropertiesCollection($properties);
 
-        $id = array_shift(array_keys($properties));
+        $keys = array_keys($properties);
+        $id = array_shift($keys);
 
         $this->assertTrue(isset($collection[$id]), 'Property does not appear to exist in collection');
     }
@@ -141,7 +142,8 @@ class TemplatePropertiesTest extends BaseUnitTest
         $properties = $this->makePropertiesList(mt_rand(3, 5));
         $collection = $this->makePropertiesCollection($properties);
 
-        $id = array_shift(array_keys($properties));
+        $keys = array_keys($properties);
+        $id = array_shift($keys);
 
         $prop = $collection[$id];
 
@@ -162,7 +164,8 @@ class TemplatePropertiesTest extends BaseUnitTest
         $properties = $this->makePropertiesList(mt_rand(3, 5));
         $collection = $this->makePropertiesCollection();
 
-        $id = array_shift(array_keys($properties));
+        $keys = array_keys($properties);
+        $id = array_shift($keys);
         $prop = $properties[$id];
 
         $collection[$id] = $prop;
@@ -183,7 +186,8 @@ class TemplatePropertiesTest extends BaseUnitTest
         $properties = $this->makePropertiesList(mt_rand(3, 5));
         $collection = $this->makePropertiesCollection($properties);
 
-        $id = array_shift(array_keys($properties));
+        $keys = array_keys($properties);
+        $id = array_shift($keys);
 
         unset($collection[$id]);
 
