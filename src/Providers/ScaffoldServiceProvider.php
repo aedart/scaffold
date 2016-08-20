@@ -287,7 +287,14 @@ class ScaffoldServiceProvider extends ServiceProvider
     protected function registerIndexBuilder()
     {
         $this->app->bind(IndexBuilderInterface::class, function($app, array $data = []){
-            return $app->make(IndexBuilder::class);
+            if(!isset($data['output'])){
+                $target = IndexBuilderInterface::class;
+                $msg = "Target {$target} cannot be build. Missing arguments; e.g. ['output' => (StyleInterface)]";
+
+                throw new BindingResolutionException($msg);
+            }
+
+            return new IndexBuilder($data['output']);
         });
     }
 }
