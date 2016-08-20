@@ -1,7 +1,9 @@
 <?php namespace Aedart\Scaffold\Console;
 
 use Aedart\Laravel\Helpers\Traits\Filesystem\FileTrait;
-use Aedart\Scaffold\Indexes\IndexBuilder;
+use Aedart\Scaffold\Containers\IoC;
+//use Aedart\Scaffold\Indexes\IndexBuilder;
+use Aedart\Scaffold\Contracts\Builders\IndexBuilder;
 use Composer\Factory;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -37,7 +39,8 @@ class IndexCommand extends BaseCommand
     {
         $this->output->title('Building index');
 
-        $builder = new IndexBuilder($this->output);
+        /** @var IndexBuilder $builder */
+        $builder = (IoC::getInstance())->make(IndexBuilder::class, ['output' => $this->output]);
 
         $builder->build($this->input->getOption('directories'), $this->input->getOption('force'), $this->input->getOption('expire'));
 
