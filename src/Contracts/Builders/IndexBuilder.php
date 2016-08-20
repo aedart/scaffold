@@ -9,7 +9,9 @@ use Aedart\Scaffold\Contracts\Indexes\Index;
 /**
  * Index Builder
  *
- * TODO: Desc...
+ * Able to build an index file and save it to the filesystem.
+ *
+ * @see Index
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Contracts\Builders
