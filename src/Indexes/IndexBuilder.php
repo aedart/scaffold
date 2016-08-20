@@ -337,8 +337,7 @@ class IndexBuilder implements IndexBuilderInterface
         // Fetch ignore file content
         $content = $fs->get($gitIgnoreFile);
 
-        // TODO: This smalls a bit bad...
-        // TODO: Get only the folder - not entire path
+        // Build the path to be ignored
         $pathToIgnore = $this->getDirectory() . '*';
 
         // Abort if the path already is ignored
