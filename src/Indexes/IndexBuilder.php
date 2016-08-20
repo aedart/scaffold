@@ -110,8 +110,8 @@ class IndexBuilder
         $this->gitIgnoreIndexDirectory();
 
         // Search for scaffold files and add them to the index
-        foreach($directories as $path){
-            $this->index($path);
+        foreach($directories as $directory){
+            $this->index($directory);
         }
 
         // Build the index file
@@ -122,6 +122,20 @@ class IndexBuilder
 
         // Finally, return the index
         return $this->index;
+    }
+
+    /**
+     * Loads and returns an index from the filesystem
+     *
+     * @return Index|null Index if one exists, null if none exists
+     */
+    public function load()
+    {
+        if($this->doesIndexFileExist()){
+            return $this->loadIndexFromFile($this->getPathToIndexFile());
+        }
+
+        return null;
     }
 
     /**
