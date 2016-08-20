@@ -1,6 +1,9 @@
 <?php
 namespace Aedart\Scaffold\Contracts\Builders;
 
+use Aedart\Model\Contracts\Strings\DirectoryAware;
+use Aedart\Model\Contracts\Strings\FilenameAware;
+use Aedart\Model\Contracts\Strings\PatternAware;
 use Aedart\Scaffold\Contracts\Indexes\Index;
 
 /**
@@ -11,7 +14,9 @@ use Aedart\Scaffold\Contracts\Indexes\Index;
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Contracts\Builders
  */
-interface IndexBuilder
+interface IndexBuilder extends DirectoryAware,
+    PatternAware,
+    FilenameAware
 {
     /**
      * Default name of the directory where
