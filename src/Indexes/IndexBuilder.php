@@ -318,12 +318,6 @@ class IndexBuilder implements IndexBuilderInterface
         }
     }
 
-    // TODO: What if other components need this path!?... Something that processes the index file!
-    public function getDefaultIndexDirectoryPath()
-    {
-        return getcwd() . DIRECTORY_SEPARATOR . self::SCAFFOLD_INDEX_DIRECTORY_NAME;
-    }
-
     /**
      * Git ignore the index directory path, if it as not
      * already ignored
