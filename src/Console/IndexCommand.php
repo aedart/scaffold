@@ -25,8 +25,6 @@ class IndexCommand extends BaseCommand
             ->addOption('directories', 'd', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Locations where to search for *.scaffold.php files', $this->directories())
             ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force build a new index file')
             ->addOption('expire', 'e', InputOption::VALUE_OPTIONAL, 'When should the index expire. Value stated in minutes.', 5);
-            //->addArgument('config', InputArgument::REQUIRED, 'Path to the scaffold configuration file')
-            //->addOption('output', null, InputOption::VALUE_OPTIONAL, 'Path where to build project or resource', getcwd())
             //->setHelp($this->formatHelp());
     }
 
