@@ -6,7 +6,6 @@ use Aedart\Model\Traits\Strings\FilenameTrait;
 use Aedart\Model\Traits\Strings\PatternTrait;
 use Aedart\Scaffold\Contracts\Builders\IndexBuilder as IndexBuilderInterface;
 use Aedart\Scaffold\Contracts\Indexes\Index;
-use Aedart\Scaffold\Traits\IndexDirectoryPath;
 use Aedart\Scaffold\Traits\IndexMaker;
 use Aedart\Scaffold\Traits\LocationMaker;
 use Aedart\Scaffold\Traits\OutputHelper;
@@ -28,7 +27,6 @@ class IndexBuilder implements IndexBuilderInterface
     use PatternTrait;
     use FilenameTrait;
     use FileTrait;
-    use IndexDirectoryPath;
     use LocationMaker;
     use IndexMaker;
     use OutputHelper;
@@ -168,7 +166,7 @@ class IndexBuilder implements IndexBuilderInterface
      */
     protected function getPathToIndexFile()
     {
-        return $this->getIndexDirectoryPath() . $this->getFilename();
+        return $this->getDirectory() . $this->getFilename();
     }
 
     /**
@@ -310,7 +308,7 @@ class IndexBuilder implements IndexBuilderInterface
     {
         $fs = $this->getFile();
 
-        $scaffoldDirectory = $this->getIndexDirectoryPath();
+        $scaffoldDirectory = $this->getDirectory();
 
         if(!$fs->exists($scaffoldDirectory)){
             $fs->makeDirectory($scaffoldDirectory);
