@@ -1,6 +1,10 @@
 <?php namespace Aedart\Scaffold\Indexes;
 
 use Aedart\Laravel\Helpers\Traits\Filesystem\FileTrait;
+use Aedart\Model\Traits\Strings\DirectoryTrait;
+use Aedart\Model\Traits\Strings\FilenameTrait;
+use Aedart\Model\Traits\Strings\PatternTrait;
+use Aedart\Scaffold\Contracts\Builders\IndexBuilder as IndexBuilderInterface;
 use Aedart\Scaffold\Contracts\Indexes\Index;
 use Aedart\Scaffold\Traits\IndexDirectoryPath;
 use Aedart\Scaffold\Traits\IndexMaker;
@@ -14,35 +18,21 @@ use Symfony\Component\Finder\Finder;
 /**
  * Index Builder
  *
- * @TODO ... description, interface maybe?
+ * @see \Aedart\Scaffold\Contracts\Builders\IndexBuilder
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Indexes
  */
-class IndexBuilder
+class IndexBuilder implements IndexBuilderInterface
 {
+    use DirectoryTrait;
+    use PatternTrait;
+    use FilenameTrait;
     use FileTrait;
     use IndexDirectoryPath;
     use LocationMaker;
     use IndexMaker;
     use OutputHelper;
-
-    /**
-     * Name of the directory where
-     * this index file is going to
-     * be located
-     */
-    const SCAFFOLD_INDEX_DIRECTORY_NAME = '.scaffold/';
-
-    /**
-     * Scaffold file name pattern
-     */
-    const SCAFFOLD_FILE_PATTERN = '*.scaffold.php';
-
-    /**
-     * Name of index file
-     */
-    const DEFAULT_INDEX_FILE_NAME = 'index.json';
 
     /**
      * The index
@@ -139,6 +129,30 @@ class IndexBuilder
     }
 
     /**
+     * {@inheritdoc}
+     */
+    public function getDefaultDirectory()
+    {
+        return self::DEFAULT_SCAFFOLD_INDEX_DIRECTORY;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultPattern()
+    {
+        return self::DEFAULT_SCAFFOLD_FILE_PATTERN;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultFilename()
+    {
+        return self::DEFAULT_INDEX_FILE;
+    }
+
+    /**
      * Check if an index file already exists
      *
      * @return bool
@@ -155,7 +169,7 @@ class IndexBuilder
      */
     protected function getPathToIndexFile()
     {
-        return $this->getIndexDirectoryPath() . self::DEFAULT_INDEX_FILE_NAME;
+        return $this->getIndexDirectoryPath() . $this->getFilename();
     }
 
     /**
@@ -195,7 +209,7 @@ class IndexBuilder
 
         // Search for *.scaffold.php files
         $finder = new Finder();
-        $finder->files()->name(self::SCAFFOLD_FILE_PATTERN)->in($path)->depth('< 3');
+        $finder->files()->name($this->getPattern())->in($path)->depth('< 3');
 
         // Abort if nothing found
         if($finder->count() == 0){
@@ -331,7 +345,7 @@ class IndexBuilder
 
         // TODO: This smalls a bit bad...
         // TODO: Get only the folder - not entire path
-        $pathToIgnore = self::SCAFFOLD_INDEX_DIRECTORY_NAME . '*';
+        $pathToIgnore = $this->getDirectory() . '*';
 
         // Abort if the path already is ignored
         if(Str::contains($content, $pathToIgnore)){
