@@ -54,6 +54,16 @@ trait OutputHelper
     }
 
     /**
+     * Output a warning
+     *
+     * @param string $message
+     */
+    public function outputWarning($message)
+    {
+        $this->output($message, 'warning');
+    }
+
+    /**
      * Output a message
      *
      * @param string $message
