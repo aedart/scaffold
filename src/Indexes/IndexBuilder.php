@@ -9,6 +9,7 @@ use Aedart\Scaffold\Contracts\Indexes\Index;
 use Aedart\Scaffold\Traits\IndexMaker;
 use Aedart\Scaffold\Traits\LocationMaker;
 use Aedart\Scaffold\Traits\OutputHelper;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Symfony\Component\Console\Style\StyleInterface;
 use Symfony\Component\Finder\Finder;
@@ -101,11 +102,11 @@ class IndexBuilder implements IndexBuilderInterface
             $this->index($directory);
         }
 
+        // Set a new expiration date
+        $this->index->expires(Carbon::now()->addMinutes($expires));
+
         // Build the index file
         $this->buildIndexFile($this->index);
-
-        // Set a new expiration date
-        $this->index->expires($this->index->expiresAt()->addMinutes($expires));
 
         // Finally, return the index
         return $this->index;
