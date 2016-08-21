@@ -370,7 +370,8 @@ class IndexBuilder implements IndexBuilderInterface
         $content = $fs->get($gitIgnoreFile);
 
         // Build the path to be ignored
-        $pathToIgnore = $this->getDirectory() . '*';
+        $scaffoldDir = str_replace(getcwd(), '', $this->getDirectory());
+        $pathToIgnore = $scaffoldDir . '*';
 
         // Abort if the path already is ignored
         if(Str::contains($content, $pathToIgnore)){
