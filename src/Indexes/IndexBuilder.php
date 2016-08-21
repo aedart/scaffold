@@ -222,6 +222,32 @@ class IndexBuilder implements IndexBuilderInterface
     }
 
     /**
+     * Returns true if given content appears to be a valid scaffold
+     * format.
+     *
+     * @param mixed $content
+     *
+     * @return bool
+     */
+    protected function isValidScaffold($content)
+    {
+        // TODO: This validation might need to improve...
+        // TODO: However, for now, this appears to be the fastest!
+
+        // Must be an array
+        if(!is_array($content)){
+            return false;
+        }
+
+        // Name property must be set
+        if(!isset($content['name'])){
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Add the given scaffold configuration file to the index
      *
      * @param string $file Scaffold configuration file
@@ -230,19 +256,27 @@ class IndexBuilder implements IndexBuilderInterface
      */
     protected function addScaffoldFileToIndex($file)
     {
-        $this->outputNote('Indexing ' . $file);
-
         $fs = $this->getFile();
 
         // Load the scaffold file
         $scaffold = $this->loadScaffoldFile($file);
+
+        // Skip file if not a valid scaffold
+        if(!$this->isValidScaffold($scaffold)){
+            $this->outputWarning(sprintf('Cannot index %s, file is not a valid scaffold format', $file));
+            return;
+        }
+
+        $this->outputNote('Indexing ' . $file);
 
         // Create a new location instance
         $location = $this->makeLocation();
 
         // Get and set the name and desc. of the scaffold
         $location->setName($scaffold['name']);
-        $location->setDescription($scaffold['description']);
+        if(isset($scaffold['description'])){
+            $location->setDescription($scaffold['description']);
+        }
 
         // Default Package vendor and package name
         $packageVendor = '(no vendor)';
