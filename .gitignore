@@ -6,4 +6,4 @@ composer.lock
 composer.phar
 .scaffold/*
 tests/_output/*
-/home/vagrant/Code/scaffold/tests/_output/commands/index/*
+/tests/_output/commands/index/*
