@@ -2,6 +2,7 @@
 
 use Aedart\Scaffold\Console\BuildCommand;
 use Aedart\Scaffold\Console\IndexCommand;
+use Aedart\Scaffold\Console\InstallCommand;
 use Aedart\Scaffold\Containers\IoC;
 use Symfony\Component\Console\Application;
 use Composer\Factory;
@@ -20,6 +21,7 @@ class ScaffoldApplication extends Application
      * @var string[]
      */
     protected $appCommands = [
+        InstallCommand::class,
         BuildCommand::class,
         IndexCommand::class
     ];
