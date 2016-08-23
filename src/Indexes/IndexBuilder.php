@@ -85,6 +85,7 @@ class IndexBuilder implements IndexBuilderInterface
             // If the index has not expired, then return the index
             if(!$index->hasExpired()){
                 $this->outputNote('Using cached index (' . $path . ')');
+                $this->outputMessage('Expires ' . $index->expiresAt());
                 return $index;
             }
         }
