@@ -3,7 +3,7 @@
 use Aedart\Laravel\Helpers\Traits\Filesystem\FileTrait;
 use Aedart\Scaffold\Containers\IoC;
 use Aedart\Scaffold\Contracts\Builders\IndexBuilder;
-use Composer\Factory;
+use Aedart\Scaffold\Traits\DirectoriesToIndex;
 use Symfony\Component\Console\Input\InputOption;
 
 /**
@@ -17,6 +17,7 @@ use Symfony\Component\Console\Input\InputOption;
 class IndexCommand extends BaseCommand
 {
     use FileTrait;
+    use DirectoriesToIndex;
 
     protected function configure()
     {
@@ -47,33 +48,6 @@ class IndexCommand extends BaseCommand
         $builder->build($this->input->getOption('directories'), $this->input->getOption('force'), $this->input->getOption('expire'));
 
         $this->output->success('Indexing completed');
-    }
-
-    /**
-     * Returns a list of directory paths in which scaffold files
-     * are to be searched for, in order to build an index
-     *
-     * @return string[]
-     */
-    public function directories()
-    {
-        $composerConfig = Factory::createConfig(null, getcwd());
-
-        $vendorDir = $composerConfig->get('vendor-dir');
-        $globalVendorDir = (Factory::createConfig(null, $composerConfig->get('home')))->get('vendor-dir');
-
-        return [
-
-            // The current working directory of where this command
-            // is being executed from
-            getcwd() . DIRECTORY_SEPARATOR,
-
-            // The vendor folder inside the current working directory
-            $vendorDir,
-
-            // The "global" vendor directory inside the composer home
-            $globalVendorDir
-        ];
     }
 
     /**
