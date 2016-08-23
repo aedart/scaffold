@@ -31,6 +31,9 @@ class InstallCommand extends BaseCommand
             ->setName('install')
             ->setDescription('TODO...')
 
+            // Install options
+            ->addOption('show-all', 'a', InputOption::VALUE_NONE, 'Display all available scaffolds, without selecting vendor and package first')
+
             // Build options
             ->addOption('output', 'o', InputOption::VALUE_OPTIONAL, 'Path where to build project or resource', getcwd())
 
@@ -97,21 +100,15 @@ class InstallCommand extends BaseCommand
      */
     public function askForScaffoldLocation(Index $index)
     {
-        // Select a vendor
-        $vendor = $this->output->choice('Please select a vendor', $index->getVendors());
-
-        // Select a package
-        $package = $this->output->choice('Please select a package', $index->getPackagesFor($vendor));
-
-        // Fetch the available locations for vendor and package
-        $locations = $index->getLocationsFor($vendor, $package);
+        // Obtain locations
+        $locations = $this->obtainLocations($index);
 
         // Create a map between the scaffold locations and what will be displayed
         // to the end user as a choice
         $map = [];
         $installableScaffolds = [];
         foreach ($locations as $location){
-            $label = $this->formatNameAndDescLabel($location);
+            $label = $this->formatLabel($location);
             $map[$this->hash($label)] = $location;
             $installableScaffolds[] = $label;
         }
@@ -120,6 +117,25 @@ class InstallCommand extends BaseCommand
         $selectedLabel = $this->output->choice('Please select a scaffold', $installableScaffolds);
 
         return $map[$this->hash($selectedLabel)];
+    }
+
+    public function obtainLocations(Index $index)
+    {
+        // If the end user desires to see all scaffolds, instead
+        // of having to select a vendor and package first, then
+        // we simply return all locations from the index
+        if($this->input->getOption('show-all') == true){
+            return $index->all();
+        }
+
+        // Select a vendor
+        $vendor = $this->output->choice('Please select a vendor', $index->getVendors());
+
+        // Select a package
+        $package = $this->output->choice('Please select a package', $index->getPackagesFor($vendor));
+
+        // Fetch the available locations for vendor and package
+        return $index->getLocationsFor($vendor, $package);
     }
 
     /**
@@ -143,8 +159,7 @@ class InstallCommand extends BaseCommand
         ];
 
         // Additionally, check if force index is required
-        $force = $this->input->getOption('index-force');
-        if($force){
+        if($this->input->getOption('index-force') == true){
             $arguments['--force'] = true;
         }
 
@@ -177,10 +192,19 @@ class InstallCommand extends BaseCommand
      *
      * @return string
      */
-    protected function formatNameAndDescLabel(ScaffoldLocation $location)
+    protected function formatLabel(ScaffoldLocation $location)
     {
+        // Default name formatting
         $name = $location->getName() . str_repeat(' ', 50 - strlen($location->getName()));
 
+        // If end-user has selected to see all the scaffolds,
+        // then it is very useful to include the vendor and package
+        if($this->input->getOption('show-all') == true){
+            $name = trim($name) . ' (' . $location->getVendor() . '/' . $location->getPackage() . ')';
+            $name = $name . str_repeat(' ', 50 - strlen($name));
+        }
+
+        // Return the label
         return $name . $location->getDescription();
     }
 
