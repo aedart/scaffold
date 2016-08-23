@@ -4,6 +4,7 @@ use Aedart\Scaffold\Console\BuildCommand;
 use Aedart\Scaffold\Console\IndexCommand;
 use Aedart\Scaffold\Containers\IoC;
 use Symfony\Component\Console\Application;
+use Composer\Factory;
 
 /**
  * Scaffold Application
@@ -71,6 +72,14 @@ class ScaffoldApplication extends Application
      */
     protected function resolveApplicationVersion()
     {
+        // TODO: This needs to change, because this a misuse of the "branch-alias"
+        // TODO: A safer choice would be to create rely on "git describe --tags"
+        // TODO:  a) create a script that can run on composer update
+        // TODO:        - Fetch version via git. If it's not clean, e.g. x.y.z, then  fallback
+        // TODO:  b) Fallback on readying composer's branch alias
+        // TODO:  c) create a version.txt file
+        // TODO:  d) load version from that file...
+
         $pathToComposerFile = __DIR__ . '/../composer.json';
         if(!file_exists($pathToComposerFile)){
             return 'UNKNOWN';
