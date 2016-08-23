@@ -31,6 +31,9 @@ class InstallCommand extends BaseCommand
             ->setName('install')
             ->setDescription('TODO...')
 
+            // Build options
+            ->addOption('output', 'o', InputOption::VALUE_OPTIONAL, 'Path where to build project or resource', getcwd())
+
             // Index options
             ->addOption('index-directories', 'd', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Locations where to search for *.scaffold.php files', $this->directories())
             ->addOption('index-force', 'f', InputOption::VALUE_NONE, 'Force build a new index file')
@@ -56,8 +59,32 @@ class InstallCommand extends BaseCommand
         // Get the scaffold location
         $location = $this->askForScaffoldLocation($index);
 
-        // TODO: send scaffold file location to build command...
-        $this->output->text($location);
+        // Install the scaffold
+        $this->install($location);
+    }
+
+    /**
+     * Builds (or installs) the scaffold found at the given
+     * location
+     *
+     * @param ScaffoldLocation $location
+     */
+    public function install(ScaffoldLocation $location)
+    {
+        // Get the build command
+        $buildCmd = $this->getApplication()->find('build');
+
+        // Create the arguments
+        $arguments = [
+            'config'            =>  $location->getFilePath(),
+            '--output'          =>  $this->input->getOption('output'),
+        ];
+
+        // Create the input
+        $indexInput = new ArrayInput($arguments);
+
+        // Execute the index command
+        $buildCmd->run($indexInput, $this->output);
     }
 
     /**
@@ -84,7 +111,7 @@ class InstallCommand extends BaseCommand
         $map = [];
         $installableScaffolds = [];
         foreach ($locations as $location){
-            $label = $this->formatLabel($location);
+            $label = $this->formatNameAndDescLabel($location);
             $map[$this->hash($label)] = $location;
             $installableScaffolds[] = $label;
         }
@@ -150,7 +177,7 @@ class InstallCommand extends BaseCommand
      *
      * @return string
      */
-    protected function formatLabel(ScaffoldLocation $location)
+    protected function formatNameAndDescLabel(ScaffoldLocation $location)
     {
         $name = $location->getName() . str_repeat(' ', 50 - strlen($location->getName()));
 
