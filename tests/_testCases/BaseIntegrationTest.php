@@ -82,4 +82,18 @@ abstract class BaseIntegrationTest extends BaseUnitTest
 
         return $stream;
     }
+
+    /**
+     * Write input stream
+     *
+     * @param array $input
+     *
+     * @return resource
+     */
+    public function writeInput(array $input)
+    {
+        $input = implode('\n', $input);
+
+        return $this->getInputStream($input);
+    }
 }
