@@ -47,6 +47,8 @@ class BuildCommand extends BaseCommand
         // Output done msg
         $this->output->newLine();
         $this->output->success(sprintf('%s completed', $config->get('name')));
+
+        return 0;
     }
 
     /**

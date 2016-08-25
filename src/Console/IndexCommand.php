@@ -48,6 +48,8 @@ class IndexCommand extends BaseCommand
         $builder->build($this->input->getOption('directories'), $this->input->getOption('force'), $this->input->getOption('expire'));
 
         $this->output->success('Indexing completed');
+
+        return 0;
     }
 
     /**
