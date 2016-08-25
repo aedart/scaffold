@@ -9,7 +9,7 @@ use Symfony\Component\Console\Input\InputOption;
 /**
  * Index Command
  *
- * Builds an index file with the location found scaffolds
+ * Builds an index file with the locations of available scaffolds
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Console
@@ -23,7 +23,7 @@ class IndexCommand extends BaseCommand
     {
         $this
             ->setName('index')
-            ->setDescription('Builds an index file with the location found scaffolds')
+            ->setDescription('Builds an index file with the locations of available scaffolds')
             ->addOption('directories', 'd', InputOption::VALUE_REQUIRED | InputOption::VALUE_IS_ARRAY, 'Locations where to search for *.scaffold.php files', $this->directories())
             ->addOption('force', 'f', InputOption::VALUE_NONE, 'Force build a new index file')
             ->addOption('expire', 'e', InputOption::VALUE_OPTIONAL, 'When should the index expire. Value stated in minutes.', 5)
