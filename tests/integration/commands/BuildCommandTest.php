@@ -28,27 +28,6 @@ class BuildCommandTest extends BaseIntegrationTest
         return parent::dataPath() . 'build/';
     }
 
-    /**
-     * Returns a input stream
-     *
-     * Utility method for helping to test commands that
-     * require interaction.
-     *
-     * @see http://symfony.com/doc/current/components/console/helpers/questionhelper.html#testing-a-command-that-expects-input
-     *
-     * @param $input
-     *
-     * @return resource
-     */
-    public function getInputStream($input)
-    {
-        $stream = fopen('php://memory', 'r+', false);
-        fputs($stream, $input);
-        rewind($stream);
-
-        return $stream;
-    }
-
     /********************************************************
      * Actual tests
      *******************************************************/
