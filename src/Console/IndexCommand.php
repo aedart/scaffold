@@ -71,6 +71,10 @@ If you have placed your scaffolds elsewhere, then you can customise what directo
 search, via the <info>directories</info> option, which accepts multiple paths.
 
 <info>php scaffold build -d /home/scaffolds/ -d vendor/</info>
+
+By default, an index will have a certain expiration date. This can be configured via the
+<info>--expire</info> option, which allows specifying when the built index should expire.
+The value is stated in minutes from the point of execution.
 EOT;
     }
 }
