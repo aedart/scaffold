@@ -14,7 +14,7 @@ use Symfony\Component\Console\Input\InputOption;
 /**
  * Install Command
  *
- * TODO: Desc...
+ * Lists available scaffolds and allows you to select which one to install.
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Console
@@ -29,7 +29,7 @@ class InstallCommand extends BaseCommand
         $this
             // Name and desc.
             ->setName('install')
-            ->setDescription('TODO...')
+            ->setDescription('Lists available scaffolds and allows you to select which one to install')
 
             // Install options
             ->addOption('show-all', 'a', InputOption::VALUE_NONE, 'Display all available scaffolds, without selecting vendor and package first')
@@ -64,6 +64,8 @@ class InstallCommand extends BaseCommand
 
         // Install the scaffold
         $this->install($location);
+
+        return 0;
     }
 
     /**
@@ -228,7 +230,23 @@ class InstallCommand extends BaseCommand
     protected function formatHelp()
     {
         return <<<EOT
-TODO ...
+Lists available scaffolds and allows you to select which one to install.
+
+Usage:
+
+<info>php scaffold install</info>
+
+The above command will first invoke the <info>index</info> command and thereafter the allow you
+to select a <info>vendor</info>, a <info>package</info> from that vendor and finally it will
+display a list of available scaffolds inside the selected package.
+
+Once you have selected the desired scaffold, the <info>build</info> command will be invoked and
+the scaffold processed and built.
+
+<info>php scaffold install --show-all</info> | <info>php scaffold install -a</info> 
+
+Alternatively, if you wish to skip selecting a vendor and package first, then you can list
+all available scaffolds. This is achieved via the <info>--show-all</info>.
 EOT;
     }
 }
