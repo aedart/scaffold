@@ -214,4 +214,53 @@ abstract class BaseUnitTest extends UnitTestCase
             $this->assertContains($value, $content, $message);
         }
     }
+
+    /********************************************************
+     * CLI input / output helpers
+     *******************************************************/
+
+    /**
+     * Returns a input stream
+     *
+     * Utility method for helping to test commands that
+     * require interaction.
+     *
+     * @see http://symfony.com/doc/current/components/console/helpers/questionhelper.html#testing-a-command-that-expects-input
+     *
+     * @param $input
+     *
+     * @return resource
+     */
+    public function getInputStream($input)
+    {
+        $stream = fopen('php://memory', 'r+', false);
+        fputs($stream, $input);
+        rewind($stream);
+
+        return $stream;
+    }
+
+    /**
+     * Write input stream
+     *
+     * @param array $input
+     *
+     * @return resource
+     */
+    public function writeInput(array $input)
+    {
+        $input = implode('\n', $input);
+
+        return $this->getInputStream($input);
+    }
+
+    /**
+     * Returns a new output instance
+     *
+     * @return StreamOutput
+     */
+    public function makeStreamOutput()
+    {
+        return new StreamOutput(fopen('php://memory', 'w', false));
+    }
 }
