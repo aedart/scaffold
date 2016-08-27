@@ -184,6 +184,9 @@ class InstallCommand extends BaseCommand
     {
         /** @var IndexBuilder $builder */
         $builder = (IoC::getInstance())->make(IndexBuilder::class, ['output' => $this->output]);
+
+        $builder->setDirectory($this->input->getOption('index-output'));
+
         return $builder->load();
     }
 
