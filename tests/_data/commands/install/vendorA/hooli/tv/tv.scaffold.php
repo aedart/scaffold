@@ -89,7 +89,7 @@ return [
 
                 'question'      => 'Controller Filename?',
 
-                'value'         => 'MyController.php',
+                'value'         => 'src/Controllers/MyController.php',
             ],
         ]
     ],
