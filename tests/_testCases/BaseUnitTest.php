@@ -7,6 +7,7 @@ use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Filesystem\Filesystem;
 use Mockery as m;
+use Symfony\Component\Console\Output\StreamOutput;
 use Symfony\Component\Console\Style\StyleInterface;
 
 /**
