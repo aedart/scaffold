@@ -250,7 +250,7 @@ abstract class BaseUnitTest extends UnitTestCase
      */
     public function writeInput(array $input)
     {
-        $input = implode('\n', $input);
+        $input = implode(PHP_EOL, $input);
 
         return $this->getInputStream($input);
     }
