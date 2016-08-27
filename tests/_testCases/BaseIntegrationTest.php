@@ -97,4 +97,24 @@ abstract class BaseIntegrationTest extends BaseUnitTest
             return $style;
         });
     }
+
+    /**
+     * Executes the given command, with the given arguments and
+     * input values for interaction
+     *
+     * @param string $name Command name
+     * @param array $args [optional] Command arguments
+     * @param array $input [optional] Values for input stream
+     */
+    public function executeInteractiveCommand($name, array $args = [], array $input = [])
+    {
+        $command = $this->getCommandFromApp($name);
+        $commandTester = $this->makeCommandTester($command);
+
+        $this->registerExtendedStyle($input);
+
+        $args['command'] = $command->getName();
+
+        $commandTester->execute($args, ['interactive' => true]);
+    }
 }
