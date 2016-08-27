@@ -81,7 +81,7 @@ return [
     'templates' => [
         'controller' => [
 
-            'source'        => 'snippets/composer.json.twig',
+            'source'        => 'templates/controller.php.twig',
 
             'destination'   => [
 
