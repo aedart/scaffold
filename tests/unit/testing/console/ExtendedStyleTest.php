@@ -73,10 +73,8 @@ class ExtendedStyleTest extends BaseUnitTest
     {
         $name = $this->faker->name;
 
-        $input = new ArrayInput([]);
         $output = $this->makeStreamOutput();
-
-        $style = $this->makeExtendedStyle($input, $output);
+        $style = $this->makeExtendedStyle(new ArrayInput([]), $output);
 
         $helper = $style->getQuestionHelper();
         $helper->setInputStream($this->writeInput([$name]));
@@ -84,5 +82,26 @@ class ExtendedStyleTest extends BaseUnitTest
         $answer = $style->ask('Does this work?');
 
         $this->assertSame($name, $answer, 'Incorrect answer given!');
+    }
+
+    /**
+     * @test
+     */
+    public function canFetchAnswersToMultipleQuestionsFromSameStream()
+    {
+        $firstName = $this->faker->firstName;
+        $lastName = $this->faker->lastName;
+
+        $output = $this->makeStreamOutput();
+        $style = $this->makeExtendedStyle(new ArrayInput([]), $output);
+
+        $helper = $style->getQuestionHelper();
+        $helper->setInputStream($this->writeInput([$firstName, $lastName]));
+
+        $answerA = $style->ask('First name?');
+        $answerB = $style->ask('Last name?');
+
+        $this->assertSame($firstName, $answerA, 'Incorrect first name given!');
+        $this->assertSame($lastName, $answerB, 'Incorrect last name given!');
     }
 }
