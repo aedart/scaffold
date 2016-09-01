@@ -1,6 +1,5 @@
 <?php
 use Aedart\Scaffold\Traits\Destination;
-use Aedart\Testing\Laravel\TestCases\unit\GetterSetterTraitTestCase;
 
 /**
  * Class DestinationTraitTest
@@ -8,35 +7,11 @@ use Aedart\Testing\Laravel\TestCases\unit\GetterSetterTraitTestCase;
  * @group traits
  * @group destination
  *
- * @coversDefaultClass Aedart\Scaffold\Traits\Destination
- *
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
-class DestinationTraitTest extends GetterSetterTraitTestCase
+class DestinationTraitTest extends TraitsTestCase
 {
-
     use PropertyUtil;
-
-    /**
-     * Returns the class path to the trait in question
-     *
-     * @return string
-     */
-    public function getTraitClassPath()
-    {
-        return Destination::class;
-    }
-
-    /**
-     * Returns the name of the property, which the given
-     * trait has implemented its getter and setter methods
-     *
-     * @return string
-     */
-    public function propertyName()
-    {
-        return 'destination';
-    }
 
     /***********************************************************
      * Actual tests
@@ -44,15 +19,9 @@ class DestinationTraitTest extends GetterSetterTraitTestCase
 
     /**
      * @test
-     *
-     * @covers ::setDestination
-     * @covers ::getDestination
-     * @covers ::hasDestination
-     * @covers ::hasDefaultDestination
-     * @covers ::getDefaultDestination
      */
-    public function runDestinationTraitMethods()
+    public function canInvokeTraitMethods()
     {
-        $this->assertGetterSetterTraitMethods($this->makePropertyMock(), $this->makePropertyMock());
+        $this->assertGetterSetterTraitMethods(Destination::class, $this->makePropertyMock(), $this->makePropertyMock());
     }
 }

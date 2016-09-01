@@ -1,7 +1,6 @@
 <?php
 
 use Aedart\Scaffold\Traits\Validation;
-use Aedart\Testing\Laravel\TestCases\unit\GetterSetterTraitTestCase;
 
 /**
  * Class ValidationTraitTest
@@ -9,10 +8,9 @@ use Aedart\Testing\Laravel\TestCases\unit\GetterSetterTraitTestCase;
  * @group traits
  * @group validation
  *
- * @coversDefaultClass Aedart\Scaffold\Traits\Validation
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
-class ValidationTraitTest extends GetterSetterTraitTestCase
+class ValidationTraitTest extends TraitsTestCase
 {
 
     /**
@@ -56,14 +54,8 @@ class ValidationTraitTest extends GetterSetterTraitTestCase
 
     /**
      * @test
-     *
-     * @covers ::setValidation
-     * @covers ::getValidation
-     * @covers ::hasValidation
-     * @covers ::hasDefaultValidation
-     * @covers ::getDefaultValidation
      */
-    public function runValidationTraitMethods(){
-        $this->assertGetterSetterTraitMethods($this->makeCallableMethod(), $this->makeCallableMethod());
+    public function canInvokeTraitMethods(){
+        $this->assertGetterSetterTraitMethods(Validation::class, $this->makeCallableMethod(), $this->makeCallableMethod());
     }
 }

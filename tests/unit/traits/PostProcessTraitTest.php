@@ -1,7 +1,6 @@
 <?php
 
 use Aedart\Scaffold\Traits\PostProcess;
-use Aedart\Testing\Laravel\TestCases\unit\GetterSetterTraitTestCase;
 
 /**
  * Class PostProcessTraitTest
@@ -9,33 +8,10 @@ use Aedart\Testing\Laravel\TestCases\unit\GetterSetterTraitTestCase;
  * @group traits
  * @group postProcess
  *
- * @coversDefaultClass Aedart\Scaffold\Traits\PostProcess
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
-class PostProcessTraitTest extends GetterSetterTraitTestCase
+class PostProcessTraitTest extends TraitsTestCase
 {
-
-    /**
-     * Returns the class path to the trait in question
-     *
-     * @return string
-     */
-    public function getTraitClassPath()
-    {
-        return PostProcess::class;
-    }
-
-    /**
-     * Returns the name of the property, which the given
-     * trait has implemented its getter and setter methods
-     *
-     * @return string
-     */
-    public function propertyName()
-    {
-        return 'postProcess';
-    }
-
     /**
      * Returns a new closure
      *
@@ -56,14 +32,8 @@ class PostProcessTraitTest extends GetterSetterTraitTestCase
 
     /**
      * @test
-     *
-     * @covers ::setPostProcess
-     * @covers ::getPostProcess
-     * @covers ::hasPostProcess
-     * @covers ::hasDefaultPostProcess
-     * @covers ::getDefaultPostProcess
      */
-    public function runPostProcessTraitMethods(){
-        $this->assertGetterSetterTraitMethods($this->makeCallableMethod(), $this->makeCallableMethod());
+    public function canInvokeTraitMethods(){
+        $this->assertGetterSetterTraitMethods(PostProcess::class, $this->makeCallableMethod(), $this->makeCallableMethod());
     }
 }
