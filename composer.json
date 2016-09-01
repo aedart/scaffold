@@ -1,6 +1,6 @@
 {
   "name": "aedart/scaffold",
-  "description": "Tool for creating and installing various file and directory templates into your project",
+  "description": "Tool for creating and installing various files and directories into your project, based on created scaffolds",
   "keywords": [
     "Scaffold",
     "Template",
