@@ -2,7 +2,7 @@
 
 use Aedart\Scaffold\Contracts\Collections\Directories;
 use Aedart\Scaffold\Contracts\Collections\Files;
-use Aedart\Testing\Laravel\TestCases\unit\UnitTestCase;
+use Aedart\Testing\TestCases\Unit\UnitTestCase;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Contracts\Logging\Log;
 use Illuminate\Filesystem\Filesystem;
