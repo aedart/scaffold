@@ -73,12 +73,8 @@ class Templates implements TemplatesInterface
         $this->remove($offset);
     }
 
-    public function populate(array $data)
+    public function populate(array $data = [])
     {
-        if(empty($data)){
-            return;
-        }
-
         $ioc = IoC::getInstance();
 
         foreach($data as $id => $template){

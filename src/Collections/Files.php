@@ -55,12 +55,8 @@ class Files implements FilesInterface
         return $this->getInternalCollection()->all();
     }
 
-    public function populate(array $data)
+    public function populate(array $data = [])
     {
-        if(empty($data)){
-            return;
-        }
-
         foreach($data as $sourceFile => $destination){
             $this->put($sourceFile, $destination);
         }

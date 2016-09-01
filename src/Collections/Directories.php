@@ -55,12 +55,8 @@ class Directories implements DirectoriesInterface
         return $this->getInternalCollection()->all();
     }
 
-    public function populate(array $data)
+    public function populate(array $data = [])
     {
-        if(empty($data)){
-            return;
-        }
-
         foreach($data as $path){
             $this->add($path);
         }
