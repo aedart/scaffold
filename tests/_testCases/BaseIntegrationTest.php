@@ -115,6 +115,11 @@ abstract class BaseIntegrationTest extends BaseUnitTest
 
         $args['command'] = $command->getName();
 
+        // See https://github.com/aedart/scaffold/issues/1
+        // See http://symfony.com/doc/master/components/console/helpers/questionhelper.html
+        // NOTE: Didn't work as expected
+        //$commandTester->setInputs($input);
+
         $commandTester->execute($args, ['interactive' => true]);
     }
 }
