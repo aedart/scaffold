@@ -1,0 +1,60 @@
+{{ '<?php' }}
+
+return [
+
+    /* ------------------------------------------------------------
+     | {{ scaffoldName }} Scaffold Configuration
+     | ------------------------------------------------------------
+     |
+     */
+
+    {{ include('snippets/partials/doc-name.twig') }}
+    'name'          => '{{ scaffoldName }}',
+
+    {{ include('snippets/partials/doc-description.twig') }}
+    'description'   => '{{ scaffoldDesc }}',
+
+    {{ include('snippets/partials/doc-location.twig') }}
+    'basePath' => __DIR__ . '/resources/',
+
+    {{ include('snippets/partials/doc-tasks.twig') }}
+    'tasks' => [
+        \Aedart\Scaffold\Tasks\AskForTemplateData::class,
+        \Aedart\Scaffold\Tasks\AskForTemplateDestination::class,
+        \Aedart\Scaffold\Tasks\CreateDirectories::class,
+        \Aedart\Scaffold\Tasks\CopyFiles::class,
+        \Aedart\Scaffold\Tasks\GenerateFilesFromTemplates::class,
+    ],
+
+    {{ include('snippets/partials/doc-folders.twig') }}
+    'folders' => [
+
+    ],
+
+    {{ include('snippets/partials/doc-files.twig') }}
+    'files' => [
+        // Source files (inside 'basePath')  =>  Destination
+    ],
+
+    {{ include('snippets/partials/doc-template-data.twig') }}
+    'templateData' => [
+
+    ],
+
+    {{ include('snippets/partials/doc-templates.twig') }}
+    'templates' => [
+
+    ],
+
+    {{ include('snippets/partials/doc-handlers.twig') }}
+//    'handlers' => [
+//
+//        'directory'     =>    \Aedart\Scaffold\Handlers\DirectoriesHandler::class,
+//
+//        'file'          =>    \Aedart\Scaffold\Handlers\FilesHandler::class,
+//
+//        'property'      =>    \Aedart\Scaffold\Handlers\PropertyHandler::class,
+//
+//        'template'      =>    \Aedart\Scaffold\Handlers\TwigTemplateHandler::class,
+//    ],
+];

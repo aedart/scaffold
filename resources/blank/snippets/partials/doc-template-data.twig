@@ -1,0 +1,62 @@
+/* ------------------------------------------------------------
+    | Template Data
+    | ------------------------------------------------------------
+    |
+    | In this section, all the "variables" that are needed by
+    | templates are defined. (Internally, these are called
+    | "properties").
+    |
+    | Each defined variable or "property" has a type, that
+    | determines how the system should deal with it. Depending on
+    | that type, a value is either just passed on to the templates
+    | or the end-user is prompted (asked) for a value, in the
+    | console.
+    |
+    | By default, the system supports the types that are defined
+    | within the Type interface.
+    | @see \Aedart\Scaffold\Contracts\Templates\Data\Type
+    | ------------------------------------------------------------
+    |
+    | Syntax
+    |
+    | As a minimum, each variable should be defined in the
+    | following way;
+    |
+    | 'name-of-property' => [
+    |      'value' => (the value of the property)
+    | ],
+    |
+    | If you need the end-user to provide you with a value, then
+    | you must state a type. It will determine how the user is
+    | going to be asked for that value. Furthermore, additional
+    | settings might be required, such as a 'question' property,
+    | that is displayed to the user.
+    |
+    | 'name-of-property' => [
+    |      'type'      => \Aedart\Scaffold\Contracts\Templates\Data\Type::QUESTION
+    |      'question'  => 'The question to ask the user'
+    |      'value'     => (default value, in case user just hits enter)
+    | ],
+    |
+    | See the resources/examples/example.scaffold.php for what
+    | settings are supported by the default types.
+    | ------------------------------------------------------------
+    |
+    | Validation and post processing
+    |
+    | Validation and post-processing of the values is also
+    | supported. This is done so, via callback methods.
+    |
+    | 'name-of-property' => [
+    |      'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::QUESTION
+    |      'question'      => 'The question to ask the user'
+    |      'value'         => (default value, in case user just hits enter),
+    |      'validation'    => function($answer){return $answer;},
+    |      'postProcess'   => function($answer){return $answer;},
+    | ],
+    | ------------------------------------------------------------
+    |
+    | Behind the scenes, the Symfony Style utility is used as a
+    | helper to prompt the user for a value.
+    | @see http://symfony.com/blog/new-in-symfony-2-8-console-style-guide
+    */
