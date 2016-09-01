@@ -33,8 +33,7 @@
     "aedart/license": "1.*",
     "aedart/license-file-manager": "~1.6",
     "aedart/testing": "~1.0",
-    "aedart/testing-gst": "~1.2",
-    "symfony/console": "~3.2@dev"
+    "aedart/testing-gst": "~1.2"
   },
   "autoload": {
     "psr-4": {
