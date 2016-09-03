@@ -46,7 +46,7 @@ return [
 
             'value'         => 'My Scaffold',
 
-            'postProcess'   => function($answer){
+            'postProcess'   => function($answer, array $previousAnswers){
                 return trim($answer);
             }
         ],
@@ -62,7 +62,7 @@ return [
 
             'value'         => 'This is my great scaffold',
 
-            'postProcess'   => function($answer){
+            'postProcess'   => function($answer, array $previousAnswers){
                 return trim($answer);
             }
         ],
@@ -80,7 +80,7 @@ return [
 
                 'value'         => 'new',
 
-                'postProcess'   => function($answer){
+                'postProcess'   => function($answer, array $previousAnswers){
                     return trim(strtolower($answer)) . '.scaffold.php';
                 }
             ],
