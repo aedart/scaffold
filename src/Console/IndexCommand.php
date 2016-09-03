@@ -41,7 +41,7 @@ class IndexCommand extends BaseCommand
         $this->output->title('Building index');
 
         /** @var IndexBuilder $builder */
-        $builder = (IoC::getInstance())->make(IndexBuilder::class, ['output' => $this->output]);
+        $builder = IoC::getInstance()->make(IndexBuilder::class, ['output' => $this->output]);
 
         $builder->setDirectory($this->input->getOption('output'));
 

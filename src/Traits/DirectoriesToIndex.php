@@ -24,7 +24,7 @@ trait DirectoriesToIndex
         $composerConfig = Factory::createConfig(null, getcwd());
 
         $vendorDir = $composerConfig->get('vendor-dir');
-        $globalVendorDir = (Factory::createConfig(null, $composerConfig->get('home')))->get('vendor-dir');
+        $globalVendorDir = Factory::createConfig(null, $composerConfig->get('home'))->get('vendor-dir');
 
         return [
 

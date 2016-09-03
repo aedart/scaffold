@@ -183,7 +183,7 @@ class InstallCommand extends BaseCommand
     public function getIndex()
     {
         /** @var IndexBuilder $builder */
-        $builder = (IoC::getInstance())->make(IndexBuilder::class, ['output' => $this->output]);
+        $builder = IoC::getInstance()->make(IndexBuilder::class, ['output' => $this->output]);
 
         $builder->setDirectory($this->input->getOption('index-output'));
 
