@@ -27,6 +27,8 @@ In other words, you can perceive this tool as a [wizzard](https://en.wikipedia.o
 * [Quick start](#quick-start)
 ---------
 
+@todo
+
 ---------
 * [Contribution](#contribution)
 * [Acknowledgement](#acknowledgement)
@@ -59,6 +61,7 @@ You can perhaps resolves this by making use of [Consolidation/Cgr](https://githu
 
 ## Quick start
 
+@todo
 
 -----------------------------
 ## Contribution
