@@ -139,6 +139,45 @@ class PropertyHandlerTest extends ConsoleTest
 
     /**
      * @test
+     */
+    public function savesPreviousAnswers()
+    {
+        $value = $this->faker->word;
+
+        $key = $this->faker->word;
+
+        $config = $this->makeConfigRepositoryMock();
+        $config->shouldReceive('set')
+            ->with($key, m::type('string'));
+
+        $output = $this->makeStyleInterfaceMock();
+        $output->shouldReceive('text')
+            ->with(m::type('string'));
+
+        $postProcessMethod = function($answer) {
+            return strtoupper($answer);
+        };
+
+        $property = $this->makePropertyMock(Type::VALUE);
+        $property->shouldReceive('getValue')
+            ->andReturn($value);
+        $property->shouldReceive('hasPostProcess')
+            ->andReturn(true);
+        $property->shouldReceive('getPostProcess')
+            ->andReturn($postProcessMethod);
+
+        $handler = $this->makePropertyHandler($config, $key, $output);
+
+        $handler->processProperty($property);
+
+        $previousAnswers = $handler->getPreviousAnswers();
+
+        $this->assertArrayHasKey($property->getId(), $previousAnswers, 'Did not save to previous answers');
+        $this->assertSame(strtoupper($value), $previousAnswers[$property->getId()], 'Incorrect answer saved as a previous answer!');
+    }
+
+    /**
+     * @test
      *
      * @covers ::applyPostProcessOn
      */
@@ -155,7 +194,7 @@ class PropertyHandlerTest extends ConsoleTest
         $output->shouldReceive('text')
             ->with(m::type('string'));
 
-        $postProcessMethod = function($v) use ($processedValue){return $processedValue;};
+        $postProcessMethod = function($answer, $previous) use ($processedValue){return $processedValue;};
 
         $property = $this->makePropertyMock(Type::VALUE);
         $property->makePartial();
@@ -169,6 +208,53 @@ class PropertyHandlerTest extends ConsoleTest
         $result = $handler->applyPostProcessOn($value, $property);
 
         $this->assertSame($processedValue, $result);
+    }
+
+    /**
+     * @test
+     *
+     * @depends savesPreviousAnswers
+     * @depends canInvokePostProcessMethod
+     */
+    public function postProcessReceivesPreviousAnswers()
+    {
+        $value = $this->faker->word;
+
+        $key = $this->faker->word;
+
+        $list = [];
+
+        $config = $this->makeConfigRepositoryMock();
+        $config->shouldReceive('set')
+            ->with($key, m::type('string'));
+
+        $output = $this->makeStyleInterfaceMock();
+        $output->shouldReceive('text')
+            ->with(m::type('string'));
+
+        $postProcessMethod = function($answer, $previousAnswers) use(&$list) {
+
+            $list = $previousAnswers;
+
+            return strtoupper($answer);
+        };
+
+        $property = $this->makePropertyMock(Type::VALUE);
+        $property->shouldReceive('getValue')
+            ->andReturn($value);
+        $property->shouldReceive('hasPostProcess')
+            ->andReturn(true);
+        $property->shouldReceive('getPostProcess')
+            ->andReturn($postProcessMethod);
+
+        $handler = $this->makePropertyHandler($config, $key, $output);
+
+        $handler->processProperty($property);
+
+        // Because the previous answers are stored statically inside the prop-handler,
+        // we should have multiple previous answers by now.
+        $this->assertNotEmpty($list, 'No previous answers given in post process!');
+        $this->assertGreaterThan(1, count($list), 'More that 1 previous answer should had been given in post process');
     }
 
     /**
