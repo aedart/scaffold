@@ -5,9 +5,18 @@ php:
   - '7.0'
   - hhvm
 
+sudo: false
+
+cache:
+  directories:
+    - $HOME/.composer/cache
+
+before_install:
+  - travis_retry composer self-update
+
 install:
-    - composer self-update
-    - composer install
+  - composer install --no-interaction --prefer-dist --no-suggest
+  - composer update --no-interaction --prefer-stable --no-suggest
 
 before_script:
 
