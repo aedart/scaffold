@@ -1,1 +1,0 @@
-# Example file to be copied when scaffold configuration is executed #
