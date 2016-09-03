@@ -42,6 +42,13 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
     protected $output;
 
     /**
+     * List of previous answers
+     *
+     * @var array
+     */
+    static protected $previousAnswers = [];
+
+    /**
      * Property Handler constructor.
      *
      * @param Repository $config The configuration repository where to store the property's
@@ -98,6 +105,16 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
     }
 
     /**
+     * Returns a list of previous given answers
+     *
+     * @return array
+     */
+    public function getPreviousAnswers()
+    {
+        return self::$previousAnswers;
+    }
+
+    /**
      * Save the given property's value in this handler's
      * configuration
      *
@@ -106,7 +123,11 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
      */
     protected function saveValueFor(Property $property, $valueToBeSaved)
     {
+        // Change the configuration
         $this->config->set($this->key, $valueToBeSaved);
+
+        // Save the value as a "previous" answer
+        self::$previousAnswers[$property->getId()] = $valueToBeSaved;
 
         // Output what value is being used
         $this->outputStatus($valueToBeSaved, $property->getType(), $property->getId());
@@ -224,7 +245,9 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
 
         $this->output->text("Applying post-process on <comment>{$property->getId()}</comment>");
 
-        return call_user_func($property->getPostProcess(), $value);
+        $method = $property->getPostProcess();
+
+        return $method($value, $this->getPreviousAnswers());
     }
 
     /**
