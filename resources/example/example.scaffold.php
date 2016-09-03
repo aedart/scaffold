@@ -191,7 +191,7 @@ return [
                 throw new \RuntimeException('Package name must contain vendor and project name, separated by "/"');
             },
 
-            'postProcess'   => function($answer){
+            'postProcess'   => function($answer, array $previousAnswers){
                 return trim(strtolower($answer));
             }
         ],
