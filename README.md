@@ -17,19 +17,14 @@ How many times have you been doing the same task, over and over again? Maybe it'
 * Ask user for input
 * Generate files based on templates, compiled with data from the user 
 
-In other words, you can perceive this tool as a [wizzard](https://en.wikipedia.org/wiki/Wizard_(software)) for installing "something" inside your project.
+In other words, you can perceive this tool as a console [wizzard](https://en.wikipedia.org/wiki/Wizard_(software)) for installing "something" inside your project.
 
 ## Contents
 
 * [How to install](#how-to-install)
   * [Local](#local)
   * [Global](#global)
-* [Quick start](#quick-start)
----------
-
-@todo
-
----------
+* [Run Demo](#run-demo)
 * [Contribution](#contribution)
 * [Acknowledgement](#acknowledgement)
 * [Versioning](#versioning)
@@ -59,7 +54,7 @@ composer global require aedart/scaffold
  
 You can perhaps resolves this by making use of [Consolidation/Cgr](https://github.com/consolidation-org/cgr), which safely installs each command line tool application in it's own directory.
 
-## Quick start
+## Run Demo
 
 @todo
 
