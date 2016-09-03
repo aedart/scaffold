@@ -15,7 +15,7 @@ return [
      | This name is displayed in the list of available templates,
      | when the CLI command is invoked.
      */
-    'name'          => 'My Template',
+    'name'          => 'Example Template',
 
     /* ------------------------------------------------------------
      | Description of this Scaffold
@@ -24,7 +24,7 @@ return [
      | This description is displayed in the list of available
      | templates, when the CLI command is invoked.
      */
-    'description'   => 'This is my awesome template...',
+    'description'   => 'Creates a directory structure, copies a few static files and generates few components',
 
     /* ------------------------------------------------------------
      | Location of scaffold's files and templates
@@ -173,9 +173,9 @@ return [
     'templateData' => [
 
         //
-        // Ask the user for a package name
+        // Ask the user for a namespace
         //
-        'packageName' => [
+        'namespace' => [
 
             'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::QUESTION,
 
