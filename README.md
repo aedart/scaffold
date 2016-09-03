@@ -8,7 +8,16 @@
 
 How many times have you been doing the same task, over and over again? Maybe it's time for you to create some kind of helper that can perform that task for you. Perhaps this tool might be able to help you along the way.
 
-**Scaffold** is a php-based CLI tool for creating and installing various files and directories into your project, based on a configuration file (scaffold).
+**Scaffold** is a php-based command line tool for creating and installing various files and directories into your project, based on a configuration file (scaffold).
+
+**Key features**
+
+* Create desired directory structure
+* Copy static files into desired location
+* Ask user for input
+* Generate files based on templates, compiled with data from the user 
+
+In other words, you can perceive this tool as a [wizzard](https://en.wikipedia.org/wiki/Wizard_(software)) for installing "something" inside your project.
 
 ## Contents
 
