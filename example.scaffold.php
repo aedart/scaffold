@@ -34,7 +34,7 @@ return [
      | resource, from which it can build and install one or several
      | folders, files and or templates.
      */
-    'basePath' => __DIR__ . '/resources/',
+    'basePath' => __DIR__ . '/resources/example/',
 
     /* ------------------------------------------------------------
      | Tasks
@@ -105,7 +105,6 @@ return [
         '.gitkeep'                  =>  '.gitkeep',
         'logs/default.log'          =>  'tmp/log.log',
         'docs/LICENSE.txt'          =>  'LICENSE',
-        'docs/README.md'            =>  'README.md',
     ],
 
     /* ------------------------------------------------------------
@@ -173,58 +172,57 @@ return [
     'templateData' => [
 
         //
-        // Ask the user for a namespace
+        // Ask the user a question
         //
-        'namespace' => [
+        'vendor' => [
 
             'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::QUESTION,
 
-            'question'      => 'What this package\'s name (composer.json "name" property)?',
+            'question'      => 'What is your vendor name? (used as namespace prefix)',
 
-            'value'         => 'aedart/scaffold-example',
+            'value'         => 'Acme',
 
             'validation'    => function($answer){
-                if(strpos($answer, '/') !== false){
+                if(strlen($answer) >= 3){
                     return $answer;
                 }
 
-                throw new \RuntimeException('Package name must contain vendor and project name, separated by "/"');
+                throw new \RuntimeException('Vendor name should be at least 3 chars long');
             },
 
             'postProcess'   => function($answer, array $previousAnswers){
-                return trim(strtolower($answer));
+                return ucfirst($answer);
             }
         ],
 
         //
-        // Ask the user for a package type; allow only predefined answers.
+        // Give user something to choose - predefined choices
         //
-        'packageType' => [
+        'subNamespace' => [
 
             'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::CHOICE,
 
-            'question'      => 'What type of this package is this (composer.json "type" property)?',
+            'question'      => 'In what sub-namespace should your class be located?',
 
             'choices'       => [
-                'library',
-                'project',
-                'metapackage',
-                'composer-plugin'
+                'Controllers',
+                'Events',
+                'Models'
             ],
 
-            'value'         => 'library',
+            'value'         => 'Controllers',
         ],
 
         //
         // Ask the user to confirm something; (yes / no)
         //
-        'requirePredefinedDev' => [
+        'addPhpDoc' => [
 
             'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::CONFIRM,
 
-            'question'      => 'Require predefined development packages (composer.json "require-dev" property)?',
+            'question'      => 'Add class PHPDoc?',
 
-            'value'         => false,
+            'value'         => true,
         ],
 
         //
@@ -250,8 +248,16 @@ return [
         // Define a default property; don't ask the user anything.
         // (Type defaults to \Aedart\Scaffold\Contracts\Templates\Data\Type::VALUE)
         //
-        'authorName' => [
-            'value'       => 'Alin Eugen Deac'
+        'className' => [
+            'value'       => 'MyClass'
+        ],
+
+        //
+        // Define a default property; don't ask the user anything.
+        // (Type defaults to \Aedart\Scaffold\Contracts\Templates\Data\Type::VALUE)
+        //
+        'author' => [
+            'value'       => 'John Doe'
         ],
 
         //
@@ -259,7 +265,7 @@ return [
         // (Type defaults to \Aedart\Scaffold\Contracts\Templates\Data\Type::VALUE)
         //
         'authorEmail' => [
-            'value'       => 'aedart@gmail.com'
+            'value'       => 'john.doe@example.com'
         ],
     ],
 
@@ -301,29 +307,51 @@ return [
      | directory of where the scaffold is being installed into!
      */
     'templates' => [
-        'composer' => [
+        'class' => [
             // Template to use, from within the 'basePath'
-            'source'        => 'snippets/composer.json.twig',
+            'source'        => 'snippets/class.php.twig',
 
             // Destination of a composer file - uses a "default"
             // property (Type defaults to \Aedart\Scaffold\Contracts\Templates\Data\Type::VALUE)
             'destination'   => [
 
-                'value'       => 'composer.json'
+                'value'       => 'MyClass.php',
+
+                // Use post processing to compute a path and file name
+                'postProcess'   => function($answer, array $previousAnswers){
+                    return 'src/' . $previousAnswers['subNamespace'] . '/' . $answer;
+                }
             ],
         ],
 
         'wiki' => [
-            'source'        => 'snippets/WIKI.md.twig',
+            'source'        => 'snippets/markdown.md.twig',
 
             // Destination of a markdown file - uses a type "question" property
             'destination'   => [
 
                 'type'          => \Aedart\Scaffold\Contracts\Templates\Data\Type::QUESTION,
 
-                'question'      => 'Name and location of WIKI markdown file?',
+                'question'      => 'Name and location of markdown file? (.md automatically added)',
 
-                'value'         => 'WIKI.md',
+                'value'         => 'WIKI',
+
+                // Use post processing to add file extension
+                'postProcess'   => function($answer, array $previousAnswers){
+                    return $answer . '.md';
+                }
+            ],
+        ],
+
+        'env' => [
+            // Template to use, from within the 'basePath'
+            'source'        => 'snippets/env.twig',
+
+            // Destination of a composer file - uses a "default"
+            // property (Type defaults to \Aedart\Scaffold\Contracts\Templates\Data\Type::VALUE)
+            'destination'   => [
+
+                'value'       => '.env',
             ],
         ],
     ],
