@@ -50,7 +50,7 @@ Alternatively, you can also require it globally and thereby making it available 
 composer global require aedart/scaffold
 ```
 
-**Warning** If you have other packages installed globally, their dependencies might conflict with this package's dependencies or vise versa.
+**Warning** If you have other packages installed globally, their dependencies might conflict.
  
 You can perhaps resolves this by making use of [Consolidation/Cgr](https://github.com/consolidation-org/cgr), which safely installs each command line tool application in it's own directory.
 
