@@ -25,6 +25,7 @@ In other words, you can perceive this tool as a console [wizzard](https://en.wik
   * [Local](#local)
   * [Global](#global)
 * [Run Demo](#run-demo)
+* [Documentation](#documentation)
 * [Contribution](#contribution)
 * [Acknowledgement](#acknowledgement)
 * [Versioning](#versioning)
@@ -79,7 +80,10 @@ Once completed. you should see the following in your console;
 
 In the directory that you are in, several directories have been created, a few static files have been copied into it and finally, some files have been generated based on your input. 
 
------------------------------
+## Documentation
+
+How to create scaffolds of your own? Please read the official documentation, which can be found on [scaffold.readthedocs.io](http://scaffold.readthedocs.io).
+
 ## Contribution
 
 Have you found a defect ( [bug or design flaw](https://en.wikipedia.org/wiki/Software_bug) ), or do you wish improvements? In the following sections, you might find some useful information
