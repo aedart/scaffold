@@ -161,7 +161,7 @@ return [
      |      'question'      => 'The question to ask the user'
      |      'value'         => (default value, in case user just hits enter),
      |      'validation'    => function($answer){return $answer;},
-     |      'postProcess'   => function($answer){return $answer;},
+     |      'postProcess'   => function($answer, $previousAnswers){return $answer;},
      | ],
      | ------------------------------------------------------------
      |
