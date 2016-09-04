@@ -30,4 +30,5 @@ Contents
 
     how_to_install/index
     install_scaffolds/index
+    create_scaffolds/index
     indices/index
