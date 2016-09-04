@@ -35,3 +35,5 @@ In the following sections, each of the above properties is covered in detail.
 
 .. toctree::
    :maxdepth: 2
+
+   name
