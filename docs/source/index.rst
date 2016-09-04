@@ -25,10 +25,30 @@ Source is available on `GitHub <https://github.com/aedart/scaffold>`_.
 Contents
 ========
 
+**The basics**
+
 .. toctree::
     :glob:
 
     how_to_install/index
+
+**How to use scaffolds**
+
+.. toctree::
+    :glob:
+
     install_scaffolds/index
+
+**Create your own**
+
+.. toctree::
+    :glob:
+
     create_scaffolds/index
+
+**Misc**
+
+.. toctree::
+    :glob:
+
     indices/index
