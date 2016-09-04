@@ -1,0 +1,4 @@
+Indices
+=======
+
+:ref:`genindex`
