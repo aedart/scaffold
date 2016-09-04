@@ -37,3 +37,4 @@ In the following sections, each of the above properties is covered in detail.
    :maxdepth: 2
 
    name
+   description
