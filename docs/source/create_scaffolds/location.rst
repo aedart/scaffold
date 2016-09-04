@@ -10,6 +10,12 @@ The first thing you need to consider is, where to place your scaffold files.
 
 Regardless of your choice, I recommend that you use a `version control system <https://en.wikipedia.org/wiki/Version_control>`_ !
 
+.. note::
+
+    Make sure that the scaffold application is available a development dependency.
+
+    See :doc:`../how_to_install/index`
+
 New Project
 ^^^^^^^^^^^
 
