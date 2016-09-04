@@ -9,3 +9,4 @@ tests/_output/*
 /tests/_output/commands/index/*
 /tests/_output/commands/install/.scaffold/*
 temp/*
+docs/build/*
