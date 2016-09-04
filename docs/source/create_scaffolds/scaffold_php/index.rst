@@ -42,3 +42,4 @@ In the following sections, each of the above properties is covered in detail.
    tasks
    folders
    files
+   template-data
