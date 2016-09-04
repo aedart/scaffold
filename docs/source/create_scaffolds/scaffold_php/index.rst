@@ -38,3 +38,4 @@ In the following sections, each of the above properties is covered in detail.
 
    name
    description
+   base-path
