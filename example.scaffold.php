@@ -311,7 +311,7 @@ return [
             // Template to use, from within the 'basePath'
             'source'        => 'snippets/class.php.twig',
 
-            // Destination of a composer file - uses a "default"
+            // Destination of a file - uses a "default"
             // property (Type defaults to \Aedart\Scaffold\Contracts\Templates\Data\Type::VALUE)
             'destination'   => [
 
