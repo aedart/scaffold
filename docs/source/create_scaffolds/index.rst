@@ -6,4 +6,5 @@ Create Scaffolds
 
    location
    blank-scaffold
+   scaffold_php/index
 
