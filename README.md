@@ -77,7 +77,7 @@ Once completed. you should see the following in your console;
 [OK] Example Template completed
 ```
 
-In the directory that you are in, several directories has been created, a few static files have been copied into it and finally, some files have been generated based on your input. 
+In the directory that you are in, several directories have been created, a few static files have been copied into it and finally, some files have been generated based on your input. 
 
 -----------------------------
 ## Contribution
