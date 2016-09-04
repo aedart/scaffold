@@ -4,6 +4,10 @@
 Description
 ===========
 
+======== =======
+required yes
+======== =======
+
 Description of the scaffold.
 
 The description is displayed in the list of available templates, when the :code:`install` command is invoked.
