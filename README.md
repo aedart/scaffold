@@ -56,7 +56,28 @@ You can perhaps resolves this by making use of [Consolidation/Cgr](https://githu
 
 ## Run Demo
 
-@todo
+Create a new directory and require the scaffold package as a development dependency (`require-dev`).
+
+Afterwards, invoke the following command;
+
+```console
+vendor/bin/scaffold install -a
+```
+
+(_The `-a` option tells the install command to skip vendor and package selection and display the found scaffolds directly._)
+
+On completion, the application will display a list of found scaffolds, starting by displaying the vendors you can choose from. Please follow these steps, in order to install an example (or demo) scaffold;
+
+1. Select `Example Template (aedart/scaffold)` as the scaffold to install
+2. Fill out the questions that you are asked, until completion
+
+Once completed. you should see the following in your console;
+
+```console
+[OK] Example Template completed
+```
+
+In the directory that you are in, several directories has been created, a few static files have been copied into it and finally, some files have been generated based on your input. 
 
 -----------------------------
 ## Contribution
