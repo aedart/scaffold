@@ -66,10 +66,10 @@ vendor/bin/scaffold install -a
 
 (_The `-a` option tells the install command to skip vendor and package selection and display the found scaffolds directly._)
 
-On completion, the application will display a list of found scaffolds, starting by displaying the vendors you can choose from. Please follow these steps, in order to install an example (or demo) scaffold;
+On completion, the application will display a list of found scaffolds. Please follow these steps, in order to install an example (or demo) scaffold;
 
-1. Select `Example Template (aedart/scaffold)` as the scaffold to install
-2. Fill out the questions that you are asked, until completion
+1. Select `Example Template (aedart/scaffold)` as the scaffold to be installed
+2. Fill out the questions that you are asked until completion
 
 Once completed. you should see the following in your console;
 
