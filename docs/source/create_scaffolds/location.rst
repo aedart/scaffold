@@ -41,6 +41,6 @@ Location of *.scaffold.php
 The :code:`*.scaffold.php` file is covered in the upcoming chapters. For now, you just need to ensure that it is located
 in the project's root directory, at the same level as your :code:`composer.json`.
 
-The reason why the scaffold configuration file (:code:`*.scaffold.php`) need to be located here, is due to the indexing
-performed by the application. By default, it will search for scaffold files inside the local vendor directory, searching
+The reason why the scaffold configuration file (:code:`*.scaffold.php`) needs to be located here, is due to the indexing
+performed by the application. By default, it will search for scaffolds inside the local vendor directory, searching
 each package's root directory only!
