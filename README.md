@@ -5,7 +5,7 @@
 [![Total Downloads](https://poser.pugx.org/aedart/scaffold/downloads)](https://packagist.org/packages/aedart/scaffold)
 [![Latest Unstable Version](https://poser.pugx.org/aedart/scaffold/v/unstable)](https://packagist.org/packages/aedart/scaffold)
 [![License](https://poser.pugx.org/aedart/scaffold/license)](https://packagist.org/packages/aedart/scaffold)
-[![Read the Docs]("https://readthedocs.org/projects/scaffold/badge/)](http://scaffold.readthedocs.io)
+[![Documentation Status](https://readthedocs.org/projects/scaffold/badge/?version=latest)](http://scaffold.readthedocs.io/en/latest/?badge=latest)
 
 How many times have you been doing the same task, over and over again? Maybe it's time for you to create some kind of helper that can perform that task for you. Perhaps this tool might be able to help you along the way.
 
