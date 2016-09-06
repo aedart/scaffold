@@ -35,8 +35,8 @@ Alternatively, you can also create scaffolds directly into existing projects. Th
 a tight coupling between your project and associated scaffolds. However, be sure of what you are doing, as it is the
 nature of this application to write files!
 
-Location of *.scaffold.php
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Location of (*).scaffold.php
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The :code:`*.scaffold.php` file is covered in the upcoming chapters. For now, you just need to ensure that it is located
 in the project's root directory, at the same level as your :code:`composer.json`.

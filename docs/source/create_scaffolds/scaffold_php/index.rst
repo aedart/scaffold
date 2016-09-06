@@ -1,8 +1,8 @@
 .. index::
     single: scaffold.php
 
-*.scaffold.php
-==============
+(*).scaffold.php
+================
 
 The :code:`*.scaffold.php` file is the configuration file (a php array) that the scaffold application will read and
 execute upon installation. In short, it determines what will happen when an end-user installs it.
