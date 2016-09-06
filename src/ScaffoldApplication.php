@@ -74,13 +74,10 @@ class ScaffoldApplication extends Application
      */
     protected function resolveApplicationVersion()
     {
-        // TODO: This needs to change, because this a misuse of the "branch-alias"
-        // TODO: A safer choice would be to create rely on "git describe --tags"
-        // TODO:  a) create a script that can run on composer update
-        // TODO:        - Fetch version via git. If it's not clean, e.g. x.y.z, then  fallback
-        // TODO:  b) Fallback on readying composer's branch alias
-        // TODO:  c) create a version.txt file
-        // TODO:  d) load version from that file...
+        // TODO: Use composer to obtain vendor dir...
+        // TODO: Search for installed.json inside composer's directory inside the vendor folder
+        // TODO: Find this package - obtain version number
+        // TODO: ...fallback?
 
         $pathToComposerFile = __DIR__ . '/../composer.json';
         if(!file_exists($pathToComposerFile)){
