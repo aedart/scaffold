@@ -28,6 +28,8 @@ execute upon installation. In short, it determines what will happen when an end-
 
         'templates' => [],
 
+        'scripts' => [],
+
         'handlers' => [],
     ];
 
@@ -44,4 +46,5 @@ In the following sections, each of the above properties is covered in detail.
    files
    template-data
    templates
+   scripts
    handlers
