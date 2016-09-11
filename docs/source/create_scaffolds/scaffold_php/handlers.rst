@@ -22,6 +22,7 @@ If you do not plan to change the default tasks' behaviour, then you can leave ou
             'file'          =>    \Aedart\Scaffold\Handlers\FilesHandler::class,
             'property'      =>    \Aedart\Scaffold\Handlers\PropertyHandler::class,
             'template'      =>    \Aedart\Scaffold\Handlers\TwigTemplateHandler::class,
+            'script'        =>    \Aedart\Scaffold\Handlers\ScriptsHandler::class,
         ]
     ];
 
