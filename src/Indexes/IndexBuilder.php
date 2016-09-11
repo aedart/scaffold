@@ -209,6 +209,7 @@ class IndexBuilder implements IndexBuilderInterface
         // Abort if directory doesn't exist
         if(!file_exists($path)){
             $this->outputNote('Directory does not exist ' . $path);
+            return;
         }
 
         // Search for *.scaffold.php files
