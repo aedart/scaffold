@@ -1,6 +1,7 @@
 <?php
 namespace Aedart\Scaffold\Contracts\Handlers;
 
+use Aedart\Scaffold\Contracts\Scripts\CliScript;
 use Aedart\Scaffold\Exceptions\ScriptFailedException;
 
 /**
@@ -14,11 +15,11 @@ interface ScriptHandler extends Handler
     /**
      * Executes the given command line script
      *
-     * @param string $script
+     * @param CliScript $script
      *
      * @return void
      *
      * @throws ScriptFailedException
      */
-    public function processScript($script);
+    public function processScript(CliScript $script);
 }
