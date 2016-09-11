@@ -59,6 +59,12 @@ class InstallCommand extends BaseCommand
 
         $this->output->title('Install...');
 
+        // Abort if nothing in index
+        if($index->isEmpty()){
+            $this->output->note('Could not find any scaffolds to install');
+            return 0;
+        }
+
         // Get the scaffold location
         $location = $this->askForScaffoldLocation($index);
 
