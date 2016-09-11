@@ -9,12 +9,12 @@ use Illuminate\Contracts\Logging\Log;
  * ScriptHandlerTest
  *
  * @group handlers
- * @group scriptHandler
- * @coversDefaultClass Aedart\Scaffold\Handlers\ScriptHandler
+ * @group scriptsHandler
+ * @coversDefaultClass Aedart\Scaffold\Handlers\ScriptsHandler
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  */
-class ScriptHandlerTest extends BaseUnitTest
+class ScriptsHandlerTest extends BaseUnitTest
 {
     protected function _after()
     {
@@ -40,7 +40,7 @@ class ScriptHandlerTest extends BaseUnitTest
      *
      * @return ScriptsHandler
      */
-    public function makeScriptHandler(Log $log = null)
+    public function makeScriptsHandler(Log $log = null)
     {
         $handler = new ScriptsHandler();
 
@@ -72,7 +72,7 @@ class ScriptHandlerTest extends BaseUnitTest
         $targetA = $this->outputPath() . 'lsOutput.txt';
         $targetB = $this->outputPath() . 'lsAhlOutput.txt';
 
-        $handler = $this->makeScriptHandler($log);
+        $handler = $this->makeScriptsHandler($log);
 
         $scripts = [
             new CliScript([
@@ -114,7 +114,7 @@ class ScriptHandlerTest extends BaseUnitTest
         $log->shouldReceive('error')
             ->withAnyArgs();
 
-        $handler = $this->makeScriptHandler($log);
+        $handler = $this->makeScriptsHandler($log);
 
         $scripts = [
             new CliScript([
