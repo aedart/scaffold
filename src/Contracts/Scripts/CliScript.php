@@ -8,6 +8,14 @@ use Aedart\Util\Interfaces\Populatable;
 /**
  * Cli Script
  *
+ * <br />
+ *
+ * Some kind of CLI command (or script) that can be executed.
+ *
+ * <br />
+ *
+ * Timeout is stated in seconds.
+ *
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Contracts\Scripts
  */
