@@ -4,6 +4,7 @@ namespace Aedart\Scaffold\Tasks;
 use Aedart\Scaffold\Containers\IoC;
 use Aedart\Scaffold\Contracts\Handlers\ScriptsHandler;
 use Aedart\Scaffold\Contracts\Scripts\CliScript;
+use Closure;
 
 /**
  * Execute Scripts Task
@@ -60,12 +61,19 @@ class ExecuteScripts extends BaseTask
      */
     protected function makeCliScript($data)
     {
+        // Execute closure, if given
+        if($data instanceof Closure){
+            return call_user_func($data, $this->config->all());
+        }
+
+        // Convert to array if string given
         if(is_string($data)){
             $data = [
                 'script' => $data
             ];
         }
 
+        // Lastly, just attempt to make CLI Script instance
         return (IoC::getInstance())->make(CliScript::class, $data);
     }
 
