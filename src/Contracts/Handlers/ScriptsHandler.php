@@ -5,12 +5,12 @@ use Aedart\Scaffold\Contracts\Scripts\CliScript;
 use Aedart\Scaffold\Exceptions\ScriptFailedException;
 
 /**
- * Script Handler
+ * Scripts Handler
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Contracts\Handlers
  */
-interface ScriptHandler extends Handler
+interface ScriptsHandler extends Handler
 {
     /**
      * Executes the given command line script
