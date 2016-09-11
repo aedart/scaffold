@@ -36,7 +36,7 @@ class ScriptsHandler extends BaseHandler implements ScriptsHandlerInterface
     public function processScript(CliScript $script)
     {
         $log = $this->getLog();
-        $log->info('Executing "{script}"', ['script' => $script]);
+        $log->info('Executing "{script}" script', ['script' => $script->getScript()]);
 
         // New process, with timeout
         $process = new Process($script->getScript());
@@ -59,7 +59,7 @@ class ScriptsHandler extends BaseHandler implements ScriptsHandlerInterface
             $process->clearErrorOutput();
 
             // Throw failure
-            throw new ScriptFailedException(sprintf('Script "%s" has filed', $script));
+            throw new ScriptFailedException(sprintf('Script "%s" has filed', $script->getScript()));
         }
     }
 }
