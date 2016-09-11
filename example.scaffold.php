@@ -386,6 +386,17 @@ return [
      |      ...
      | ],
      |
+     | Lastly, if you need to build very advanced scripts, which depends
+     | on the entire scaffold configuration, then you can do so by means
+     | of a function.
+     |
+     | The function MUST return a CLI Script component instance!
+     | @see \Aedart\Scaffold\Contracts\Scripts\CliScript
+     |
+     | 'scripts' => [
+     |      function(array $config){ return new \Aedart\Scaffold\Scripts\CliScript(); },
+     |      ...
+     | ],
      */
     'scripts' => [
         // Simple script
