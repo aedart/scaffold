@@ -6,7 +6,6 @@ use Aedart\Scaffold\Console\IndexCommand;
 use Aedart\Scaffold\Console\InstallCommand;
 use Aedart\Scaffold\Containers\IoC;
 use Symfony\Component\Console\Application;
-use Composer\Factory as ComposerFactory;
 
 /**
  * Scaffold Application
