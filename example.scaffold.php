@@ -49,6 +49,7 @@ return [
         \Aedart\Scaffold\Tasks\CreateDirectories::class,
         \Aedart\Scaffold\Tasks\CopyFiles::class,
         \Aedart\Scaffold\Tasks\GenerateFilesFromTemplates::class,
+        \Aedart\Scaffold\Tasks\ExecuteScripts::class,
     ],
 
     /* ------------------------------------------------------------
@@ -357,6 +358,44 @@ return [
     ],
 
     /* ------------------------------------------------------------
+     | Scripts
+     | ------------------------------------------------------------
+     |
+     | CLI scripts (or commands) to be executed
+     | ------------------------------------------------------------
+     |
+     | Syntax
+     |
+     | Each script has to be given
+     |
+     | 'scripts' => [
+     |      (CLI executable script),
+     |      (CLI executable script),
+     |      (CLI executable script),
+     |      ...
+     | ],
+     |
+     | If you need to specify a timeout for a given script, then
+     | you can state a script via an array;
+     |
+     | 'scripts' => [
+     |      [,
+     |          'timeout'   => 60, // Timeout in seconds
+     |          'script'    => (CLI executable script)
+     |      ],
+     |      ...
+     | ],
+     |
+     */
+    'scripts' => [
+        [
+            'timeout' => 65,
+            'script' => 'ls'
+        ],
+        'echo All tunas hail scrawny, clear lagoons.'
+    ]
+
+    /* ------------------------------------------------------------
      | Scaffold handlers
      | ------------------------------------------------------------
      |
@@ -377,5 +416,7 @@ return [
 //        'property'      =>    \Aedart\Scaffold\Handlers\PropertyHandler::class,
 //
 //        'template'      =>    \Aedart\Scaffold\Handlers\TwigTemplateHandler::class,
+//
+//        'script'        =>    \Aedart\Scaffold\Handlers\ScriptsHandler::class,
 //    ],
 ];
