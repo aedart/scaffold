@@ -12,19 +12,23 @@ use Aedart\Scaffold\Contracts\Collections\Templates as TemplatesInterface;
 use Aedart\Scaffold\Contracts\Handlers\DirectoriesHandler as DirectoriesHandlerInterface;
 use Aedart\Scaffold\Contracts\Handlers\FilesHandler as FilesHandlerInterface;
 use Aedart\Scaffold\Contracts\Handlers\PropertyHandler as PropertyHandlerInterface;
+use Aedart\Scaffold\Contracts\Handlers\ScriptsHandler as ScriptsHandlerInterface;
 use Aedart\Scaffold\Contracts\Handlers\TemplateHandler;
 use Aedart\Scaffold\Contracts\Indexes\Index;
 use Aedart\Scaffold\Contracts\Indexes\ScaffoldLocation as ScaffoldLocationInterface;
+use Aedart\Scaffold\Contracts\Scripts\CliScript as CliScriptInterface;
 use Aedart\Scaffold\Contracts\Tasks\ConsoleTaskRunner;
 use Aedart\Scaffold\Contracts\Templates\Data\Property as PropertyInterface;
 use Aedart\Scaffold\Contracts\Templates\Template as TemplateInterface;
 use Aedart\Scaffold\Handlers\DirectoriesHandler;
 use Aedart\Scaffold\Handlers\FilesHandler;
 use Aedart\Scaffold\Handlers\PropertyHandler;
+use Aedart\Scaffold\Handlers\ScriptsHandler;
 use Aedart\Scaffold\Handlers\TwigTemplateHandler;
 use Aedart\Scaffold\Indexes\IndexBuilder;
 use Aedart\Scaffold\Indexes\Location;
 use Aedart\Scaffold\Indexes\ScaffoldIndex;
+use Aedart\Scaffold\Scripts\CliScript;
 use Aedart\Scaffold\Tasks\TaskRunner;
 use Aedart\Scaffold\Templates\Data\Property;
 use Aedart\Scaffold\Templates\Template;
@@ -69,6 +73,8 @@ class ScaffoldServiceProvider extends ServiceProvider
         $this->registerScaffoldLocation();
         $this->registerScaffoldIndex();
         $this->registerIndexBuilder();
+        $this->registerCliScript();
+        $this->registerScriptsHandler();
     }
 
     /******************************************************
@@ -295,6 +301,28 @@ class ScaffoldServiceProvider extends ServiceProvider
             }
 
             return new IndexBuilder($data['output']);
+        });
+    }
+
+    /**
+     * Register the Scripts handler
+     */
+    protected function registerScriptsHandler()
+    {
+        $this->app->bind(ScriptsHandlerInterface::class, function($app, array $data = []){
+            return new ScriptsHandler();
+        });
+
+        $this->app->alias(ScriptsHandlerInterface::class, 'handlers.script');
+    }
+
+    /**
+     * Register the CLI script object
+     */
+    protected function registerCliScript()
+    {
+        $this->app->bind(CliScriptInterface::class, function($app, array $data = []){
+            return new CliScript($data, $app);
         });
     }
 }
