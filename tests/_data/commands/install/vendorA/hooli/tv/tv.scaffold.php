@@ -58,10 +58,20 @@ return [
     ],
 
     'scripts' => [
+        'echo Freebooters stutter from powers like proud shores.',
+
         [
-            'timeout' => 65,
+            'timeout' => 10,
             'script' => 'ls'
         ],
-        'echo Freebooters stutter from powers like proud shores.'
+
+        function(array $config){
+            $script = 'cd ' . $config['outputPath'] . ' && ls';
+
+            return new \Aedart\Scaffold\Scripts\CliScript([
+                'timeout'   => 10,
+                'script'    => $script
+            ]);
+        }
     ]
 ];
