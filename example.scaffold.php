@@ -388,11 +388,25 @@ return [
      |
      */
     'scripts' => [
+        // Simple script
+        'echo All tunas hail scrawny, clear lagoons.',
+
+        // Script with timeout
         [
-            'timeout' => 65,
-            'script' => 'ls'
+            'timeout' => 20, // Default is 60 seconds
+            'script' => 'echo Scrawny, stormy captains calmly break an addled, gutless anchor.'
         ],
-        'echo All tunas hail scrawny, clear lagoons.'
+
+        // Advanced - closure that must return \Aedart\Scaffold\Contracts\Scripts\CliScript instance
+        // The entire array configuration of the scaffold is given as argument!
+        function(array $config){
+            $script = 'cd ' . $config['outputPath'] . ' && ls';
+
+            return new \Aedart\Scaffold\Scripts\CliScript([
+                'timeout'   => 10,
+                'script'    => $script
+            ]);
+        }
     ]
 
     /* ------------------------------------------------------------
