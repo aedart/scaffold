@@ -1,20 +1,20 @@
 <?php
 namespace Aedart\Scaffold\Handlers;
 
-use Aedart\Scaffold\Contracts\Handlers\ScriptHandler as ScriptHandlerInterface;
+use Aedart\Scaffold\Contracts\Handlers\ScriptsHandler as ScriptsHandlerInterface;
 use Aedart\Scaffold\Contracts\Scripts\CliScript;
 use Aedart\Scaffold\Exceptions\ScriptFailedException;
 use Symfony\Component\Process\Process;
 
 /**
- * Script Handler
+ * Scripts Handler
  *
- * @see \Aedart\Scaffold\Contracts\Handlers\ScriptHandler
+ * @see \Aedart\Scaffold\Contracts\Handlers\ScriptsHandler
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Handlers
  */
-class ScriptHandler extends BaseHandler implements ScriptHandlerInterface
+class ScriptsHandler extends BaseHandler implements ScriptsHandlerInterface
 {
     /**
      * Perform the actual element processing

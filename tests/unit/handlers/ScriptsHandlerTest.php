@@ -1,6 +1,6 @@
 <?php
 
-use Aedart\Scaffold\Handlers\ScriptHandler;
+use Aedart\Scaffold\Handlers\ScriptsHandler;
 use Aedart\Scaffold\Scripts\CliScript;
 use Codeception\Util\Debug;
 use Illuminate\Contracts\Logging\Log;
@@ -38,11 +38,11 @@ class ScriptHandlerTest extends BaseUnitTest
      *
      * @param Log|null $log [optional]
      *
-     * @return ScriptHandler
+     * @return ScriptsHandler
      */
     public function makeScriptHandler(Log $log = null)
     {
-        $handler = new ScriptHandler();
+        $handler = new ScriptsHandler();
 
         $handler->setBasePath($this->dataPath());
         $handler->setOutputPath($this->outputPath());
