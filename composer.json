@@ -22,6 +22,7 @@
     "aedart/laravel-helpers": "~2.0",
     "aedart/config-loader": "~2.0",
     "aedart/model": "~1.9",
+    "aedart/installed-version": "~1.0",
     "twig/twig": "~1.24",
     "symfony/console": "~3.1",
     "symfony/finder": "~3.1",
