@@ -24,6 +24,7 @@ return [
         \Aedart\Scaffold\Tasks\CreateDirectories::class,
         \Aedart\Scaffold\Tasks\CopyFiles::class,
         \Aedart\Scaffold\Tasks\GenerateFilesFromTemplates::class,
+        \Aedart\Scaffold\Tasks\ExecuteScripts::class,
     ],
 
     {{ include('snippets/partials/doc-folders.twig') }}
@@ -43,6 +44,11 @@ return [
 
     {{ include('snippets/partials/doc-templates.twig') }}
     'templates' => [
+
+    ],
+
+    {{ include('snippets/partials/doc-scripts.twig') }}
+    'scripts' => [
 
     ],
 

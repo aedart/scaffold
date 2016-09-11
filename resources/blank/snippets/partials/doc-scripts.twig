@@ -1,0 +1,41 @@
+/* ------------------------------------------------------------
+     | Scripts
+     | ------------------------------------------------------------
+     |
+     | CLI scripts (or commands) to be executed
+     | ------------------------------------------------------------
+     |
+     | Syntax
+     |
+     | Each script has to be given
+     |
+     | 'scripts' => [
+     |      (CLI executable script),
+     |      (CLI executable script),
+     |      (CLI executable script),
+     |      ...
+     | ],
+     |
+     | If you need to specify a timeout for a given script, then
+     | you can state a script via an array;
+     |
+     | 'scripts' => [
+     |      [,
+     |          'timeout'   => 60, // Timeout in seconds
+     |          'script'    => (CLI executable script)
+     |      ],
+     |      ...
+     | ],
+     |
+     | Lastly, if you need to build very advanced scripts, which depends
+     | on the entire scaffold configuration, then you can do so by means
+     | of a function.
+     |
+     | The function MUST return a CLI Script component instance!
+     | @see \Aedart\Scaffold\Contracts\Scripts\CliScript
+     |
+     | 'scripts' => [
+     |      function(array $config){ return new \Aedart\Scaffold\Scripts\CliScript(); },
+     |      ...
+     | ],
+     */
