@@ -206,6 +206,11 @@ class IndexBuilder implements IndexBuilderInterface
     {
         $this->outputMessage('Searching in ' . $path);
 
+        // Abort if directory doesn't exist
+        if(!file_exists($path)){
+            $this->outputNote('Directory does not exist ' . $path);
+        }
+
         // Search for *.scaffold.php files
         $finder = new Finder();
         $finder->files()->name($this->getPattern())->in($path)->depth('< 3');
