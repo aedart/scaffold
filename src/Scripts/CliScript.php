@@ -18,4 +18,12 @@ class CliScript extends DataTransferObject implements CliScriptInterface
 {
     use TimeoutTrait;
     use ScriptTrait;
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getDefaultTimeout()
+    {
+        return 60;
+    }
 }
