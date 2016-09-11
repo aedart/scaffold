@@ -20,6 +20,7 @@ return [
         \Aedart\Scaffold\Tasks\CreateDirectories::class,
         \Aedart\Scaffold\Tasks\CopyFiles::class,
         \Aedart\Scaffold\Tasks\GenerateFilesFromTemplates::class,
+        \Aedart\Scaffold\Tasks\ExecuteScripts::class,
     ],
 
     'folders' => [
@@ -86,4 +87,15 @@ return [
             ],
         ],
     ],
+
+    'scripts' => [
+        function(array $config){
+            $script = 'cd ' . $config['outputPath'] . ' && ls';
+
+            return new \Aedart\Scaffold\Scripts\CliScript([
+                'timeout'   => 10,
+                'script'    => $script
+            ]);
+        }
+    ]
 ];
