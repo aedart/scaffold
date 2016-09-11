@@ -30,3 +30,8 @@ See :doc:`base-path`
 
     You should avoid large files. If your template requires such, then you should perhaps consider a custom
     task that can download them from an external source!
+
+    Alternatively, you can use :code:`scripts` to perform large file downloads. Just remember to specify a
+    timeout.
+
+    See :doc:`scripts`
