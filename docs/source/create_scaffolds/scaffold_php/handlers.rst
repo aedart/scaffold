@@ -17,10 +17,12 @@ If you do not plan to change the default tasks' behaviour, then you can leave ou
 
     <?php
     return [
-        'directory'     =>    \Aedart\Scaffold\Handlers\DirectoriesHandler::class,
-        'file'          =>    \Aedart\Scaffold\Handlers\FilesHandler::class,
-        'property'      =>    \Aedart\Scaffold\Handlers\PropertyHandler::class,
-        'template'      =>    \Aedart\Scaffold\Handlers\TwigTemplateHandler::class,
+        'handlers' => [
+            'directory'     =>    \Aedart\Scaffold\Handlers\DirectoriesHandler::class,
+            'file'          =>    \Aedart\Scaffold\Handlers\FilesHandler::class,
+            'property'      =>    \Aedart\Scaffold\Handlers\PropertyHandler::class,
+            'template'      =>    \Aedart\Scaffold\Handlers\TwigTemplateHandler::class,
+        ]
     ];
 
 .. note::
