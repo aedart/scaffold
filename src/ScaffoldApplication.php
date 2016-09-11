@@ -1,11 +1,12 @@
 <?php namespace Aedart\Scaffold;
 
+use Aedart\Installed\Version\Reader;
 use Aedart\Scaffold\Console\BuildCommand;
 use Aedart\Scaffold\Console\IndexCommand;
 use Aedart\Scaffold\Console\InstallCommand;
 use Aedart\Scaffold\Containers\IoC;
 use Symfony\Component\Console\Application;
-use Composer\Factory;
+use Composer\Factory as ComposerFactory;
 
 /**
  * Scaffold Application
@@ -74,18 +75,6 @@ class ScaffoldApplication extends Application
      */
     protected function resolveApplicationVersion()
     {
-        // TODO: Use composer to obtain vendor dir...
-        // TODO: Search for installed.json inside composer's directory inside the vendor folder
-        // TODO: Find this package - obtain version number
-        // TODO: ...fallback?
-
-        $pathToComposerFile = __DIR__ . '/../composer.json';
-        if(!file_exists($pathToComposerFile)){
-            return 'UNKNOWN';
-        }
-
-        $composer = json_decode(file_get_contents($pathToComposerFile), true);
-
-        return $composer['extra']['branch-alias']['dev-master'];
+        return (new Reader())->getVersion('aedart/scaffold');
     }
 }
