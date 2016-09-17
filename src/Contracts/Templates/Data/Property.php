@@ -4,7 +4,7 @@ use Aedart\Model\Contracts\Arrays\ChoicesAware;
 use Aedart\Model\Contracts\Strings\IdAware;
 use Aedart\Model\Contracts\Integers\TypeAware;
 use Aedart\Model\Contracts\Strings\QuestionAware;
-use Aedart\Model\Contracts\Strings\ValueAware;
+use Aedart\Model\Contracts\Mixed\ValueAware;
 use Aedart\Util\Interfaces\Populatable;
 use ArrayAccess;
 use Illuminate\Contracts\Support\Arrayable;

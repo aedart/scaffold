@@ -5,7 +5,7 @@ use Aedart\Model\Traits\Arrays\ChoicesTrait;
 use Aedart\Model\Traits\Integers\TypeTrait;
 use Aedart\Model\Traits\Strings\IdTrait;
 use Aedart\Model\Traits\Strings\QuestionTrait;
-use Aedart\Model\Traits\Strings\ValueTrait;
+use Aedart\Model\Traits\Mixed\ValueTrait;
 use Aedart\Scaffold\Contracts\Templates\Data\Property as PropertyInterface;
 use Aedart\Scaffold\Contracts\Templates\Data\Type;
 use Aedart\Scaffold\Traits\PostProcess;
