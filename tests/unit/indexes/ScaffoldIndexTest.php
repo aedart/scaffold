@@ -271,9 +271,9 @@ class ScaffoldIndexTest extends BaseUnitTest
      */
     public function canObtainAllVendors()
     {
-        $vendorA = $this->faker->word;
-        $vendorB = $this->faker->word;
-        $vendorC = $this->faker->word;
+        $vendorA = $this->faker->unique()->word;
+        $vendorB = $this->faker->unique()->word;
+        $vendorC = $this->faker->unique()->word;
 
         $locationA = $this->makeScaffoldLocation();
         $locationA->setVendor($vendorA);
@@ -312,13 +312,13 @@ class ScaffoldIndexTest extends BaseUnitTest
      */
     public function canObtainAllPackages()
     {
-        $vendorA = $this->faker->word;
-        $vendorB = $this->faker->word;
+        $vendorA = $this->faker->unique()->word;
+        $vendorB = $this->faker->unique()->word;
 
-        $packageA = $this->faker->word;
-        $packageB = $this->faker->word;
-        $packageC = $this->faker->word;
-        $packageD = $this->faker->word;
+        $packageA = $this->faker->unique()->word;
+        $packageB = $this->faker->unique()->word;
+        $packageC = $this->faker->unique()->word;
+        $packageD = $this->faker->unique()->word;
 
         $locationA = $this->makeScaffoldLocation();
         $locationA->setVendor($vendorA);
@@ -361,12 +361,12 @@ class ScaffoldIndexTest extends BaseUnitTest
      */
     public function canObtainLocationsForSpecificVendorAndPackage()
     {
-        $vendorA = $this->faker->word;
-        $vendorB = $this->faker->word;
+        $vendorA = $this->faker->unique()->word;
+        $vendorB = $this->faker->unique()->word;
 
-        $packageA = $this->faker->word;
-        $packageB = $this->faker->word;
-        $packageC = $this->faker->word;
+        $packageA = $this->faker->unique()->word;
+        $packageB = $this->faker->unique()->word;
+        $packageC = $this->faker->unique()->word;
 
         $locationA = $this->makeScaffoldLocation();
         $locationA->setVendor($vendorA);
