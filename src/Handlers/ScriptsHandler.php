@@ -44,6 +44,14 @@ class ScriptsHandler extends BaseHandler implements ScriptsHandlerInterface
 
         // Run process
         $process->run(function($type, $buffer) use($log){
+            // Trim
+            $buffer = trim($buffer);
+
+            // Don't log empty output
+            if(empty($buffer)){
+                return;
+            }
+
             if(Process::OUT === $type){
                 $log->debug($buffer);
                 return;
