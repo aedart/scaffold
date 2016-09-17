@@ -247,6 +247,47 @@ class TwigTemplateHandlerTest extends BaseUnitTest
 
     /**
      * @test
+     */
+    public function canHandleComplexValueTypes()
+    {
+        // Make a template
+        $templateId = 'complexData';
+        $source = 'complexData.txt.twig';
+        $destination= 'complexData.txt';
+        $template = $this->makeTemplateWith($templateId, $source, $destination);
+
+        // Get a log mock
+        $log = $this->makeLogMock();
+        $log->shouldReceive('info')
+            ->withAnyArgs();
+
+        $listValue = $this->faker->words();
+        $list = $this->makePropertyMock();
+        $list->shouldReceive('getValue')
+            ->andReturn($listValue);
+
+        $data = [
+            'list' => $list
+        ];
+        $collection = $this->makeTemplatePropertiesMock($data);
+
+        // Get the directory handler
+        $handler = $this->makeTemplateHandler($log, $collection);
+
+        // Process template
+        $handler->processTemplate($template);
+
+        // Assert
+        $expectedData = [
+            'foo' => join(',', $listValue),
+        ];
+
+        $this->assertPathsOrFilesExist([$destination], 'Destination file was not created by handler');
+        $this->assertFileContainsData($destination, $expectedData);
+    }
+
+    /**
+     * @test
      *
      * @covers ::processElement
      *
