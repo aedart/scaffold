@@ -44,12 +44,12 @@ class ScriptsHandler extends BaseHandler implements ScriptsHandlerInterface
 
         // Run process
         $process->run(function($type, $buffer) use($log){
-            // Log on error
-            if(Process::ERR === $type){
-                $log->error($buffer);
+            if(Process::OUT === $type){
+                $log->debug($buffer);
+                return;
             }
 
-            $log->info($buffer);
+            $log->error($buffer);
         });
 
         // Abort if process failed
