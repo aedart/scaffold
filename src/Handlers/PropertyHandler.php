@@ -162,6 +162,10 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
             $valueToDisplay = ($value === true) ? 'true' : 'false';
         }
 
+        if(is_array($value)){
+            $valueToDisplay = join(',', $value);
+        }
+
         // Check if type is hidden
         if($type == Type::HIDDEN){
             $valueToDisplay = '[censored]';
