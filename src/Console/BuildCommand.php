@@ -1,6 +1,8 @@
 <?php namespace Aedart\Scaffold\Console;
 
 use Aedart\Config\Loader\Traits\ConfigLoaderTrait;
+use Aedart\Scaffold\Cache\CacheHelper;
+use Aedart\Scaffold\Containers\IoC;
 use Aedart\Scaffold\Traits\TaskRunner;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Config\Repository as RepositoryInterface;
@@ -28,6 +30,7 @@ class BuildCommand extends BaseCommand
             ->setDescription('Executes the tasks that are defined inside the provided scaffold configuration')
             ->addArgument('config', InputArgument::REQUIRED, 'Path to the scaffold configuration file')
             ->addOption('output', 'o', InputOption::VALUE_OPTIONAL, 'Path where to build project or resource', getcwd())
+            ->addOption('cache', 'c', InputOption::VALUE_OPTIONAL, 'Cache directory', CacheHelper::DEFAULT_CACHE_DIRECTORY)
             ->setHelp($this->formatHelp());
     }
 
@@ -38,6 +41,9 @@ class BuildCommand extends BaseCommand
      */
     public function runCommand()
     {
+        // Configure the cache
+        $this->configureCache(new Repository(), $this->input->getOption('cache'));
+
         // Load and resolve the configuration
         $config = $this->loadAndResolveConfiguration($this->input->getArgument('config'), $this->input->getOption('output'));
 
@@ -87,6 +93,21 @@ class BuildCommand extends BaseCommand
 
         // Finally, return the configuration
         return $config;
+    }
+
+    /**
+     * Configure the cache
+     *
+     * @param Repository $config
+     * @param string $cachePath
+     */
+    protected function configureCache(Repository $config, $cachePath)
+    {
+        // Set the IoC's configuration instance
+        IoC::getInstance()->container()['config'] = $config;
+
+        // Set the cache directory
+        CacheHelper::setCacheDirectory($cachePath);
     }
 
     /**
