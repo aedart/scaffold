@@ -16,7 +16,7 @@ class CacheHelper
     /**
      * Default cache directory
      */
-    const DEFAULT_CACHE_DIRECTORY = '.scaffold/cache/';
+    const DEFAULT_CACHE_DIRECTORY = IndexBuilder::DEFAULT_SCAFFOLD_INDEX_DIRECTORY . 'cache/';
 
     /**
      * @var Repository
