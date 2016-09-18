@@ -41,7 +41,10 @@
   "autoload": {
     "psr-4": {
       "Aedart\\Scaffold\\": "src/"
-    }
+    },
+    "files": [
+      "helpers/helpers.php"
+    ]
   },
   "autoload-dev": {
     "classmap": [
