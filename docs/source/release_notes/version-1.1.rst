@@ -1,7 +1,7 @@
 Version 1.1.x
 =============
 
-v1.1.0 (xx-09-2016)
+v1.1.0 (18-09-2016)
 ^^^^^^^^^^^^^^^^^^^
 
 Added
@@ -14,6 +14,3 @@ Added
 Changed
 -------
 * Changed :code:`ScaffoldServiceProvider`, has now become an :code:`AggregateServiceProvider` instead. It registers a series of smaller service providers.
-
-Fixed
------
