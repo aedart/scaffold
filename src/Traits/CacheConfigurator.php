@@ -16,7 +16,8 @@ trait CacheConfigurator
     protected function configureCache(Repository $config, $cachePath)
     {
         // Set the IoC's configuration instance
-        IoC::getInstance()->container()['config'] = $config;
+        $ioc = IoC::getInstance();
+        $ioc->container()['config'] = $config;
 
         // Set the cache directory
         CacheHelper::setCacheDirectory($cachePath);
