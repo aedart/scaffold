@@ -1,0 +1,6 @@
+.. index::
+    single: Cache
+
+Cache
+=====
+
