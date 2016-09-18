@@ -10,3 +10,4 @@ Within this chapter, you will find a list of the **most significant** changes.
    :maxdepth: 2
 
    version-1.1
+   version-1.0
