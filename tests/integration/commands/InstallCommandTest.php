@@ -63,10 +63,13 @@ class InstallCommandTest extends BaseIntegrationTest
             'src/Controllers/TvController.php' // Filename
         ];
 
+        $cacheDir = $this->outputPath() . '.scaffold/cache/';
+
         $args = [
             '--output'              => $this->outputPath(),
             '--index-directories'   => $this->getVendorsList(),
-            '--index-output'        => $this->outputPath() . '.scaffold/'
+            '--index-output'        => $this->outputPath() . '.scaffold/',
+            '--cache'               => $cacheDir,
         ];
 
         $this->executeInteractiveCommand('install', $args, $input);
@@ -93,10 +96,13 @@ class InstallCommandTest extends BaseIntegrationTest
             'src/Controllers/TvController.php' // Filename
         ];
 
+        $cacheDir = $this->outputPath() . '.scaffold/cache/';
+
         $args = [
             '--output'              => $this->outputPath(),
             '--index-directories'   => $this->getVendorsList(),
-            '--index-output'        => $this->outputPath() . '.scaffold/'
+            '--index-output'        => $this->outputPath() . '.scaffold/',
+            '--cache'               => $cacheDir,
         ];
 
         $this->executeInteractiveCommand('install', $args, $input);
@@ -124,5 +130,6 @@ class InstallCommandTest extends BaseIntegrationTest
         $result = $controller->watch($channel);
 
         $this->assertSame($expected, $result);
+        $this->assertFileExists($cacheDir, 'Cache directory was not created');
     }
 }
