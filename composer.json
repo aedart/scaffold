@@ -29,7 +29,8 @@
     "illuminate/container": "5.3.*",
     "illuminate/cache": "5.3.*",
     "psr/log": "1.0.*",
-    "nesbot/carbon": "~1.21"
+    "nesbot/carbon": "~1.21",
+    "symfony/var-dumper": "3.1.*"
   },
   "require-dev": {
     "aedart/license": "1.*",
