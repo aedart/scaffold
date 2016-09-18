@@ -1,8 +1,8 @@
 .. index::
-    single: Changelog
+    single: Release Notes
 
-Changelog
-=========
+Release Notes
+=============
 
 .. toctree::
    :maxdepth: 2

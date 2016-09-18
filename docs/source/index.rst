@@ -51,5 +51,5 @@ Contents
 .. toctree::
     :glob:
 
-    changelog/index
+    release_notes/index
     indices/index
