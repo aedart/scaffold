@@ -37,7 +37,11 @@ return [
 
             'question'      => 'Controller Class name name?',
 
-            'value'         => 'MyController'
+            'value'         => scaffold_cache()->remember('controllerClass', 10, function(){
+                // If caching utility isn't configured correctly, just invoking the
+                // scaffold_cache() will fail.
+                return 'MyController';
+            })
         ]
     ],
 
