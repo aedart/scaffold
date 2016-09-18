@@ -1,6 +1,13 @@
 Version 1.1.x
 =============
 
+v1.1.1 (18-09-2016)
+^^^^^^^^^^^^^^^^^^^
+
+Fixed
+-----
+* Fixed Fatal error: Can't use function return value in write context (issue existing only in PHP 5.6.x only)
+
 v1.1.0 (18-09-2016)
 ^^^^^^^^^^^^^^^^^^^
 
