@@ -4,6 +4,8 @@
 Release Notes
 =============
 
+Within this chapter, you will find a list of the **most significant** changes.
+
 .. toctree::
    :maxdepth: 2
 
