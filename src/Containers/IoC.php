@@ -45,8 +45,6 @@ class IoC
      * @var string[]
      */
     protected $providers = [
-        ConsoleLoggerServiceProvider::class,
-        ConfigurationLoaderServiceProvider::class,
         ScaffoldServiceProvider::class
     ];
 
