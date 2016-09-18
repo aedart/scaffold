@@ -3,11 +3,14 @@
 namespace Aedart\Scaffold\Console;
 
 use Aedart\Laravel\Helpers\Traits\Filesystem\FileTrait;
+use Aedart\Scaffold\Cache\CacheHelper;
 use Aedart\Scaffold\Containers\IoC;
 use Aedart\Scaffold\Contracts\Builders\IndexBuilder;
 use Aedart\Scaffold\Contracts\Indexes\Index;
 use Aedart\Scaffold\Contracts\Indexes\ScaffoldLocation;
+use Aedart\Scaffold\Traits\CacheConfigurator;
 use Aedart\Scaffold\Traits\DirectoriesToIndex;
+use Illuminate\Config\Repository;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputOption;
 
@@ -23,6 +26,7 @@ class InstallCommand extends BaseCommand
 {
     use FileTrait;
     use DirectoriesToIndex;
+    use CacheConfigurator;
 
     protected function configure()
     {
@@ -43,6 +47,9 @@ class InstallCommand extends BaseCommand
             ->addOption('index-expire', 'e', InputOption::VALUE_OPTIONAL, 'When should the index expire. Value stated in minutes.', 5)
             ->addOption('index-output', 'i', InputOption::VALUE_OPTIONAL, 'Directory where to build index', IndexBuilder::DEFAULT_SCAFFOLD_INDEX_DIRECTORY)
 
+            // Cache options
+            ->addOption('cache', 'c', InputOption::VALUE_OPTIONAL, 'Cache directory, used by the build command', CacheHelper::DEFAULT_CACHE_DIRECTORY)
+
             // Help
             ->setHelp($this->formatHelp());
     }
@@ -54,6 +61,9 @@ class InstallCommand extends BaseCommand
      */
     public function runCommand()
     {
+        // Configure the cache
+        $this->configureCache(new Repository(), $this->input->getOption('cache'));
+
         // Build index (if needed)
         $index = $this->index();
 
@@ -89,6 +99,7 @@ class InstallCommand extends BaseCommand
         $arguments = [
             'config'            =>  $location->getFilePath(),
             '--output'          =>  $this->input->getOption('output'),
+            '--cache'           =>  $this->input->getOption('cache'),
         ];
 
         // Create the input
