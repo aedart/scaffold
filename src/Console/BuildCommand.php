@@ -3,6 +3,7 @@
 use Aedart\Config\Loader\Traits\ConfigLoaderTrait;
 use Aedart\Scaffold\Cache\CacheHelper;
 use Aedart\Scaffold\Containers\IoC;
+use Aedart\Scaffold\Traits\CacheConfigurator;
 use Aedart\Scaffold\Traits\TaskRunner;
 use Illuminate\Config\Repository;
 use Illuminate\Contracts\Config\Repository as RepositoryInterface;
@@ -22,6 +23,7 @@ class BuildCommand extends BaseCommand
 {
     use ConfigLoaderTrait;
     use TaskRunner;
+    use CacheConfigurator;
 
     protected function configure()
     {
@@ -93,21 +95,6 @@ class BuildCommand extends BaseCommand
 
         // Finally, return the configuration
         return $config;
-    }
-
-    /**
-     * Configure the cache
-     *
-     * @param Repository $config
-     * @param string $cachePath
-     */
-    protected function configureCache(Repository $config, $cachePath)
-    {
-        // Set the IoC's configuration instance
-        IoC::getInstance()->container()['config'] = $config;
-
-        // Set the cache directory
-        CacheHelper::setCacheDirectory($cachePath);
     }
 
     /**
