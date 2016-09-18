@@ -8,6 +8,7 @@ Added
 -----
 * Added release notes documentation
 * Added multiple smaller and more maintainable service providers
+* Added documentation about why output from :code:`composer` commands (in :code:`scripts`) are logged to :code:`STDERR`
 
 Changed
 -------
