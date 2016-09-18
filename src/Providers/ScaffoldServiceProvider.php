@@ -21,7 +21,8 @@ class ScaffoldServiceProvider extends AggregateServiceProvider
         FileServiceProvider::class,
         TemplateServiceProvider::class,
         IndexServiceProvider::class,
-        ScriptServiceProvider::class
+        ScriptServiceProvider::class,
+        CacheServiceProvider::class
     ];
 
     public function register()
