@@ -1,5 +1,6 @@
 <?php
 
+use Aedart\Scaffold\Cache\CacheHelper;
 use Aedart\Scaffold\Contracts\Collections\Directories;
 use Aedart\Scaffold\Contracts\Collections\Files;
 use Aedart\Testing\TestCases\Unit\UnitTestCase;
@@ -35,6 +36,8 @@ abstract class BaseUnitTest extends UnitTestCase
     protected function _after()
     {
         $this->destroyIoC();
+
+        CacheHelper::destroy();
 
         parent::_after();
     }
