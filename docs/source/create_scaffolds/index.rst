@@ -8,4 +8,5 @@ Create Scaffolds
    blank-scaffold
    scaffold_php/index
    testing
+   helpers/index
 
