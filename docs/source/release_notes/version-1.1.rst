@@ -6,6 +6,7 @@ v1.1.0 (xx-09-2016)
 
 Added
 -----
+* Added :doc:`../create_scaffolds/helpers/cache` utility (`#3 <https://github.com/aedart/scaffold/issues/3>`_).
 * Added release notes documentation
 * Added multiple smaller and more maintainable service providers
 * Added documentation about why output from :code:`composer` commands (in :code:`scripts`) are logged to :code:`STDERR`
