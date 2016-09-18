@@ -1,4 +1,6 @@
 .. index::
+    pair: Composer; STDERR
+    pair: Composer; STDOUT
     pair: Scripts; scaffold.php
     single: CLI
 
@@ -70,3 +72,11 @@ The function **MUST** return an instance of :code:`\Aedart\Scaffold\Contracts\Sc
             },
         ]
     ];
+
+Error when triggering composer commands
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you trigger some kind of :code:`composer` script, then you might see that composer's output is logger to the console
+as an error. This is due to that composer chooses to write diagnostic output to :code:`STDERR` instead of :code:`STDOUT`.
+
+You can read more about this in `#1905 <https://github.com/composer/composer/issues/1905>`_ and `#3795 <https://github.com/composer/composer/issues/3795>`_ .
