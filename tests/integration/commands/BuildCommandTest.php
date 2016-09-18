@@ -221,4 +221,25 @@ class BuildCommandTest extends BaseIntegrationTest
 
         $this->assertContains($expectedPackageName, $commandTester->getDisplay());
     }
+
+    /**
+     * @test
+     */
+    public function canUseCache()
+    {
+        $command = $this->getCommandFromApp('build');
+
+        $commandTester = $this->makeCommandTester($command);
+
+        $cacheDir = $this->outputPath() . 'cache/';
+
+        $commandTester->execute([
+            'command'   => $command->getName(),
+            'config'    => $this->dataPath() . 'cacheValues.scaffold.php',
+            '--cache'   => $cacheDir
+        ]);
+
+        $this->assertFileExists($cacheDir, 'Cache dir not created!');
+        $this->assertNotEmpty(scaffold_cache_get('mySentence'), 'Item was not cached');
+    }
 }
