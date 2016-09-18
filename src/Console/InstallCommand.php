@@ -175,6 +175,7 @@ class InstallCommand extends BaseCommand
             '--directories'     =>  $this->input->getOption('index-directories'),
             '--expire'          =>  $this->input->getOption('index-expire'),
             '--output'          =>  $this->input->getOption('index-output'),
+            '--cache'           =>  $this->input->getOption('cache'),
         ];
 
         // Additionally, check if force index is required
