@@ -59,6 +59,6 @@ class CacheHelper
      */
     static public function destroy()
     {
-        unset(self::$cache);
+        self::$cache = null;
     }
 }
