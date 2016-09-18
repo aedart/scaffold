@@ -32,7 +32,7 @@ class CacheTest extends BaseUnitTest
 
     protected function _after()
     {
-        //$this->emptyPath($this->outputPath());
+        $this->emptyPath($this->outputPath());
 
         parent::_after();
     }
