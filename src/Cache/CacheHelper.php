@@ -2,6 +2,7 @@
 namespace Aedart\Scaffold\Cache;
 
 use Aedart\Scaffold\Containers\IoC;
+use Aedart\Scaffold\Contracts\Builders\IndexBuilder;
 use Illuminate\Contracts\Cache\Repository;
 
 /**
@@ -12,6 +13,11 @@ use Illuminate\Contracts\Cache\Repository;
  */
 class CacheHelper
 {
+    /**
+     * Default cache directory
+     */
+    const DEFAULT_CACHE_DIRECTORY = IndexBuilder::DEFAULT_SCAFFOLD_INDEX_DIRECTORY . '/cache';
+
     /**
      * @var Repository
      */
