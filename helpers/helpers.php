@@ -41,6 +41,23 @@ if (! function_exists('scaffold_cache_put')) {
     }
 }
 
+if (! function_exists('scaffold_cache_remember')) {
+
+    /**
+     * Get an item from the cache, or store the default value.
+     *
+     * @param  string  $key
+     * @param  \DateTime|float|int  $minutes
+     * @param  \Closure  $callback
+     *
+     * @return mixed
+     */
+    function scaffold_cache_remember($key, $minutes, Closure $callback)
+    {
+        return scaffold_cache()->remember($key, $minutes, $callback);
+    }
+}
+
 if (! function_exists('scaffold_cache_forever')) {
 
     /**
