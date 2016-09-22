@@ -1,6 +1,13 @@
 Version 1.1.x
 =============
 
+v1.1.2 (22-09-2016)
+^^^^^^^^^^^^^^^^^^^
+
+Fixed
+-----
+* Fixed `#4 <https://github.com/aedart/scaffold/issues/4>`_ Parse error: syntax error, unexpected '->' (T_OBJECT_OPERATOR) (issue in PHP 5.6.x only)
+
 v1.1.1 (18-09-2016)
 ^^^^^^^^^^^^^^^^^^^
 
