@@ -74,7 +74,7 @@ class ExecuteScripts extends BaseTask
         }
 
         // Lastly, just attempt to make CLI Script instance
-        return (IoC::getInstance())->make(CliScript::class, $data);
+        return IoC::getInstance()->make(CliScript::class, $data);
     }
 
     /**
