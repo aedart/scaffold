@@ -1,6 +1,13 @@
 Version 1.1.x
 =============
 
+v1.1.5 (01-10-2016)
+^^^^^^^^^^^^^^^^^^^
+
+Fixed
+-----
+* Re-fixed indexing order. First fix was correct, yet due to incorrect manual test, the "issue" didn't seemed fixed.
+
 v1.1.4 (01-10-2016)
 ^^^^^^^^^^^^^^^^^^^
 
