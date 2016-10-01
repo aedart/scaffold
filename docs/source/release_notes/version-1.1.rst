@@ -1,6 +1,13 @@
 Version 1.1.x
 =============
 
+v1.1.4 (01-10-2016)
+^^^^^^^^^^^^^^^^^^^
+
+Fixed
+-----
+* Re-fixed order of default indexing directories. First fix caused undesired indexing results.
+
 v1.1.3 (01-10-2016)
 ^^^^^^^^^^^^^^^^^^^
 
