@@ -28,15 +28,15 @@ trait DirectoriesToIndex
 
         return [
 
-            // The current working directory of where this command
-            // is being executed from
-            getcwd() . DIRECTORY_SEPARATOR,
+            // The "global" vendor directory inside the composer home
+            $globalVendorDir,
 
             // The vendor folder inside the current working directory
             $vendorDir,
 
-            // The "global" vendor directory inside the composer home
-            $globalVendorDir
+            // The current working directory of where this command
+            // is being executed from
+            getcwd() . DIRECTORY_SEPARATOR,
         ];
     }
 }
