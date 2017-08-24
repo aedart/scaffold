@@ -20,6 +20,10 @@ trait LocationMaker
      */
     public function makeLocation(array $data = [])
     {
-        return IoC::getInstance()->make(ScaffoldLocation::class, $data);
+        /** @var ScaffoldLocation $location */
+        $location = IoC::getInstance()->make(ScaffoldLocation::class);
+        $location->populate($data);
+
+        return $location;
     }
 }
