@@ -6,6 +6,7 @@ use Aedart\Scaffold\Exceptions\CannotPopulateIndexException;
 use Aedart\Scaffold\Traits\LocationMaker;
 use Aedart\Util\Traits\Collections\PartialCollectionTrait;
 use Carbon\Carbon;
+use DateTime;
 
 /**
  * Scaffold Index
@@ -209,8 +210,15 @@ class ScaffoldIndex implements Index
                 continue;
             }
 
+            // Expires at
             if(is_string($key) && $key == self::EXPIRES_AT_KEY){
-                $this->expires(new Carbon($location));
+
+                if($location instanceof DateTime){
+                    $this->expires($location);
+                } else {
+                    $this->expires(new Carbon($location));
+                }
+
                 continue;
             }
 
