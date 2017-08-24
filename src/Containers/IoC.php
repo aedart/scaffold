@@ -1,9 +1,8 @@
 <?php namespace Aedart\Scaffold\Containers;
 
-use Aedart\Config\Loader\Providers\ConfigurationLoaderServiceProvider;
 use Aedart\Scaffold\Exceptions\ForbiddenException;
-use Aedart\Scaffold\Providers\ConsoleLoggerServiceProvider;
 use Aedart\Scaffold\Providers\ScaffoldServiceProvider;
+use Aedart\Util\Interfaces\Populatable;
 use Illuminate\Container\Container;
 use Illuminate\Contracts\Config\Repository;
 use Illuminate\Support\Facades\App;
@@ -142,25 +141,30 @@ class IoC
     {
         if($config->has($entry)){
             $instance = $config->get($entry);
-            return new $instance;
+            $instance = new $instance;
+        } else {
+            $instance = $this->container()->make($entry);
         }
 
-        return $this->container()->make($entry, $parameters);
+        if($instance instanceof Populatable){
+            $instance->populate($parameters);
+        }
+
+        return $instance;
     }
 
     /**
      * Alias for Container::make
      *
      * @param string $concrete
-     * @param array $parameters
      *
      * @see \Illuminate\Contracts\Container\Container::make()
      *
      * @return mixed
      */
-    public function make($concrete, array $parameters = [])
+    public function make($concrete)
     {
-        return $this->container()->make($concrete, $parameters);
+        return $this->container()->make($concrete);
     }
 
     /**
