@@ -49,7 +49,10 @@ class TwigTemplateHandlerTest extends BaseUnitTest
     {
         $directoryHandler = $this->makeDirectoryHandlerMock();
 
-        $handler = new TwigTemplateHandler($directoryHandler, $collection);
+        $handler = new TwigTemplateHandler([
+            'directoryHandler' => $directoryHandler,
+            'templateData' => $collection
+        ]);
 
         $handler->setBasePath($this->dataPath());
         $handler->setOutputPath($this->outputPath());
