@@ -2,6 +2,7 @@
 
 use Aedart\Model\Contracts\Strings\IdAware;
 use Aedart\Model\Contracts\Strings\SourceAware;
+use Aedart\Util\Interfaces\Populatable;
 
 /**
  * Template
@@ -14,7 +15,8 @@ use Aedart\Model\Contracts\Strings\SourceAware;
  */
 interface Template extends IdAware,
     SourceAware,
-    DestinationAware
+    DestinationAware,
+    Populatable
 {
 
 }
