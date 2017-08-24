@@ -28,7 +28,7 @@ class ConfigServiceProvider extends ServiceProvider
      */
     protected function registerConfig()
     {
-        $this->app->bind(RepositoryInterface::class, function($app, array $data = []){
+        $this->app->bind(RepositoryInterface::class, function($app){
             return new Repository();
         });
 

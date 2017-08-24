@@ -27,7 +27,7 @@ class FilesystemServiceProvider extends ServiceProvider
      */
     protected function registerFilesystem()
     {
-        $this->app->bind('files', function($app, array $data = []){
+        $this->app->bind('files', function($app){
             return new Filesystem();
         });
     }

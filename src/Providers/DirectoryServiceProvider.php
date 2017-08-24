@@ -31,7 +31,7 @@ class DirectoryServiceProvider extends ServiceProvider
      */
     protected function registerDirectoriesHandler()
     {
-        $this->app->bind(DirectoriesHandlerInterface::class, function($app, array $data = []){
+        $this->app->bind(DirectoriesHandlerInterface::class, function($app){
             return new DirectoriesHandler();
         });
 
@@ -43,8 +43,8 @@ class DirectoryServiceProvider extends ServiceProvider
      */
     protected function registerDirectoriesCollection()
     {
-        $this->app->bind(DirectoriesInterface::class, function($app, array $data = []){
-            return new Directories($data);
+        $this->app->bind(DirectoriesInterface::class, function($app){
+            return new Directories();
         });
     }
 }

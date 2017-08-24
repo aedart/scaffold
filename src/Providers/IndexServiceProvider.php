@@ -54,15 +54,8 @@ class IndexServiceProvider extends ServiceProvider
      */
     protected function registerIndexBuilder()
     {
-        $this->app->bind(IndexBuilderInterface::class, function($app, array $data = []){
-            if(!isset($data['output'])){
-                $target = IndexBuilderInterface::class;
-                $msg = "Target {$target} cannot be build. Missing arguments; e.g. ['output' => (StyleInterface)]";
-
-                throw new BindingResolutionException($msg);
-            }
-
-            return new IndexBuilder($data['output']);
+        $this->app->bind(IndexBuilderInterface::class, function($app){
+            return new IndexBuilder();
         });
     }
 }

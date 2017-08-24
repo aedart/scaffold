@@ -29,7 +29,7 @@ class ConsoleLoggerServiceProvider extends ServiceProvider
      */
     protected function registerLogger()
     {
-        $this->app->bind(LoggerInterface::class, function($app, array $data = []){
+        $this->app->bind(LoggerInterface::class, function($app){
             return new ConsoleWrite(new ConsoleOutput());
         });
 
