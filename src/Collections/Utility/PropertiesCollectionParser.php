@@ -23,8 +23,10 @@ trait PropertiesCollectionParser
      */
     public function parsePropertiesCollection(array $properties = [])
     {
-        $ioc = IoC::getInstance();
+        /** @var TemplateProperties $collection */
+        $collection = IoC::getInstance()->make(TemplateProperties::class);
+        $collection->populate($properties);
 
-        return $ioc->make(TemplateProperties::class, $properties);
+        return $collection;
     }
 }

@@ -86,7 +86,12 @@ class Templates implements TemplatesInterface
 
             if(is_string($id) && is_array($template)){
                 $template['id'] = $id;
-                $this->put($id, $ioc->make(Template::class, $template));
+
+                /** @var Template $templateObj */
+                $templateObj = $ioc->make(Template::class);
+                $templateObj->populate($template);
+
+                $this->put($id, $templateObj);
                 continue;
             }
 

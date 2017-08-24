@@ -2,7 +2,6 @@
 
 use Aedart\Config\Loader\Traits\ConfigLoaderTrait;
 use Aedart\Scaffold\Cache\CacheHelper;
-use Aedart\Scaffold\Containers\IoC;
 use Aedart\Scaffold\Traits\CacheConfigurator;
 use Aedart\Scaffold\Traits\TaskRunner;
 use Illuminate\Config\Repository;

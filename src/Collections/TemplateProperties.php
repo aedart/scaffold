@@ -86,7 +86,12 @@ class TemplateProperties implements TemplatePropertiesInterface
 
             if(is_string($id) && is_array($property)){
                 $property['id'] = $id;
-                $this->put($id, $ioc->make(Property::class, $property));
+
+                /** @var Property $propertyObj */
+                $propertyObj = $ioc->make(Property::class);
+                $propertyObj->populate($property);
+
+                $this->put($id, $propertyObj);
                 continue;
             }
 

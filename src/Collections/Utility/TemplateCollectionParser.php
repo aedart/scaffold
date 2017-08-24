@@ -24,8 +24,10 @@ trait TemplateCollectionParser
      */
     public function parseTemplatesCollection(array $templates = [])
     {
-        $ioc = IoC::getInstance();
+        /** @var Templates $collection */
+        $collection = IoC::getInstance()->make(Templates::class);
+        $collection->populate($templates);
 
-        return $ioc->make(Templates::class, $templates);
+        return $collection;
     }
 }

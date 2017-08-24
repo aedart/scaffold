@@ -22,6 +22,10 @@ trait IndexMaker
      */
     public function makeIndex(array $locations = [])
     {
-        return IoC::getInstance()->make(Index::class, $locations);
+        /** @var Index $index */
+        $index = IoC::getInstance()->make(Index::class);
+        $index->populate($locations);
+
+        return $index;
     }
 }

@@ -52,11 +52,16 @@ class IndexCommand extends BaseCommand
         $this->output->title('Building index');
 
         /** @var IndexBuilder $builder */
-        $builder = IoC::getInstance()->make(IndexBuilder::class, ['output' => $this->output]);
+        $builder = IoC::getInstance()->make(IndexBuilder::class);
+        $builder->setOutput($this->output);
 
         $builder->setDirectory($this->input->getOption('output'));
 
-        $builder->build($this->input->getOption('directories'), $this->input->getOption('force'), $this->input->getOption('expire'));
+        $builder->build(
+            $this->input->getOption('directories'),
+            $this->input->getOption('force'),
+            $this->input->getOption('expire')
+        );
 
         $this->output->success('Indexing completed');
 

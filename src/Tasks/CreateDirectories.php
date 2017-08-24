@@ -45,7 +45,11 @@ class CreateDirectories extends BaseTask
     {
         $ioc = IoC::getInstance();
 
-        return $ioc->make(Directories::class, $this->transformIntoPaths($directories));
+        /** @var Directories $directories */
+        $collection = $ioc->make(Directories::class);
+        $collection->populate($this->transformIntoPaths($directories));
+
+        return $collection;
     }
 
     /**
