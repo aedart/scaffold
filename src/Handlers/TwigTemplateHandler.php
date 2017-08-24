@@ -54,19 +54,19 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
     ];
 
     /**
-     * TwigTemplateHandler constructor.
-     *
-     * @param DirHandler $directoriesHandler
-     * @param TemplateProperties $collection [optional]
+     * {@inheritdoc}
      */
-    public function __construct(DirHandler $directoriesHandler, TemplateProperties $collection = null)
+    public function populate(array $data = [])
     {
-        $this->directoryHandler = $directoriesHandler;
+        if(isset($data['directoryHandler']) && $data['directoryHandler'] instanceof DirHandler){
+            $this->directoryHandler = $data['directoryHandler'];
+        }
 
-        if(!is_null($collection)){
-            $this->setTemplateData($collection);
+        if(isset($data['templateData']) && $data['templateData'] instanceof DirHandler){
+            $this->setTemplateData($data['templateData']);
         }
     }
+
 
     /**
      * Perform the actual element processing
@@ -258,7 +258,8 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
         $this->configureDirectoryHandler();
 
         /** @var Directories $collection */
-        $collection = IoC::getInstance()->make(Directories::class, [$destination]);
+        $collection = IoC::getInstance()->make(Directories::class);
+        $collection->populate($destination);
 
         // Process the destination directory
         $this->directoryHandler->processDirectories($collection);

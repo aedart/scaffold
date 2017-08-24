@@ -23,6 +23,19 @@ abstract class BaseHandler implements Handler
     use FileTrait;
     use LogTrait;
 
+    /**
+     * BaseHandler constructor.
+     *
+     * @param array $configuration [optional] Handler configuration
+     */
+    public function __construct(array $configuration = [])
+    {
+        $this->populate($configuration);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function process($element)
     {
         try {
@@ -30,6 +43,15 @@ abstract class BaseHandler implements Handler
         } catch(Exception $e){
             throw new UnableToProcessElementException($e->getMessage(), $e->getCode(), $e);
         }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function populate(array $data = [])
+    {
+        // N/A - Overwrite this method if you need to accept and process
+        // configuration.
     }
 
     /**

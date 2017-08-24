@@ -49,23 +49,23 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
     static protected $previousAnswers = [];
 
     /**
-     * Property Handler constructor.
-     *
-     * @param Repository $config The configuration repository where to store the property's
-     *                           processed value.
-     * @param string $key The "key" or "index" inside the configuration repository,
-     *                           in which the final processed value must be stored.
-     * @param StyleInterface $output The console output to use, if there is a need to ask
-     *                              the user for a property value
+     * {@inheritdoc}
      */
-    public function __construct(Repository $config, $key, StyleInterface $output)
+    public function populate(array $data = [])
     {
-        //parent::__construct();
+        if(isset($data['config']) && $data['config'] instanceof Repository){
+            $this->config = $data['config'];
+        }
 
-        $this->config = $config;
-        $this->key = $key;
-        $this->output = $output;
+        if(isset($data['key'])){
+            $this->key = $data['key'];
+        }
+
+        if(isset($data['output']) && $data['output'] instanceof StyleInterface){
+            $this->output = $data['output'];
+        }
     }
+
 
     /**
      * Perform the actual element processing

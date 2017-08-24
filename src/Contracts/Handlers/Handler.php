@@ -5,6 +5,7 @@ use Aedart\Laravel\Helpers\Contracts\Logging\LogAware;
 use Aedart\Model\Contracts\Strings\BasePathAware;
 use Aedart\Model\Contracts\Strings\OutputPathAware;
 use Aedart\Scaffold\Exceptions\UnableToProcessElementException;
+use Aedart\Util\Interfaces\Populatable;
 
 /**
  * Handler
@@ -18,7 +19,8 @@ use Aedart\Scaffold\Exceptions\UnableToProcessElementException;
 interface Handler extends BasePathAware,
     OutputPathAware,
     FileAware,
-    LogAware
+    LogAware,
+    Populatable
 {
 
     /**
