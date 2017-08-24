@@ -62,7 +62,7 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
             $this->directoryHandler = $data['directoryHandler'];
         }
 
-        if(isset($data['templateData']) && $data['templateData'] instanceof DirHandler){
+        if(isset($data['templateData']) && $data['templateData'] instanceof TemplateProperties){
             $this->setTemplateData($data['templateData']);
         }
     }
