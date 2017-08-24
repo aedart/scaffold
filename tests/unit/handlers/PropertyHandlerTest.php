@@ -31,8 +31,11 @@ class PropertyHandlerTest extends ConsoleTest
      */
     public function makePropertyHandler(Repository $config, $key, StyleInterface $output, Log $log = null)
     {
-
-        $handler = new PropertyHandler($config, $key, $output);
+        $handler = new PropertyHandler([
+            'config' => $config,
+            'key' => $key,
+            'output' => $output
+        ]);
 
         $handler->setOutputPath($this->outputPath());
         $handler->setFile($this->getFilesystem());
