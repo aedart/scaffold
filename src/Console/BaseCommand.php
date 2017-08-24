@@ -1,6 +1,7 @@
 <?php namespace Aedart\Scaffold\Console;
 
 use Aedart\Scaffold\Containers\IoC;
+use Aedart\Scaffold\Contracts\Console\Style\Factory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -35,11 +36,11 @@ abstract class BaseCommand extends Command
     {
         $ioc = IoC::getInstance();
 
+        /** @var Factory $factory */
+        $factory = $ioc->make(Factory::class);
+
         $this->input = $input;
-        $this->output = $ioc->make(StyleInterface::class, [
-            'input'     => $input,
-            'output'    => $output,
-        ]);
+        $this->output = $factory->make($input, $output);
 
         return $this->runCommand();
     }

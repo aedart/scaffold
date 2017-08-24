@@ -1,12 +1,11 @@
 <?php
 namespace Aedart\Scaffold\Providers;
 
+use Aedart\Scaffold\Console\Style\Factory as OutputStyleFactory;
+use Aedart\Scaffold\Contracts\Console\Style\Factory as OutputStyleFactoryInterface;
 use Aedart\Scaffold\Contracts\Tasks\ConsoleTaskRunner;
 use Aedart\Scaffold\Tasks\TaskRunner;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Support\ServiceProvider;
-use Symfony\Component\Console\Style\StyleInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
 /**
  * Console Service Provider
@@ -23,28 +22,17 @@ class ConsoleServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->registerConsoleOutputStyle();
+        $this->registerOutputStyleFactory();
         $this->registerConsoleTaskRunner();
     }
 
     /**
-     * Register a console output style
-     *
-     * @see \Symfony\Component\Console\Style\StyleInterface
+     * Register output style factory
      */
-    protected function registerConsoleOutputStyle()
+    protected function registerOutputStyleFactory()
     {
-        $this->app->bind(StyleInterface::class, function($app, array $data = []){
-            if(!array_key_exists('input', $data) || !array_key_exists('output', $data)){
-
-                $target = StyleInterface::class;
-
-                $msg = "Target {$target} cannot be build. Missing arguments; e.g. ['input' => (InputInterface), 'output' => (OutputInterface)]";
-
-                throw new BindingResolutionException($msg);
-            }
-
-            return new SymfonyStyle($data['input'], $data['output']);
+        $this->app->singleton(OutputStyleFactoryInterface::class, function(){
+            return new OutputStyleFactory();
         });
     }
 
@@ -53,7 +41,7 @@ class ConsoleServiceProvider extends ServiceProvider
      */
     protected function registerConsoleTaskRunner()
     {
-        $this->app->bind(ConsoleTaskRunner::class, function($app, array $data = []){
+        $this->app->bind(ConsoleTaskRunner::class, function($app){
             return new TaskRunner();
         });
     }
