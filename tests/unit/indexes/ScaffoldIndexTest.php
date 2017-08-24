@@ -24,7 +24,12 @@ class ScaffoldIndexTest extends BaseUnitTest
     protected $vendorList = [
         'acme',
         'bobs',
-        'tmps'
+        'tmps',
+        'tule',
+        'can',
+        'org',
+        'com',
+        'dk'
     ];
 
     /**
@@ -121,7 +126,7 @@ class ScaffoldIndexTest extends BaseUnitTest
      */
     public function makeVendor()
     {
-        return $this->faker->randomElement($this->vendorList);
+        return $this->faker->unique()->randomElement($this->vendorList);
     }
 
     /**
@@ -426,11 +431,11 @@ class ScaffoldIndexTest extends BaseUnitTest
         // Add a string expires at date
         $expiresAt = (new Carbon())->addMinutes(5);
 
-        $locations[ScaffoldIndex::EXPIRES_AT_KEY] = (string) $expiresAt;
+        $locations[ScaffoldIndex::EXPIRES_AT_KEY] = $expiresAt;
 
         $index = $this->makeScaffoldIndex($locations);
 
-        Debug::debug((string) $index->expiresAt());
+        Debug::debug('Expires at: ' . $expiresAt . ' :: index expires at: ' . $index->expiresAt());
 
         $this->assertTrue($index->expiresAt()->eq($expiresAt), 'Incorrect expires at date set');
     }
