@@ -28,7 +28,7 @@ abstract class BaseCommand extends Command
     /**
      * The output
      *
-     * @var StyleInterface
+     * @var StyleInterface|OutputInterface
      */
     protected $output;
 
