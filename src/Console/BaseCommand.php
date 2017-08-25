@@ -34,13 +34,18 @@ abstract class BaseCommand extends Command
 
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $ioc = IoC::getInstance();
-
-        /** @var Factory $factory */
-        $factory = $ioc->make(Factory::class);
-
+        // Set input
         $this->input = $input;
-        $this->output = $factory->make($input, $output);
+
+        // Set output
+        if($output instanceof StyleInterface){
+            $this->output = $output;
+        } else {
+            // Means that we should wrap the output
+            /** @var Factory $factory */
+            $factory = IoC::getInstance()->make(Factory::class);
+            $this->output = $factory->make($input, $output);
+        }
 
         return $this->runCommand();
     }
