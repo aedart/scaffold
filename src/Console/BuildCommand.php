@@ -43,13 +43,24 @@ class BuildCommand extends BaseCommand
     public function runCommand()
     {
         // Configure the cache
-        $this->configureCache(new Repository(), $this->input->getOption('cache'));
+        $this->configureCache(
+            new Repository(),
+            $this->input->getOption('cache')
+        );
 
         // Load and resolve the configuration
-        $config = $this->loadAndResolveConfiguration($this->input->getArgument('config'), $this->input->getOption('output'));
+        $config = $this->loadAndResolveConfiguration(
+            $this->input->getArgument('config'),
+            $this->input->getOption('output')
+        );
 
         // Execute builder's tasks
-        $this->getTaskRunner()->execute($config->get('tasks', []), $this->input, $this->output, $config);
+        $this->getTaskRunner()->execute(
+            $config->get('tasks', []),
+            $this->input,
+            $this->output,
+            $config
+        );
 
         // Output done msg
         $this->output->newLine();
