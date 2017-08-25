@@ -6,42 +6,49 @@ use Aedart\Scaffold\Contracts\Console\Style\Factory;
 use Aedart\Scaffold\Testing\Console\Style\ExtendedStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\SymfonyStyle;
 
+/**
+ * Extended Style Output Factory
+ *
+ * <br />
+ *
+ * Intended for testing only!
+ *
+ * @author Alin Eugen Deac <aedart@gmail.com>
+ * @package Aedart\Scaffold\Console\Style
+ */
 class ExtendedStyleFactory implements Factory
 {
     /**
      * Input values
      *
-     * @var resource
+     * @var resource|null
      */
     protected $inputValues;
 
     /**
      * ExtendedStyleFactory constructor.
      *
-     * @param resource $inputValues
+     * @param resource|null $inputValues [optional]
      */
-    public function __construct($inputValues)
+    public function __construct($inputValues = null)
     {
         $this->inputValues = $inputValues;
     }
 
     /**
-     * Make a new Symfony Style instance
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
-     * @return SymfonyStyle
+     * {@inheritdoc}
      */
     public function make(InputInterface $input, OutputInterface $output)
     {
         $style = new ExtendedStyle($input, $output);
 
-        $style->getQuestionHelper()->setInputStream(
-            $this->inputValues
-        );
+        // Set input steam (input values) if any are given
+        if(isset($this->inputValues)){
+            $style->getQuestionHelper()->setInputStream(
+                $this->inputValues
+            );
+        }
 
         return $style;
     }
