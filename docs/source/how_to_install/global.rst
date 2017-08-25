@@ -4,7 +4,7 @@
 Global Installation
 ===================
 
-The Scaffold application is intended as a development tool, which is why it should be required via composer as a development dependency.
+A global installation allows you to use the scaffold application everywhere.
 
 .. code-block:: console
 
