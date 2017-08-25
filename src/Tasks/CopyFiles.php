@@ -41,9 +41,11 @@ class CopyFiles extends BaseTask
      */
     protected function parseFiles(array $files = [])
     {
-        $ioc = IoC::getInstance();
-
-        return $ioc->make(Files::class, $files);
+        /** @var Files $collection */
+        $collection = IoC::getInstance()->make(Files::class);
+        $collection->populate($files);
+        
+        return $collection;
     }
 
     /**
