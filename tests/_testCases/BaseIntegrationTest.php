@@ -1,9 +1,14 @@
 <?php
+
+use Aedart\Scaffold\Console\Style\ExtendedStyleFactory;
 use Aedart\Scaffold\Containers\IoC;
+use Aedart\Scaffold\Contracts\Console\Style\Factory;
 use Aedart\Scaffold\ScaffoldApplication;
 use Aedart\Scaffold\Testing\Console\Style\ExtendedStyle;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use Symfony\Component\Console\Command\Command;
+use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\StyleInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 
@@ -76,25 +81,8 @@ abstract class BaseIntegrationTest extends BaseUnitTest
     {
         $ioc = IoC::getInstance()->container();
 
-        // NB: Has to be singleton or stream might get screwed!
-        $ioc->singleton(StyleInterface::class, function($app, array $data = []) use ($inputValues){
-            if(!array_key_exists('input', $data) || !array_key_exists('output', $data)){
-
-                $target = StyleInterface::class;
-
-                $msg = "Target {$target} cannot be build. Missing arguments; e.g. ['input' => (InputInterface), 'output' => (OutputInterface)]";
-
-                throw new BindingResolutionException($msg);
-            }
-
-            $style = new ExtendedStyle($data['input'], $data['output']);
-
-            // Set the input stream on the question helper
-            if(!empty($inputValues)){
-                $style->getQuestionHelper()->setInputStream($this->writeInput($inputValues));
-            }
-
-            return $style;
+        $ioc->singleton(Factory::class, function() use($inputValues){
+            return new ExtendedStyleFactory($this->writeInput($inputValues));
         });
     }
 
