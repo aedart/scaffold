@@ -1,5 +1,7 @@
 <?php namespace Aedart\Scaffold\Console;
 
+use Aedart\Scaffold\Console\Style\ExtendedStyle;
+use Aedart\Scaffold\Console\Style\ExtendedStyleFactory;
 use Aedart\Scaffold\Containers\IoC;
 use Aedart\Scaffold\Contracts\Console\Style\Factory;
 use Symfony\Component\Console\Command\Command;
@@ -17,7 +19,6 @@ use Symfony\Component\Console\Style\StyleInterface;
  */
 abstract class BaseCommand extends Command
 {
-
     /**
      * The input
      *
@@ -28,7 +29,7 @@ abstract class BaseCommand extends Command
     /**
      * The output
      *
-     * @var StyleInterface|OutputInterface
+     * @var StyleInterface|OutputInterface|ExtendedStyle
      */
     protected $output;
 
