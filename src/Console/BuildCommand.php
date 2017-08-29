@@ -32,6 +32,7 @@ class BuildCommand extends BaseCommand
             ->addArgument('config', InputArgument::REQUIRED, 'Path to the scaffold configuration file')
             ->addOption('output', 'o', InputOption::VALUE_OPTIONAL, 'Path where to build project or resource', getcwd())
             ->addOption('cache', 'c', InputOption::VALUE_OPTIONAL, 'Cache directory', CacheHelper::DEFAULT_CACHE_DIRECTORY)
+            ->addOption('input', 'i', InputOption::VALUE_OPTIONAL|InputOption::VALUE_IS_ARRAY, 'Answers to question(s)', [])
             ->setHelp($this->formatHelp());
     }
 
@@ -42,6 +43,11 @@ class BuildCommand extends BaseCommand
      */
     public function runCommand()
     {
+        // Set eventual input onto the question helper
+        $this->setQuestionHelperInput(
+            $this->input->getOption('input')
+        );
+
         // Configure the cache
         $this->configureCache(
             new Repository(),
