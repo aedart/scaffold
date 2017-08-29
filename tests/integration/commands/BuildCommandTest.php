@@ -242,4 +242,26 @@ class BuildCommandTest extends BaseIntegrationTest
         $this->assertFileExists($cacheDir, 'Cache dir not created!');
         $this->assertNotEmpty(scaffold_cache_get('mySentence'), 'Item was not cached');
     }
+
+    /**
+     * @test
+     */
+    public function canSetInputFromOptions()
+    {
+        $command = $this->getCommandFromApp('build');
+
+        $commandTester = $this->makeCommandTester($command);
+
+        $input = 'AEDART/input-from-options';
+
+        $commandTester->execute([
+            'command'   => $command->getName(),
+            'config'    => $this->dataPath() . 'inputFromOption.scaffold.php',
+            '--input'     => [$input]
+        ]);
+
+        $expected = strtolower($input);
+        
+        $this->assertContains($expected, $commandTester->getDisplay());
+    }
 }
