@@ -1,6 +1,6 @@
 <?php
 
-use Aedart\Scaffold\Testing\Console\Style\ExtendedStyle;
+use Aedart\Scaffold\Console\Style\ExtendedStyle;
 use Symfony\Component\Console\Input\ArrayInput;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
