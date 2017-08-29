@@ -1,7 +1,7 @@
 <?php
 namespace Aedart\Scaffold\Providers;
 
-use Aedart\Scaffold\Console\Style\Factory as OutputStyleFactory;
+use Aedart\Scaffold\Console\Style\ExtendedStyleFactory;
 use Aedart\Scaffold\Contracts\Console\Style\Factory as OutputStyleFactoryInterface;
 use Aedart\Scaffold\Contracts\Tasks\ConsoleTaskRunner;
 use Aedart\Scaffold\Tasks\TaskRunner;
@@ -32,7 +32,7 @@ class ConsoleServiceProvider extends ServiceProvider
     protected function registerOutputStyleFactory()
     {
         $this->app->singleton(OutputStyleFactoryInterface::class, function(){
-            return new OutputStyleFactory();
+            return new ExtendedStyleFactory();
         });
     }
 

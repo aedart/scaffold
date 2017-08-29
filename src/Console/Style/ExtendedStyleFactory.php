@@ -3,16 +3,11 @@
 namespace Aedart\Scaffold\Console\Style;
 
 use Aedart\Scaffold\Contracts\Console\Style\Factory;
-use Aedart\Scaffold\Testing\Console\Style\ExtendedStyle;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
  * Extended Style Output Factory
- *
- * <br />
- *
- * Intended for testing only!
  *
  * @author Alin Eugen Deac <aedart@gmail.com>
  * @package Aedart\Scaffold\Console\Style
