@@ -56,4 +56,42 @@ abstract class BaseCommand extends Command
      * @return int|null
      */
     abstract public function runCommand();
+
+    /********************************************************
+     * CLI input / output helpers
+     *******************************************************/
+
+    /**
+     * Returns a input stream
+     *
+     * Utility method for writing an input stream
+     *
+     * @see http://symfony.com/doc/current/components/console/helpers/questionhelper.html#testing-a-command-that-expects-input
+     *
+     * @param $input
+     *
+     * @return resource
+     */
+    public function getInputStream($input)
+    {
+        $stream = fopen('php://memory', 'r+', false);
+        fputs($stream, $input);
+        rewind($stream);
+
+        return $stream;
+    }
+
+    /**
+     * Write input stream
+     *
+     * @param array $input
+     *
+     * @return resource
+     */
+    public function writeInput(array $input)
+    {
+        $input = implode(PHP_EOL, $input);
+
+        return $this->getInputStream($input);
+    }
 }
