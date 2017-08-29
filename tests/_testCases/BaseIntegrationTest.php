@@ -4,12 +4,7 @@ use Aedart\Scaffold\Console\Style\ExtendedStyleFactory;
 use Aedart\Scaffold\Containers\IoC;
 use Aedart\Scaffold\Contracts\Console\Style\Factory;
 use Aedart\Scaffold\ScaffoldApplication;
-use Aedart\Scaffold\Testing\Console\Style\ExtendedStyle;
-use Illuminate\Contracts\Container\BindingResolutionException;
 use Symfony\Component\Console\Command\Command;
-use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Style\StyleInterface;
 use Symfony\Component\Console\Tester\CommandTester;
 
 /**
