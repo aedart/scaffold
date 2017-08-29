@@ -2,6 +2,7 @@
 
 use Aedart\Installed\Version\Reader;
 use Aedart\Scaffold\Console\BuildCommand;
+use Aedart\Scaffold\Console\BuildFromFileCommand;
 use Aedart\Scaffold\Console\IndexCommand;
 use Aedart\Scaffold\Console\InstallCommand;
 use Aedart\Scaffold\Containers\IoC;
@@ -23,6 +24,7 @@ class ScaffoldApplication extends Application
     protected $appCommands = [
         InstallCommand::class,
         BuildCommand::class,
+        BuildFromFileCommand::class,
         IndexCommand::class
     ];
 
