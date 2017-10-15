@@ -1,6 +1,10 @@
 .. index::
+    triple: Build-File; File; Command
     triple: Install; Build; Command
     pair: Output; Location
+    Single: Build
+    Single: Install
+    Single: Build-File
 
 Install Scaffold
 ================
@@ -59,6 +63,54 @@ command to specify your desired scaffold directly.
 .. code-block:: console
 
     vendor/bin/scaffold build other/location/my-scaffold.scaffold.php
+
+Build From File Command
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Sometimes it can be useful to automate the building process. For instance, if you want to build several scaffolds
+at once, then you can use the :code:`build:file` command.
+
+.. code-block:: console
+
+    vendor/bin/scaffold build:file location/scaffoldsToBuild.php
+
+The command accepts a single argument, :code:`file`, which is a location to a php file that contains a list of
+scaffolds to be built.
+
+In other words, this command allows you to build multiple scaffolds in one and the same process.
+
+File Format
+---------------
+
+The following illustrates the format that the :code:`build:file` command accepts.
+
+.. code-block:: php
+
+    <?php
+
+    return [
+        [
+            // Location to scaffold
+            'location'  => __DIR__ . '/MyModel.scaffold.php',
+
+            // Input (answers to questions) for that scaffold
+            'input'     => [
+                'AEDART/a'
+            ]
+        ],
+        [
+            'location'  => __DIR__ . '/MyController.scaffold.php',
+            'input'     => [
+                'Acme/b'
+            ]
+        ],
+        [
+            'location'  => __DIR__ . '/MyView.scaffold.php',
+            'input'     => [
+                'Punk/c'
+            ]
+        ],
+    ];
 
 Output Location
 ^^^^^^^^^^^^^^^
