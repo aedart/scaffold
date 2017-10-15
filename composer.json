@@ -16,18 +16,18 @@
     }
   ],
   "require": {
-    "php": ">=5.6.4",
+    "php": ">=7.1.0",
     "composer/composer": "~1.5",
-    "aedart/dto": "~3.0",
-    "aedart/laravel-helpers": "~3.0",
-    "aedart/config-loader": "~3.0",
-    "aedart/model": "~1.12",
-    "aedart/installed-version": "~1.1",
-    "twig/twig": "~1.34",
+    "aedart/dto": "~4.0",
+    "aedart/laravel-helpers": "~4.0",
+    "aedart/config-loader": "~4.0",
+    "aedart/model": "~2.3",
+    "aedart/installed-version": "~3.0",
+    "twig/twig": "~2.4",
     "symfony/console": "~3.3",
     "symfony/finder": "~3.3",
-    "illuminate/container": "5.4.*",
-    "illuminate/cache": "5.4.*",
+    "illuminate/container": "5.5.*",
+    "illuminate/cache": "5.5.*",
     "psr/log": "1.0.*",
     "nesbot/carbon": "~1.22",
     "symfony/var-dumper": "3.3.*"
@@ -35,8 +35,7 @@
   "require-dev": {
     "aedart/license": "1.*",
     "aedart/license-file-manager": "~1.6",
-    "aedart/testing": "~1.0",
-    "aedart/testing-gst": "~1.2"
+    "aedart/testing-gst": "~2.0"
   },
   "autoload": {
     "psr-4": {
