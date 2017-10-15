@@ -48,7 +48,7 @@ abstract class BaseHandler implements Handler
     /**
      * {@inheritdoc}
      */
-    public function populate(array $data = [])
+    public function populate(array $data = []) : void
     {
         // N/A - Overwrite this method if you need to accept and process
         // configuration.

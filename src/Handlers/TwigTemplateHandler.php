@@ -56,7 +56,7 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
     /**
      * {@inheritdoc}
      */
-    public function populate(array $data = [])
+    public function populate(array $data = []) : void
     {
         if(isset($data['directoryHandler']) && $data['directoryHandler'] instanceof DirHandler){
             $this->directoryHandler = $data['directoryHandler'];

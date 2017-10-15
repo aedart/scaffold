@@ -197,7 +197,7 @@ class ScaffoldIndex implements Index
     /**
      * {@inheritdoc}
      */
-    public function populate(array $data = [])
+    public function populate(array $data = []) : void
     {
         foreach ($data as $key => $location){
             if(is_array($location)){

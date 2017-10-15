@@ -51,7 +51,7 @@ class PropertyHandler extends BaseHandler implements PropertyHandlerInterface
     /**
      * {@inheritdoc}
      */
-    public function populate(array $data = [])
+    public function populate(array $data = []) : void
     {
         if(isset($data['config']) && $data['config'] instanceof Repository){
             $this->config = $data['config'];
