@@ -1,11 +1,18 @@
 Version 2.0.x
 =============
 
+v2.0.1 (29-10-2017)
+^^^^^^^^^^^^^^^^^^^
+
+Fixed
+-----
+* Incorrect populate of directories collection inside `TwigTemplateHandler`
+
 v2.0.0 (15-10-2017)
 ^^^^^^^^^^^^^^^^^^^
 
 Added
--------
+-----
 * Added "build:file" command
 
 Changed
