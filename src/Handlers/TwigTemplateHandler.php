@@ -259,7 +259,7 @@ class TwigTemplateHandler extends BaseHandler implements TemplateHandler
 
         /** @var Directories $collection */
         $collection = IoC::getInstance()->make(Directories::class);
-        $collection->populate($destination);
+        $collection->populate([$destination]);
 
         // Process the destination directory
         $this->directoryHandler->processDirectories($collection);
