@@ -1,4 +1,4 @@
-Scaffold Docs
+Abandoned - Scaffold Docs
 =============
 
 .. image:: https://travis-ci.org/aedart/scaffold.svg?branch=master
@@ -6,6 +6,8 @@ Scaffold Docs
 .. image:: https://poser.pugx.org/aedart/scaffold/downloads
 .. image:: https://poser.pugx.org/aedart/scaffold/v/unstable
 .. image:: https://poser.pugx.org/aedart/scaffold/license
+
+**This project is no longer maintained.**
 
 How many times have you been doing the same task, over and over again? Maybe it's time for you to create some kind of helper that can perform that task for you. Perhaps this tool might be able to help you along the way.
 

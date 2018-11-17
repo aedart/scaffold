@@ -1,4 +1,5 @@
 {
+  "abandoned": true,
   "name": "aedart/scaffold",
   "description": "Tool for creating and installing various files and directories into your project, based on created scaffolds",
   "keywords": [
